@@ -67,4 +67,12 @@
     {% block package_additional_info %}
       {% snippet "package/snippets/additional_info.html", pkg_dict=pkg %}
     {% endblock %}
+
+
+    {% if c.pkg_dict.approval_state  != 'approval_pending' and c.pkg_dict.approval_state  != 'rejected' %}
+      {% block disqus_comments %}
+        {{ h.disqus_comments() }}
+      {% endblock %}
+    {% endif %}
+
 {% endblock %}
