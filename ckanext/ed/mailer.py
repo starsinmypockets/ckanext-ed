@@ -25,6 +25,16 @@ def mail_package_publish_request_to_admins(context, data_dict):
             log.debug('[email] Pakcage publishing request email sent to {0}'.format(user.name))
 
 
+def mail_package_publish_update_to_user(context, pkg_dict, event='approval'):
+    context.setdefault('model', model)
+    user = model.User.get(pkg_dict['creator_user_id'])
+    if user and user.email:
+        subj = _compose_email_subj(pkg_dict, event=event)
+        body = _compose_email_body(pkg_dict, user, event=event)
+        mail_user(user, subj, body)
+        log.debug('[email] Data container update email sent to {0}'.format(user.name))
+
+
 def _compose_email_subj(data_dict, event='request'):
     return '[US ED] Package Publishing {0}: {1}'.format(event.capitalize(), data_dict.get('title'))
 
