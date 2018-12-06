@@ -41,7 +41,7 @@ def _compose_email_subj(data_dict, event='request'):
 
 def _compose_email_body(data_dict, user, event='request'):
     pkg_link = toolkit.url_for('dataset_read', id=data_dict['name'], qualified=True)
-    return render_jinja2('emails/package_publish_{0}.txt'.format(event), {
+    return render_jinja2('emails/package_publish_{0}.html'.format(event), {
         'admin_name': user.fullname or user.name,
         'site_title': config.get('ckan.site_title'),
         'site_url': config.get('ckan.site_url'),
