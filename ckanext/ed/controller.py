@@ -39,7 +39,8 @@ class ApproveRejectControler(base.BaseController):
         _make_action(id, 'approve')
 
     def reject(self, id):
-        _make_action(id, 'reject')
+        feedback = toolkit.request.params.get('feedback', 'No feedback provided')
+        _make_action(id, 'reject', feedback=feedback)
 
 
 def _raise_not_authz_or_not_pending(id):
@@ -51,7 +52,7 @@ def _raise_not_authz_or_not_pending(id):
         raise toolkit.ObjectNotFound('Dataset "{}" not found'.format(id))
 
 
-def _make_action(package_id, action='reject'):
+def _make_action(package_id, action='reject', feedback=None):
     states = {
         'reject': 'rejected',
         'approve': 'approved'
@@ -67,6 +68,6 @@ def _make_action(package_id, action='reject'):
         mail_package_publish_update_to_user({}, data_dict, event='approval')
         toolkit.h.flash_success(msg)
     else:
-        mail_package_publish_update_to_user({}, data_dict, event='rejection')
+        mail_package_publish_update_to_user({}, data_dict, event='rejection', feedback=feedback)
         toolkit.h.flash_error(msg)
     toolkit.redirect_to(controller='package', action='read', id=data_dict['name'])

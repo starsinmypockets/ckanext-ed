@@ -33,7 +33,7 @@ class TestHelpers(test_helpers.FunctionalTestBase):
             _create_dataset_dict('test', office['name'])
         )
         assert_equals(mock_mail_user.call_count, 2)
-        assert_equals(mock_render_jinja2.call_args[0][0], 'emails/package_publish_request.txt')
+        assert_equals(mock_render_jinja2.call_args[0][0], 'emails/package_publish_request.html')
 
 
 def _create_dataset_dict(package_name, office_name='us-ed'):
