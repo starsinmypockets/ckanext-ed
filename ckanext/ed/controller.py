@@ -7,6 +7,7 @@ from ckan.lib import base
 from ckan.plugins import toolkit
 
 from ckanext.ed.helpers import get_storage_path_for
+from ckanext.ed.mailer import mail_package_publish_update_to_user
 
 log = logging.getLogger()
 
@@ -63,7 +64,9 @@ def _make_action(package_id, action='reject'):
     )
     msg = 'Dataset "{0}" {1}'.format(data_dict['title'], states[action])
     if action == 'approve':
+        mail_package_publish_update_to_user({}, data_dict, event='approval')
         toolkit.h.flash_success(msg)
     else:
+        mail_package_publish_update_to_user({}, data_dict, event='rejection')
         toolkit.h.flash_error(msg)
     toolkit.redirect_to(controller='package', action='read', id=data_dict['name'])
