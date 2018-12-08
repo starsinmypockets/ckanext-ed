@@ -25,12 +25,12 @@ def mail_package_publish_request_to_admins(context, data_dict):
             log.debug('[email] Pakcage publishing request email sent to {0}'.format(user.name))
 
 
-def mail_package_publish_update_to_user(context, pkg_dict, event='approval'):
+def mail_package_publish_update_to_user(context, pkg_dict, event='approval', feedback=None):
     context.setdefault('model', model)
     user = model.User.get(pkg_dict['creator_user_id'])
     if user and user.email:
         subj = _compose_email_subj(pkg_dict, event=event)
-        body = _compose_email_body(pkg_dict, user, event=event)
+        body = _compose_email_body(pkg_dict, user, event=event, feedback=feedback)
         mail_user(user, subj, body)
         log.debug('[email] Data container update email sent to {0}'.format(user.name))
 
@@ -39,7 +39,7 @@ def _compose_email_subj(data_dict, event='request'):
     return '[US ED] Package Publishing {0}: {1}'.format(event.capitalize(), data_dict.get('title'))
 
 
-def _compose_email_body(data_dict, user, event='request'):
+def _compose_email_body(data_dict, user, event='request', feedback=None):
     pkg_link = toolkit.url_for('dataset_read', id=data_dict['name'], qualified=True)
     return render_jinja2('emails/package_publish_{0}.html'.format(event), {
         'admin_name': user.fullname or user.name,
@@ -48,5 +48,6 @@ def _compose_email_body(data_dict, user, event='request'):
         'package_title': data_dict.get('title'),
         'package_description': data_dict.get('notes', ''),
         'package_url': pkg_link,
-        'publisher_name': data_dict.get('contact_name')
+        'publisher_name': data_dict.get('contact_name'),
+        'feedback': feedback
     })

@@ -1,4 +1,9 @@
 {% extends "package/read_base.html" %}
+{% block scripts %}
+  {{ super() }}
+  {% resource 'ed/js/confirm-reject.js' %}
+{% endblock %}
+
 
 {% block primary_content_inner %}
   {{ super() }}
@@ -12,11 +17,8 @@
         <a href="/dataset-publish/{{ c.pkg_dict.id }}/approve" class="btn btn-primary">
           {% trans %}Approve Dataset{% endtrans %}
         </a>
-        <a href="/dataset-publish/{{ c.pkg_dict.id }}/reject" class="btn btn-danger">
-          {% trans %}Reject Dataset{% endtrans %}
-        </a>
+        <a class="btn btn-danger" href="/dataset-publish/{{ c.pkg_dict.id }}/reject" data-module="reject" data-module-content="{{ _('Please provide some feedback for the editor:') }} ">{{ _('Reject Dataset') }}</a>
       </div>
-
       {% endif %}
 
     </div>
