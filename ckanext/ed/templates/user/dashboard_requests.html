@@ -1,0 +1,15 @@
+{% extends "user/dashboard.html" %}
+
+{% block dashboard_activity_stream_context %}{% endblock %}
+
+
+{% block primary_content_inner %}
+  <h2 class="hide-heading">{{ _('My Datasets') }}</h2>
+  {% if pending_dataset %}
+    {% snippet 'snippets/package_list.html', packages=pending_dataset %}
+  {% else %}
+    <p class="empty">
+      {{ _('No Pending Requests') }}
+    </p>
+  {% endif %}
+{% endblock %}

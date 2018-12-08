@@ -2,14 +2,37 @@ import os
 import logging
 
 from ckan import model
-from ckan.common import response
+from ckan.common import _, g, request, response
 from ckan.lib import base
+from ckan.logic import NotFound
 from ckan.plugins import toolkit
+from ckan.views.user import _extra_template_variables
 
-from ckanext.ed.helpers import get_storage_path_for
+from ckanext.ed.helpers import get_storage_path_for, is_admin
 from ckanext.ed.mailer import mail_package_publish_update_to_user
 
 log = logging.getLogger()
+
+
+class PendingRequestsController(base.BaseController):
+    def list_requests(self):
+        pending_dataset = toolkit.get_action('package_search')(
+            data_dict={
+                'fq': 'approval_state:approval_pending',
+                'extras': {'from_dashboard': True},
+            })['results']
+
+        # filter datasets that are not under admins organisation
+        pending_dataset = list(filter(
+            lambda x: is_admin(toolkit.c.user, x.get('owner_org')),
+            pending_dataset))
+        context = {u'for_view': True, u'user': g.user, u'auth_user_obj': g.userobj}
+        data_dict = {u'user_obj': g.userobj, u'include_datasets': True}
+        extra_vars = _extra_template_variables(context, data_dict)
+        if extra_vars is None:
+            raise toolkit.NotAuthorized
+        extra_vars['pending_dataset'] = pending_dataset
+        return base.render(u'user/dashboard_requests.html', extra_vars)
 
 
 class DownloadController(base.BaseController):
