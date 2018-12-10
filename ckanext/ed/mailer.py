@@ -21,7 +21,8 @@ def mail_package_publish_request_to_admins(context, data_dict):
         if user.email:
             subj = _compose_email_subj(data_dict, event='request')
             body = _compose_email_body(data_dict, user, event='request')
-            mail_user(user, subj, body)
+            header = {'Content-Type': 'text/html; charset=UTF-8'}
+            mail_user(user, subj, body, headers=header)
             log.debug('[email] Pakcage publishing request email sent to {0}'.format(user.name))
 
 
@@ -31,7 +32,8 @@ def mail_package_publish_update_to_user(context, pkg_dict, event='approval', fee
     if user and user.email:
         subj = _compose_email_subj(pkg_dict, event=event)
         body = _compose_email_body(pkg_dict, user, event=event, feedback=feedback)
-        mail_user(user, subj, body)
+        header = {'Content-Type': 'text/html; charset=UTF-8'}
+        mail_user(user, subj, body, headers=header)
         log.debug('[email] Data container update email sent to {0}'.format(user.name))
 
 
