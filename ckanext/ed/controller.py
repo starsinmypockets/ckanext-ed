@@ -64,7 +64,7 @@ class DownloadController(base.BaseController):
         os.remove(file_path)
 
 
-class ApproveRejectControler(base.BaseController):
+class ApproveRejectController(base.BaseController):
     def approve(self, id):
         _make_action(id, 'approve')
 
