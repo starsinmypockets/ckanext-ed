@@ -45,7 +45,7 @@ class TestController(helpers.FunctionalTestBase):
 
         extra_environ = {'REMOTE_USER': editor['name'].encode('ascii')}
         resp = app.get(url=url_for('dashboard.requests'), extra_environ=extra_environ)
-        assert '<a href="/dashboard/requests">Requests</a>' not in resp
+        assert '<a href="/dashboard/requests">Pending dataset requests</a>' not in resp
 
     def test_requests_tab_appears_for_admin_on_dashboard(self):
         app = self._get_test_app()
@@ -54,7 +54,7 @@ class TestController(helpers.FunctionalTestBase):
 
         extra_environ = {'REMOTE_USER': editor['name'].encode('ascii')}
         resp = app.get(url=url_for('dashboard.requests'), extra_environ=extra_environ)
-        assert '<a href="/dashboard/requests">Requests</a>' in resp
+        assert '<a href="/dashboard/requests">Pending dataset requests</a>' in resp
 
     def test_requests_tab_appears_for_sysadmin_on_dashboard(self):
         app = self._get_test_app()
@@ -63,7 +63,7 @@ class TestController(helpers.FunctionalTestBase):
 
         extra_environ = {'REMOTE_USER': sysadmin['name'].encode('ascii')}
         resp = app.get(url=url_for('dashboard.requests'), extra_environ=extra_environ)
-        assert '<a href="/dashboard/requests">Requests</a>' in resp
+        assert '<a href="/dashboard/requests">Pending dataset requests</a>' in resp
 
     def test_pending_datasets_show_up_on_dashboard(self):
         app = self._get_test_app()
@@ -149,7 +149,30 @@ class TestController(helpers.FunctionalTestBase):
         assert 'TEST-PENDING-NATIVE' in resp
 
 
-def _create_dataset_dict(package_name, office_name='us-ed'):
+    def test_pending_private_datasets_show_up_on_dashboard(self):
+        app = self._get_test_app()
+        # Create Users
+        editor = factories.User()
+        admin = factories.User()
+        factories.Organization(
+            users=[
+                {'name': admin['name'], 'capacity': 'admin'},
+                {'name': editor['name'], 'capacity': 'editor'}
+            ],
+            name='us-ed-1',
+            id='us-ed-1'
+        )
+        # Create Dataset
+        context = {'user': editor['name']}
+        data_dict = _create_dataset_dict('test-pending-private', 'us-ed-1', private=True)
+        helpers.call_action('package_create', context, **data_dict)
+
+        extra_environ = {'REMOTE_USER': admin['name'].encode('ascii')}
+        resp = app.get(url=url_for('dashboard.requests'), extra_environ=extra_environ)
+        assert 'TEST-PENDING-PRIVATE' in resp, resp
+
+
+def _create_dataset_dict(package_name, office_name='us-ed', private=False):
     return {
         'name': package_name,
         'contact_name': 'Stu Shepard',
@@ -160,5 +183,6 @@ def _create_dataset_dict(package_name, office_name='us-ed'):
         'notes': 'notes',
         'owner_org': office_name,
         'title': package_name.upper(),
-        'identifier': 'identifier'
+        'identifier': 'identifier',
+        'private': private
     }

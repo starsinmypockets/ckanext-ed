@@ -50,15 +50,21 @@ python setup.py develop
 pip install -r requirements.txt
 cd -
 
+git clone https://github.com/ckan/ckanext-showcase
+cd ckanext-showcase
+python setup.py develop
+pip install -r requirements.txt
+cd -
+
 echo "Installing ckanext-ed and its requirements..."
 python setup.py develop
 
-# Change the path the core test ini file as the docker compose scripts change this 
-# locally 
-sed -i -e 's/config:..\/..\/src\/ckan\/test-core.ini/config:..\/ckan\/test-core.ini/' test.ini 
- 
-echo "Moving test.ini into a subdir..." 
-mkdir subdir 
-mv test.ini subdir 
+# Change the path the core test ini file as the docker compose scripts change this
+# locally
+sed -i -e 's/config:..\/..\/src\/ckan\/test-core.ini/config:..\/ckan\/test-core.ini/' test.ini
+
+echo "Moving test.ini into a subdir..."
+mkdir subdir
+mv test.ini subdir
 
 echo "travis-install-dependencies is done."
