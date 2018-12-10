@@ -7,7 +7,7 @@ from ckan.lib import base
 from ckan.plugins import toolkit
 from ckan.views.user import _extra_template_variables
 
-from ckanext.ed.helpers import get_storage_path_for
+from ckanext.ed.helpers import get_storage_path_for, get_pending_datasets
 from ckanext.ed.mailer import mail_package_publish_update_to_user
 
 log = logging.getLogger(__name__)
@@ -15,24 +15,7 @@ log = logging.getLogger(__name__)
 
 class PendingRequestsController(base.BaseController):
     def list_requests(self):
-        user_orgs = toolkit.get_action(
-            'organization_list_for_user'
-        )({'user': toolkit.c.user}, {'user': toolkit.c.user})
-        admin_org_id = [
-            'owner_org:' + i['id'] for i in user_orgs
-            if i.get('capacity') == 'admin'
-        ]
-        admin_fq_string = ''
-        if len(admin_org_id):
-            admin_fq_string = 'AND (%s)' % ' OR '.join(admin_org_id)
-        pending_dataset = toolkit.get_action('package_search')(
-            data_dict={
-                'fq': 'approval_state:approval_pending %s' % admin_fq_string,
-                'include_private': True,
-                'extras': {'from_dashboard': True},
-            })['results']
-
-        # filter datasets that are not under admins organisation
+        pending_dataset = get_pending_datasets(toolkit.c.user)
         context = {
             u'for_view': True, u'user': g.user, u'auth_user_obj': g.userobj}
         data_dict = {u'user_obj': g.userobj, u'include_datasets': True}
