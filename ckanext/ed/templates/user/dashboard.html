@@ -1,6 +1,7 @@
 {% extends "user/edit_base.html" %}
 
 {% set user = c.userobj %}
+{% set pending_dataset = h.ed_get_pending_datasets(c.user) %}
 
 {% block breadcrumb_content %}
   <li class="active"><a href="{{ h.url_for('dashboard.index') }}">{{ _('Dashboard') }}</a></li>
@@ -18,7 +19,8 @@
         <ul class="nav nav-tabs">
           {{ h.build_nav_icon('dashboard.index', _('News feed')) }}
           {% if h.ed_is_admin(c.user) %}
-            {{ h.build_nav_icon('dashboard.requests', _('Pending dataset requests')) }}
+            {% set tab_name = 'Pending dataset requests (%s)'|format(pending_dataset|length) %}
+            {{ h.build_nav_icon('dashboard.requests', _(tab_name)) }}
           {% endif %}
           {{ h.build_nav_icon('dashboard.datasets', _('My Datasets')) }}
           {{ h.build_nav_icon('dashboard.organizations', _('My Organizations')) }}

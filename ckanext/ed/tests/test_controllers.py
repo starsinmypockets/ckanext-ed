@@ -45,7 +45,7 @@ class TestController(helpers.FunctionalTestBase):
 
         extra_environ = {'REMOTE_USER': editor['name'].encode('ascii')}
         resp = app.get(url=url_for('dashboard.requests'), extra_environ=extra_environ)
-        assert '<a href="/dashboard/requests">Pending dataset requests</a>' not in resp
+        assert '<a href="/dashboard/requests">Pending dataset requests (0)</a>' not in resp
 
     def test_requests_tab_appears_for_admin_on_dashboard(self):
         app = self._get_test_app()
@@ -54,7 +54,7 @@ class TestController(helpers.FunctionalTestBase):
 
         extra_environ = {'REMOTE_USER': editor['name'].encode('ascii')}
         resp = app.get(url=url_for('dashboard.requests'), extra_environ=extra_environ)
-        assert '<a href="/dashboard/requests">Pending dataset requests</a>' in resp
+        assert '<a href="/dashboard/requests">Pending dataset requests (0)</a>' in resp, resp
 
     def test_requests_tab_appears_for_sysadmin_on_dashboard(self):
         app = self._get_test_app()
@@ -63,7 +63,7 @@ class TestController(helpers.FunctionalTestBase):
 
         extra_environ = {'REMOTE_USER': sysadmin['name'].encode('ascii')}
         resp = app.get(url=url_for('dashboard.requests'), extra_environ=extra_environ)
-        assert '<a href="/dashboard/requests">Pending dataset requests</a>' in resp
+        assert '<a href="/dashboard/requests">Pending dataset requests (0)</a>' in resp
 
     def test_pending_datasets_show_up_on_dashboard(self):
         app = self._get_test_app()

@@ -127,3 +127,21 @@ def is_admin(user, office=None):
         return any([i.get('capacity') == 'admin' \
                 and i.get('id') == office for i in user_orgs])
     return any([i.get('capacity') == 'admin' for i in user_orgs])
+
+
+def get_pending_datasets(user):
+    user_orgs = _get_action(
+        'organization_list_for_user', {'user': user}, {'user': user})
+    admin_org_id = [
+        'owner_org:' + i['id'] for i in user_orgs if i.get('capacity') == 'admin'
+    ]
+    admin_fq_string = ''
+    if len(admin_org_id):
+        admin_fq_string = 'AND (%s)' % ' OR '.join(admin_org_id)
+    pending_dataset = toolkit.get_action('package_search')(
+        data_dict={
+            'fq': 'approval_state:approval_pending %s' % admin_fq_string,
+            'include_private': True,
+            'extras': {'from_dashboard': True},
+        })['results']
+    return pending_dataset
