@@ -7,3 +7,10 @@
     <i class="fa fa-bar-chart-o"></i> {{ ungettext('{total_views} view', '{total_views} views', total_views).format(total_views=total_views) }}
   </div>
 {% endblock %}
+
+{% block heading_meta %}
+  {{ super() }}
+  {% if package.get('approval_state', '') == 'approval_pending' %}
+    <span class="label label-warning">{{ _('Pending') }}</span>
+  {% endif %}
+{% endblock %}

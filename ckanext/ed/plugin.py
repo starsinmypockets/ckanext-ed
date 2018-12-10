@@ -34,6 +34,11 @@ class EDPlugin(plugins.SingletonPlugin, DefaultTranslation):
 
     # IPackageController
     def before_search(self, search_params):
+        # For requests dashboard we need approval_pending datasets. Passing in
+        # extras that request is sent from dashboard. Return params as is if so
+        if search_params.get('extras', {}).get('from_dashboard'):
+            return search_params
+
         search_params.update({
             'fq': '!(approval_state:approval_pending) ' + search_params.get('fq', '')
         })
@@ -47,7 +52,10 @@ class EDPlugin(plugins.SingletonPlugin, DefaultTranslation):
 
     # IRoutes
     def before_map(self, map):
-        publish_controller = 'ckanext.ed.controller:ApproveRejectControler'
+        publish_controller = 'ckanext.ed.controller:ApproveRejectController'
+        map.connect('dashboard.requests', '/dashboard/requests',
+                    controller='ckanext.ed.controller:PendingRequestsController',
+                    action='list_requests')
         map.connect('/dataset-publish/{id}/approve',
                     controller=publish_controller,
                     action='approve')
