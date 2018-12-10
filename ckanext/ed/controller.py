@@ -2,9 +2,8 @@ import os
 import logging
 
 from ckan import model
-from ckan.common import _, g, request, response
+from ckan.common import g, response
 from ckan.lib import base
-from ckan.logic import NotFound
 from ckan.plugins import toolkit
 from ckan.views.user import _extra_template_variables
 
@@ -20,7 +19,8 @@ class PendingRequestsController(base.BaseController):
             'organization_list_for_user'
         )({'user': toolkit.c.user}, {'user': toolkit.c.user})
         admin_org_id = [
-            'owner_org:' + i['id'] for i in user_orgs if i.get('capacity') == 'admin'
+            'owner_org:' + i['id'] for i in user_orgs
+            if i.get('capacity') == 'admin'
         ]
         admin_fq_string = ''
         if len(admin_org_id):
@@ -33,7 +33,8 @@ class PendingRequestsController(base.BaseController):
             })['results']
 
         # filter datasets that are not under admins organisation
-        context = {u'for_view': True, u'user': g.user, u'auth_user_obj': g.userobj}
+        context = {
+            u'for_view': True, u'user': g.user, u'auth_user_obj': g.userobj}
         data_dict = {u'user_obj': g.userobj, u'include_datasets': True}
         extra_vars = _extra_template_variables(context, data_dict)
         if extra_vars is None:
@@ -45,12 +46,12 @@ class PendingRequestsController(base.BaseController):
 class DownloadController(base.BaseController):
     def download_zip(self, zip_id):
         if not zip_id:
-            abort(404, toolkit._('Resource data not found'))
+            toolkit.abort(404, toolkit._('Resource data not found'))
         file_name, package_name = zip_id.split('::')
         file_path = get_storage_path_for('temp-ed/' + file_name)
 
         if not os.path.isfile(file_path):
-            abort(404, toolkit._('Resource data not found'))
+            toolkit.abort(404, toolkit._('Resource data not found'))
 
         if not package_name:
             package_name = 'resources'
@@ -69,7 +70,8 @@ class ApproveRejectController(base.BaseController):
         _make_action(id, 'approve')
 
     def reject(self, id):
-        feedback = toolkit.request.params.get('feedback', 'No feedback provided')
+        feedback = toolkit.request.params.get(
+            'feedback', 'No feedback provided')
         _make_action(id, 'reject', feedback=feedback)
 
 
@@ -98,6 +100,8 @@ def _make_action(package_id, action='reject', feedback=None):
         mail_package_publish_update_to_user({}, data_dict, event='approval')
         toolkit.h.flash_success(msg)
     else:
-        mail_package_publish_update_to_user({}, data_dict, event='rejection', feedback=feedback)
+        mail_package_publish_update_to_user(
+            {}, data_dict, event='rejection', feedback=feedback)
         toolkit.h.flash_error(msg)
-    toolkit.redirect_to(controller='package', action='read', id=data_dict['name'])
+    toolkit.redirect_to(
+        controller='package', action='read', id=data_dict['name'])
