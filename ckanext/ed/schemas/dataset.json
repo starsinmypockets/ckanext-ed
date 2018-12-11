@@ -76,20 +76,17 @@
     },
     {
       "field_name": "identifier",
-      "required": true,
       "label": "Unique Identifier",
-      "help_text": "A unique identifier for the dataset or API as maintained within an Agency catalog or database."
+      "help_text": "A unique identifier for the dataset or API as maintained within an Agency catalog or database. Optional: if not provided, one will be automatically generated."
     },
     {
       "field_name": "bureau_code",
-      "required": true,
       "label": "Bureau Code",
       "form_placeholder": "eg. 015:11, 017:99",
       "help_text": "Federal agencies, combined agency and bureau code from OMB Circular A-11, Appendix C (PDF, CSV) in the format of 015:11. Use comma to separate values"
     },
     {
       "field_name": "program_code",
-      "required": true,
       "label": "Program Code",
       "form_placeholder": "eg. 015:11, 017:99",
       "help_text": "Federal agencies, list the primary program related to this data asset, from the Federal Program Inventory. Use the format of 015:001. Use comma to separate values"
