@@ -3,17 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "docker:bash": "docker exec -it dockerckaned_ckan-dev_1 bash",
-    "docker:build": "docker-compose -f ../../docker-compose.dev.yml build",
-    "docker:pull": "docker pull openknowledge/ckan-base:2.8 && docker pull openknowledge/ckan-dev:2.8 && docker-compose -f ../../docker-compose.dev.yml build ckan-dev",
-    "docker:up": "docker-compose -f ../../docker-compose.dev.yml up",
-    "i18n:compile": "docker exec -t dockerckaned_ckan-dev_1 bash -c 'cd /srv/app/src_extensions/ckanext-ed && python setup.py compile_catalog -l en -f'",
-    "i18n:extract": "docker exec -t dockerckaned_ckan-dev_1 bash -c 'cd /srv/app/src_extensions/ckanext-ed && python setup.py extract_messages'",
     "static:build": "gulp less",
     "static:watch": "gulp watch",
-    "test:e2e": "nightwatch -e chrome",
-    "test:unit": "docker-compose -f ../../docker-compose.dev.yml exec ckan-dev nosetests --ckan --nologcapture --reset-db -s -v --with-pylons=/srv/app/src_extensions/ckanext-ed/test.ini /srv/app/src_extensions/ckanext-ed/",
-    "toc": "doctoc README.md"
+    "test:e2e": "nightwatch -e chrome"
   },
   "repository": {
     "type": "git",

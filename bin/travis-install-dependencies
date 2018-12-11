@@ -53,7 +53,7 @@ cd -
 git clone https://github.com/ckan/ckanext-showcase
 cd ckanext-showcase
 python setup.py develop
-pip install -r requirements.txt
+pip install -r dev-requirements.txt
 cd -
 
 echo "Installing ckanext-ed and its requirements..."

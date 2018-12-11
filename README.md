@@ -60,16 +60,6 @@ $ cd ckanext-ed
 
 Now we have cloned all the required repositories and we're located in our main working directory `docker-ckan-ed/src/ckanext-ed`
 
-For running commands and building static files, we can use `npm`. Let's enable a Node.js environment:
-
-> You have to have `nvm` installed or you can use any other way to get Node.js prepared - system setup etc
-
-```bash
-$ nvm install 10
-$ nvm use 10
-$ npm install
-```
-
 ### Start development server
 
 > Take a look inside `package.json` to understand what's going on under the hood. Or if you don't have Node.js installed.
@@ -77,7 +67,7 @@ $ npm install
 To start a development server, we have to build docker images:
 
 ```bash
-$ npm run docker:build
+$ make build
 ```
 
 Let's start the development server:
@@ -85,8 +75,7 @@ Let's start the development server:
 > For live development the first option is recommended to be launched in another terminal window
 
 ```bash
-$ npm run docker:up # Option 1: to see logs at the same window
-$ npm run docker:up -- -d # Option 2: to start as a deamon; requires understanding how to manage a docker container
+$ make start
 ```
 
 You can work on the `ckanext-ed` codebase having it running. On every change to the codebase, the server will be reloaded automatically. It's important to mention that the ckan configuration and other things like `cron/patches/etc` are managed inside the `docker-ckan-ed` repo. If you want to update it you have to restart the server.
@@ -110,25 +99,33 @@ We write and store unit tests inside the `ckanext/ed/tests` directory. See CKAN 
 In another terminal window run the test command:
 
 ```bash
-$ npm run test:unit
+$ make test
 ```
 
 You can pass additional nosetests options inthe following way (note the two `--` characters):
 
 ```bash
-$ npm run test:unit -- --ipdb --ipdb-failure
+$ make ARGS='--ipdb --ipdb-failure' test
 ```
 
 Right now all tests under `ckanext/ed/tests` will be run, it is not possible to choose a specific file or test.
 
 ### Running E2E tests
 
+For building static files, we can use `npm`. Let's enable a Node.js environment:
+
+> You have to have `nvm` installed or you can use any other way to get Node.js prepared - system setup etc
+
+```bash
+$ nvm install 10
+$ nvm use 10
+$ npm install
+```
+
 We write and store acceptance E2E tests inside the top-level `tests` directory. For running it we also have to switch to the test server:
 
 ```bash
-$ npm run docker:up
-# It's running so we use CTRL-C to stop
-$ npm run docker:up:test
+$ make start
 ```
 
 In another terminal window run the test command:
@@ -161,8 +158,8 @@ To extract i18n messages and compile the catalog we have to have our development
 In another terminal window run these commands:
 
 ```
-$ npm run i18n:extract
-$ npm run i18n:compile
+$ make i18n_extract
+$ make i18n_compile
 ```
 
 See CKAN documentation for more on i18n management.
@@ -193,10 +190,10 @@ To update the translation map (`package -> data.json`) edit `export_map/export.m
 
 ### Log into the container
 
-To issue commands inside a running container (after `$ npm run docker:up`):
+To issue commands inside a running container (after `$ make start`):
 
 ```
-$ npm run docker:bash
+$ make bash
 ```
 
 Now you can tweak the running `ckan-dev` docker container from inside. Please take into account that all changes will be lost after the next container restart.
@@ -206,8 +203,36 @@ Now you can tweak the running `ckan-dev` docker container from inside. Please ta
 Sometimes we need to update the base docker images `ckan/ckan-dev`. We can do it using:
 
 ```bash
-$ npm run docker:pull
-$ npm run docker:build
+$ make pull
+$ make build
+```
+
+### Stop service containers
+
+Stop all service containers
+
+```
+$ make stop
+```
+
+Stop specific service container
+
+```
+$ make SERVICE=ckan-dev stop
+```
+
+### removing stopped service containers
+
+Remove all service containers
+
+```
+$ make remove
+```
+
+Remove specific service container
+
+```
+$ make SERVICE=ckan-dev remove
 ```
 
 ### Reseting docker
@@ -225,7 +250,7 @@ $ docker system prune -a --volumes
 To update this readme table of contents run:
 
 ```bash
-$ npm run toc
+$ make readme
 ```
 
 ## Troubleshooting
@@ -235,8 +260,8 @@ $ npm run toc
 There had been a bug in `ckan-dev` that was fixed. Run the following commands to update your ckan image:
 
 ```bash
-$ npm run docker:pull
-$ npm run docker:build
+$ make pull
+$ make build
 ```
 
 ## References
