@@ -12,5 +12,7 @@
   {{ super() }}
   {% if package.get('approval_state', '') == 'approval_pending' %}
     <span class="label label-warning">{{ _('Pending') }}</span>
+  {% elif package.get('approval_state', '') == 'rejected' %}
+    <span class="label label-danger">{{ _('Rejected') }}</span>
   {% endif %}
 {% endblock %}

@@ -43,6 +43,60 @@ class TestValidators(FunctionalTestBase):
         assert_equals(dataset['approval_state'], 'approval_pending')
 
 
+    def test_dataset_update_by_editor_remains_rejected(self):
+        core_factories.User(name='george')
+        core_factories.User(name='john')
+        core_factories.Organization(
+            users=[
+                {'name': 'george', 'capacity': 'admin'},
+                {'name': 'john', 'capacity': 'editor'}
+            ],
+            name='us-ed-3',
+            id='us-ed-3'
+        )
+
+        context_editor = _create_context({'name': 'john'})
+        data_dict = _create_dataset_dict('test-dataset', 'us-ed-3')
+        package = call_action('package_create', context_editor, **data_dict)
+        context_admin = _create_context({'name': 'george'})
+        call_action(
+            'package_patch',
+            context_admin,
+            **{'approval_state': 'rejected', 'id': package['id']}
+        )
+        data_dict['id'] = package['id']
+        call_action('package_update', context_editor, **data_dict)
+        dataset = call_action('package_show', context_editor, id='test-dataset')
+        assert_equals(dataset['approval_state'], 'rejected')
+
+
+    def test_dataset_update_by_editor_remains_approved(self):
+        core_factories.User(name='george')
+        core_factories.User(name='john')
+        core_factories.Organization(
+            users=[
+                {'name': 'george', 'capacity': 'admin'},
+                {'name': 'john', 'capacity': 'editor'}
+            ],
+            name='us-ed-4',
+            id='us-ed-4'
+        )
+
+        context_editor = _create_context({'name': 'john'})
+        data_dict = _create_dataset_dict('test-dataset', 'us-ed-4')
+        package = call_action('package_create', context_editor, **data_dict)
+        context_admin = _create_context({'name': 'george'})
+        call_action(
+            'package_patch',
+            context_admin,
+            **{'approval_state': 'approved', 'id': package['id']}
+        )
+        data_dict['id'] = package['id']
+        call_action('package_update', context_editor, **data_dict)
+        dataset = call_action('package_show', context_editor, id='test-dataset')
+        assert_equals(dataset['approval_state'], 'approved')
+
+
 def _create_context(user):
     return {'model': model, 'user': user['name']}
 

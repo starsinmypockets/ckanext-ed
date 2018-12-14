@@ -1,32 +1,29 @@
+import mock
+
 from nose.tools import assert_raises
 
 from ckan.lib.helpers import url_for
+from ckan.lib.search import rebuild
 from ckan.plugins import toolkit
 from ckan.tests import helpers, factories
 
-class TestController(helpers.FunctionalTestBase):
+class TestPendingRequestsController(helpers.FunctionalTestBase):
 
     @classmethod
     def setup_class(cls):
 
         helpers.reset_db()
-        super(TestController, cls).setup_class()
+        super(TestPendingRequestsController, cls).setup_class()
 
     @classmethod
     def teardown_class(cls):
-        super(TestController, cls).teardown_class()
+        super(TestPendingRequestsController, cls).teardown_class()
         helpers.reset_db()
 
     def setup(self):
-        super(TestController, self).setup()
+        super(TestPendingRequestsController, self).setup()
         sysadmin = factories.Sysadmin()
         self.extra_environ = {'REMOTE_USER': sysadmin['name'].encode('ascii')}
-
-    def test_requests_403_for_anonimous_users(self):
-        app = self._get_test_app()
-
-        with assert_raises(toolkit.NotAuthorized) as e:
-            app.get(url=url_for('dashboard.requests'), status=403)
 
 
     def test_requests_tab_not_appears_for_member_on_dashboard(self):
@@ -38,14 +35,31 @@ class TestController(helpers.FunctionalTestBase):
         resp = app.get(url=url_for('dashboard.requests'), extra_environ=extra_environ)
         assert '<a href="/dashboard/requests">Requests</a>' not in resp
 
-    def test_requests_tab_not_appears_for_editor_on_dashboard(self):
+    def test_requests_tab_appears_for_editor_on_dashboard(self):
         app = self._get_test_app()
         editor = factories.User()
         factories.Organization(users=[{'name': editor['name'], 'capacity': 'editor'}])
+        org = factories.Organization(users=[{'name': editor['name'], 'capacity': 'editor'}])
+        context = {'user': editor['name']}
+        data_dict = _create_dataset_dict('test-pending-1', org['id'])
+        helpers.call_action('package_create', context, **data_dict)
 
         extra_environ = {'REMOTE_USER': editor['name'].encode('ascii')}
         resp = app.get(url=url_for('dashboard.requests'), extra_environ=extra_environ)
-        assert '<a href="/dashboard/requests">Pending dataset requests (0)</a>' not in resp
+        assert '<a href="/dashboard/requests">Pending dataset requests (1)</a>' in resp
+
+    def test_requests_tab_not_appears_for_non_creator_editor_on_dashboard(self):
+        app = self._get_test_app()
+        editor = factories.User()
+        editor_2 = factories.User()
+        org = factories.Organization(users=[{'name': editor['name'], 'capacity': 'editor'}])
+        context = {'user': editor['name']}
+        data_dict = _create_dataset_dict('test-pending-1', org['id'])
+        helpers.call_action('package_create', context, **data_dict)
+
+        extra_environ = {'REMOTE_USER': editor_2['name'].encode('ascii')}
+        resp = app.get(url=url_for('dashboard.requests'), extra_environ=extra_environ)
+        assert '<a href="/dashboard/requests">Pending dataset requests (0)</a>' in resp
 
     def test_requests_tab_appears_for_admin_on_dashboard(self):
         app = self._get_test_app()
@@ -170,6 +184,148 @@ class TestController(helpers.FunctionalTestBase):
         extra_environ = {'REMOTE_USER': admin['name'].encode('ascii')}
         resp = app.get(url=url_for('dashboard.requests'), extra_environ=extra_environ)
         assert 'TEST-PENDING-PRIVATE' in resp, resp
+
+
+class TestStateUpdateController(helpers.FunctionalTestBase):
+
+    @classmethod
+    def setup_class(cls):
+
+        helpers.reset_db()
+        super(TestStateUpdateController, cls).setup_class()
+
+    @classmethod
+    def teardown_class(cls):
+        super(TestStateUpdateController, cls).teardown_class()
+        helpers.reset_db()
+
+    def setup(self):
+        super(TestStateUpdateController, self).setup()
+        self.pkg = 'test-dataset-1'
+        helpers.reset_db()
+        rebuild()
+        factories.User(name='george', id='george')
+        factories.User(name='john', id='john')
+        factories.User(name='paul', id='paul')
+        factories.Organization(
+            users=[
+                {'name': 'george', 'capacity': 'admin'},
+                {'name': 'john', 'capacity': 'editor'},
+                {'name': 'paul', 'capacity': 'reader'}
+            ],
+            name='us-ed-1',
+            id='us-ed-1'
+        )
+        # Dataset created by factories seem to use sysadmin so approval_state
+        # forced to be "approved". Creating packages this way to avoid that
+        context = {'user': 'john'}
+        data_dict = _create_dataset_dict(self.pkg, 'us-ed-1')
+        self.package = helpers.call_action('package_create', context, **data_dict)
+
+
+    def test_dataset_reject_403_for_anonimous_users(self):
+        app = self._get_test_app()
+        with assert_raises(toolkit.NotAuthorized) as e:
+            app.get(url=url_for('/dataset-publish/{0}/reject'.format(self.package['id']), status=403))
+
+    def test_dataset_reject_403_for_member(self):
+        app = self._get_test_app()
+        with assert_raises(toolkit.NotAuthorized) as e:
+            extra_environ = {'REMOTE_USER': 'paul'.encode('ascii')}
+            app.get(url=url_for(
+                '/dataset-publish/{0}/reject'.format(self.package['id'])),
+                extra_environ=extra_environ
+            )
+
+    def test_dataset_reject_403_for_editor(self):
+        app = self._get_test_app()
+        with assert_raises(toolkit.NotAuthorized) as e:
+            extra_environ = {'REMOTE_USER': 'john'.encode('ascii')}
+            app.get(url=url_for(
+                '/dataset-publish/{0}/reject'.format(self.package['id'])),
+                extra_environ=extra_environ
+            )
+
+    @mock.patch('ckanext.ed.mailer.mail_user')
+    @mock.patch('ckanext.ed.mailer.render_jinja2')
+    def test_dataset_reject_302_for_admin(self, mock_jinja2, mock_mail_user):
+        app = self._get_test_app()
+        extra_environ = {'REMOTE_USER': 'george'}
+        resp = app.get(url=url_for(
+            '/dataset-publish/{0}/reject'.format(self.package['id'])),
+            extra_environ=extra_environ
+        )
+        assert resp.status_int, 302
+
+    def test_dataset_approve_403_for_anonimous_users(self):
+        app = self._get_test_app()
+        with assert_raises(toolkit.NotAuthorized) as e:
+            app.get(url=url_for('/dataset-publish/{0}/approve'.format(self.package['id']), status=403))
+
+    def test_dataset_approve_403_for_member(self):
+        app = self._get_test_app()
+        with assert_raises(toolkit.NotAuthorized) as e:
+            extra_environ = {'REMOTE_USER': 'paul'.encode('ascii')}
+            app.get(url=url_for(
+                '/dataset-publish/{0}/approve'.format(self.package['id'])),
+                extra_environ=extra_environ
+            )
+
+    def test_dataset_approve_403_for_editor(self):
+        app = self._get_test_app()
+        with assert_raises(toolkit.NotAuthorized) as e:
+            extra_environ = {'REMOTE_USER': 'john'.encode('ascii')}
+            app.get(url=url_for(
+                '/dataset-publish/{0}/approve'.format(self.package['id'])),
+                extra_environ=extra_environ
+            )
+
+    @mock.patch('ckanext.ed.mailer.mail_user')
+    @mock.patch('ckanext.ed.mailer.render_jinja2')
+    def test_dataset_approve_302_for_admin(self, mock_jinja2, mock_mail_user):
+        app = self._get_test_app()
+        extra_environ = {'REMOTE_USER': 'george'}
+        resp = app.get(url=url_for(
+            '/dataset-publish/{0}/approve'.format(self.package['id'])),
+            extra_environ=extra_environ
+        )
+        assert resp.status_int, 302
+
+    def test_dataset_resubmit_403_for_anonimous_users(self):
+        app = self._get_test_app()
+        with assert_raises(toolkit.NotAuthorized) as e:
+            app.get(url=url_for('/dataset-publish/{0}/resubmit'.format(self.package['id']), status=403))
+
+    def test_dataset_resubmit_403_for_member(self):
+        app = self._get_test_app()
+        with assert_raises(toolkit.NotAuthorized) as e:
+            extra_environ = {'REMOTE_USER': 'paul'.encode('ascii')}
+            app.get(url=url_for(
+                '/dataset-publish/{0}/resubmit'.format(self.package['id'])),
+                extra_environ=extra_environ
+            )
+
+    @mock.patch('ckanext.ed.mailer.mail_user')
+    @mock.patch('ckanext.ed.mailer.render_jinja2')
+    def test_dataset_resubmit_302_for_editor(self, mock_jinja2, mock_mail_user):
+        app = self._get_test_app()
+        extra_environ = {'REMOTE_USER': 'john'}
+        resp = app.get(url=url_for(
+            '/dataset-publish/{0}/resubmit'.format(self.package['id'])),
+            extra_environ=extra_environ
+        )
+        assert resp.status_int, 302
+
+    @mock.patch('ckanext.ed.mailer.mail_user')
+    @mock.patch('ckanext.ed.mailer.render_jinja2')
+    def test_dataset_resubmit_302_for_admin(self, mock_jinja2, mock_mail_user):
+        app = self._get_test_app()
+        extra_environ = {'REMOTE_USER': 'george'}
+        resp = app.get(url=url_for(
+            '/dataset-publish/{0}/resubmit'.format(self.package['id'])),
+            extra_environ=extra_environ
+        )
+        assert resp.status_int, 302
 
 
 def _create_dataset_dict(package_name, office_name='us-ed', private=False):

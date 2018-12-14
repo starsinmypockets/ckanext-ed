@@ -1,7 +1,6 @@
 {% extends "user/edit_base.html" %}
 
 {% set user = c.userobj %}
-{% set pending_datasets = h.ed_get_pending_datasets(c.user) %}
 
 {% block breadcrumb_content %}
   <li class="active"><a href="{{ h.url_for('dashboard.index') }}">{{ _('Dashboard') }}</a></li>
@@ -18,7 +17,8 @@
         </div>
         <ul class="nav nav-tabs">
           {{ h.build_nav_icon('dashboard.index', _('News feed')) }}
-          {% if h.ed_is_admin(c.user) %}
+          {% if h.ed_is_admin(c.user) or h.check_access('package_create', {'user': c.user}) %}
+            {% set pending_datasets = h.ed_get_pending_datasets(c.userobj.id, not h.ed_is_admin(c.user)) %}
             {% set tab_name = 'Pending dataset requests (%s)'|format(pending_datasets|length) %}
             {{ h.build_nav_icon('dashboard.requests', _(tab_name)) }}
           {% endif %}

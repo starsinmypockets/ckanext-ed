@@ -2,26 +2,27 @@ import os
 import logging
 
 from ckan import model
-from ckan.common import g, response
+from ckan.common import g, _, response
 from ckan.lib import base
 from ckan.plugins import toolkit
 from ckan.views.user import _extra_template_variables
 
-from ckanext.ed.helpers import get_storage_path_for, get_pending_datasets
-from ckanext.ed.mailer import mail_package_publish_update_to_user
+from ckanext.ed.helpers import get_storage_path_for, get_pending_datasets, is_admin
+from ckanext.ed.mailer import mail_package_publish_update_to_user, mail_package_publish_request_to_admins
 
 log = logging.getLogger(__name__)
 
 
 class PendingRequestsController(base.BaseController):
     def list_requests(self):
-        pending_dataset = get_pending_datasets(toolkit.c.user)
+        if not toolkit.c.userobj:
+            base.abort(403, _('Not authorized to see this page'))
+        is_editor = not is_admin(toolkit.c.user)
+        pending_dataset = get_pending_datasets(toolkit.c.userobj.id, is_editor)
         context = {
             u'for_view': True, u'user': g.user, u'auth_user_obj': g.userobj}
         data_dict = {u'user_obj': g.userobj, u'include_datasets': True}
         extra_vars = _extra_template_variables(context, data_dict)
-        if extra_vars is None:
-            raise toolkit.NotAuthorized
         extra_vars['pending_dataset'] = pending_dataset
         return base.render(u'user/dashboard_requests.html', extra_vars)
 
@@ -48,7 +49,7 @@ class DownloadController(base.BaseController):
         os.remove(file_path)
 
 
-class ApproveRejectController(base.BaseController):
+class StateUpdateController(base.BaseController):
     def approve(self, id):
         _make_action(id, 'approve')
 
@@ -57,34 +58,67 @@ class ApproveRejectController(base.BaseController):
             'feedback', 'No feedback provided')
         _make_action(id, 'reject', feedback=feedback)
 
+    def resubmit(self, id):
+        _make_action(id, 'resubmit')
 
-def _raise_not_authz_or_not_pending(id):
-    toolkit.check_access(
-        'package_delete', {'model': model, 'user': toolkit.c.user}, {'id': id})
-    # check approval_state is pending
-    data_dict = toolkit.get_action('package_show')({}, {'id': id})
-    if data_dict.get('approval_state') != 'approval_pending':
-        raise toolkit.ObjectNotFound('Dataset "{}" not found'.format(id))
+
+def _raise_not_authz(id, action='reject'):
+    if action == 'resubmit':
+        toolkit.check_access(
+            'package_update', {
+                'model': model, 'user': toolkit.c.user}, {'id': id})
+    else:
+        # Check user is admin of the org pakcage is created for
+        try:
+            package_dict = toolkit.get_action('package_show')(
+                {'model': model, 'user': toolkit.c.user}, {'id': id}
+            )
+        except toolkit.ObjectNotFound:
+            # We don't need ObjectNotFound here
+            raise toolkit.NotAuthorized
+
+        is_admin_ = is_admin(toolkit.c.user, package_dict['owner_org'])
+        if not is_admin_:
+            raise toolkit.NotAuthorized
 
 
 def _make_action(package_id, action='reject', feedback=None):
-    states = {
-        'reject': 'rejected',
-        'approve': 'approved'
+    action_props = {
+        'reject': {
+            'state': 'rejected',
+            'message': 'Dataset "{0}" rejected',
+            'event': 'rejection',
+            'mail_func': mail_package_publish_update_to_user,
+            'flash_func': toolkit.h.flash_error
+        },
+        'approve': {
+            'state': 'approved',
+            'message': 'Dataset "{0}" approved',
+            'event': 'approval',
+            'mail_func': mail_package_publish_update_to_user,
+            'flash_func': toolkit.h.flash_success
+        },
+        'resubmit': {
+            'state': 'approval_pending',
+            'message': 'Dataset "{0}" submitted',
+            'event': 'request',
+            'mail_func': mail_package_publish_request_to_admins,
+            'flash_func': toolkit.h.flash_success
+        }
     }
     # check access and state
-    _raise_not_authz_or_not_pending(package_id)
-    data_dict = toolkit.get_action('package_patch')(
-        {'model': model, 'user': toolkit.c.user},
-        {'id': package_id, 'approval_state': states[action]}
+    _raise_not_authz(package_id, action=action)
+    context = {'model': model, 'user': toolkit.c.user}
+    data_dict = toolkit.get_action('package_patch')(context,
+        {'id': package_id, 'approval_state': action_props[action]['state']}
     )
-    msg = 'Dataset "{0}" {1}'.format(data_dict['title'], states[action])
-    if action == 'approve':
-        mail_package_publish_update_to_user({}, data_dict, event='approval')
-        toolkit.h.flash_success(msg)
-    else:
-        mail_package_publish_update_to_user(
-            {}, data_dict, event='rejection', feedback=feedback)
-        toolkit.h.flash_error(msg)
+    action_props[action]['mail_func'](
+        context,
+        data_dict,
+        event=action_props[action]['event'],
+        feedback=feedback
+    )
+    action_props[action]['flash_func'](
+        action_props[action]['message'].format(data_dict['title']))
     toolkit.redirect_to(
         controller='package', action='read', id=data_dict['name'])

@@ -41,7 +41,7 @@ class EDPlugin(plugins.SingletonPlugin, DefaultTranslation):
             return search_params
 
         search_params.update({
-            'fq': '!(approval_state:approval_pending) ' + search_params.get('fq', '')
+            'fq': '!(approval_state:approval_pending OR approval_state:rejected) ' + search_params.get('fq', '')
         })
         return search_params
 
@@ -53,7 +53,7 @@ class EDPlugin(plugins.SingletonPlugin, DefaultTranslation):
 
     # IRoutes
     def before_map(self, map):
-        publish_controller = 'ckanext.ed.controller:ApproveRejectController'
+        publish_controller = 'ckanext.ed.controller:StateUpdateController'
         map.connect('dashboard.requests', '/dashboard/requests',
                     controller='ckanext.ed.controller:PendingRequestsController',
                     action='list_requests')
@@ -63,6 +63,9 @@ class EDPlugin(plugins.SingletonPlugin, DefaultTranslation):
         map.connect('/dataset-publish/{id}/reject',
                     controller=publish_controller,
                     action='reject')
+        map.connect('/dataset-publish/{id}/resubmit',
+                    controller=publish_controller,
+                    action='resubmit')
         map.connect(
             'download_zip',
             '/download/zip/{zip_id}',

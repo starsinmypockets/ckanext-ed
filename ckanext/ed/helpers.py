@@ -116,7 +116,7 @@ def is_admin(user, office=None):
     :param user: user name
     :type user: string
     :param office: office id
-    :type user: string
+    :type office: string
 
     :returns: True/False
     :rtype: boolean
@@ -129,18 +129,36 @@ def is_admin(user, office=None):
     return any([i.get('capacity') == 'admin' for i in user_orgs])
 
 
-def get_pending_datasets(user):
+def get_pending_datasets(user, include_rejected=False):
+    """
+    Returns List of datasets requested for approval.
+    Includes rejecred datasets if include_rejected is set to True.
+
+    :param user: username
+    :type user: string
+    :include_rejected: Flag to include rejecte datasets or not
+    :type include_rejected: boolean
+
+    :returns: List of matching datasets
+    :rtype: list
+    """
+    role = 'editor' if include_rejected else 'admin'
     user_orgs = _get_action(
-        'organization_list_for_user', {'user': user}, {'user': user})
-    admin_org_id = [
-        'owner_org:' + i['id'] for i in user_orgs if i.get('capacity') == 'admin'
+        'organization_list_for_user', {'id': user}, {'id': user})
+    user_org_pemrs = [
+        'owner_org:' + i['id'] for i in user_orgs if i.get('capacity') == role
     ]
-    admin_fq_string = ''
-    if len(admin_org_id):
-        admin_fq_string = 'AND (%s)' % ' OR '.join(admin_org_id)
+    fq_string = '(approval_state:approval_pending{0}){1}{2}'.format(
+        # Include rejected datasets if needed
+        ' OR approval_state:rejected' if include_rejected else '',
+        # Filter datasets by orgs user is admin of
+        ' AND (%s)' % ' OR '.join(user_org_pemrs) if len(user_org_pemrs) else '',
+        # Filter datasets not belonging to ediotr
+        ' AND creator_user_id:%s' % (user) if include_rejected else ''
+    )
     pending_dataset = toolkit.get_action('package_search')(
         data_dict={
-            'fq': 'approval_state:approval_pending %s' % admin_fq_string,
+            'fq': fq_string,
             'include_private': True,
             'extras': {'from_dashboard': True},
         })['results']

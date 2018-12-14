@@ -10,7 +10,8 @@ from ckan.logic.action.get import member_list as core_member_list
 log = logging.getLogger(__name__)
 
 
-def mail_package_publish_request_to_admins(context, data_dict):
+def mail_package_publish_request_to_admins(
+                        context, data_dict, event='approval', feedback=None):
     members = core_member_list(
         context=context,
         data_dict={'id': data_dict.get('owner_org')}
@@ -26,7 +27,8 @@ def mail_package_publish_request_to_admins(context, data_dict):
             log.debug('[email] Pakcage publishing request email sent to {0}'.format(user.name))
 
 
-def mail_package_publish_update_to_user(context, pkg_dict, event='approval', feedback=None):
+def mail_package_publish_update_to_user(
+                            context, pkg_dict, event='approval', feedback=None):
     context.setdefault('model', model)
     user = model.User.get(pkg_dict['creator_user_id'])
     if user and user.email:

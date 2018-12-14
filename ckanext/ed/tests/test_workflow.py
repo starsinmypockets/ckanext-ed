@@ -1,5 +1,6 @@
 from nose.tools import assert_raises, assert_equals
 
+from ckan import model
 from ckan.lib.search import rebuild
 from ckan.tests import factories as core_factories
 from ckan.tests import helpers as test_helpers
@@ -32,12 +33,12 @@ class TestWorFlows(FunctionalTestBase):
         # forced to be "approved". Creating packages this way to avoid that
         context = {'user': 'john'}
         data_dict = _create_dataset_dict(self.pkg_1, 'us-ed-1')
-        call_action('package_create', context, **data_dict)
+        self.package_approved = call_action('package_create', context, **data_dict)
 
         # 1 datasets above "approveal_pending" and 1 below "approved"
         context = {'user': 'george'}
         data_dict = _create_dataset_dict(self.pkg_2, 'us-ed-1')
-        call_action('package_create', context, **data_dict)
+        self.package_pending = call_action('package_create', context, **data_dict)
 
 
     @classmethod
@@ -64,6 +65,46 @@ class TestWorFlows(FunctionalTestBase):
         context = {'user': 'ringo'}
         packages = call_action('package_search', context, **{})
         assert_equals(packages['count'], 1)
+
+    def test_dataset_not_appears_in_search_if_rejected_admin(self):
+        call_action(
+            'package_patch',
+            {'model': model, 'user': 'george'},
+            **{'id': self.package_pending['id'], 'approval_state': 'rejected'}
+        )
+        context = {'user': 'george'}
+        packages = call_action('package_search', context, **{})
+        assert_equals(packages['count'], 0)
+
+    def test_dataset_not_appears_in_search_if_rejected_editor(self):
+        call_action(
+            'package_patch',
+            {'model': model, 'user': 'george'},
+            **{'id': self.package_pending['id'], 'approval_state': 'rejected'}
+        )
+        context = {'user': 'john'}
+        packages = call_action('package_search', context, **{})
+        assert_equals(packages['count'], 0)
+
+    def test_dataset_not_appears_in_search_if_rejected_reder(self):
+        call_action(
+            'package_patch',
+            {'model': model, 'user': 'george'},
+            **{'id': self.package_pending['id'], 'approval_state': 'rejected'}
+        )
+        context = {'user': 'paul'}
+        packages = call_action('package_search', context, **{})
+        assert_equals(packages['count'], 0)
+
+    def test_dataset_not_appears_in_search_if_rejected_aninimous(self):
+        call_action(
+            'package_patch',
+            {'model': model, 'user': 'george'},
+            **{'id': self.package_pending['id'], 'approval_state': 'rejected'}
+        )
+        context = {'user': 'ringo'}
+        packages = call_action('package_search', context, **{})
+        assert_equals(packages['count'], 0)
 
     def test_package_show_admin_can_see_both(self):
         context = {'user': 'george'}
