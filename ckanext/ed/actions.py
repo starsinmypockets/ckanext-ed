@@ -8,6 +8,7 @@ from ckan.controllers.admin import get_sysadmins
 from ckan.lib.mailer import MailerException
 from ckan.logic.action.create import package_create as core_package_create
 from ckan.logic.action.get import package_show as core_package_show
+from ckan.logic.action.get import package_activity_list as core_package_activity_list
 from ckan.plugins import toolkit
 
 from ckanext.ed import helpers
@@ -163,9 +164,23 @@ def package_show(context, data_dict):
 def package_create(context, data_dict):
     dataset_dict = core_package_create(context, data_dict)
     if dataset_dict.get('approval_state') == 'approval_pending':
+        helpers.workflow_activity_create('submitted_for_review',
+                                    dataset_dict['id'], dataset_dict['name'])
         try:
             mail_package_publish_request_to_admins(context, dataset_dict)
         except MailerException:
             message = '[email] Package Publishing request is not sent: {0}'
             log.critical(message.format(data_dict.get('title')))
     return dataset_dict
+
+
+@toolkit.side_effect_free
+def package_activity_list(context, data_dict):
+    get_workflow_activities = data_dict.get('get_workflow_activities')
+    full_list = core_package_activity_list(context, data_dict)
+    workflow_activities = [
+        a for a in full_list if 'workflow_activity' in a.get('data', {})]
+    normal_activities = [
+        a for a in full_list if 'workflow_activity' not in a.get('data', {})]
+    return (workflow_activities
+        if get_workflow_activities else normal_activities)

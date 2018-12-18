@@ -1,3 +1,4 @@
+from ckan.lib.activity_streams import activity_stream_string_functions
 from ckan.lib.plugins import DefaultTranslation
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
@@ -30,7 +31,8 @@ class EDPlugin(plugins.SingletonPlugin, DefaultTranslation):
         return {
             'ed_prepare_zip_resources': actions.prepare_zip_resources,
             'package_create': actions.package_create,
-            'package_show': actions.package_show
+            'package_show': actions.package_show,
+            'package_activity_list': actions.package_activity_list
         }
 
     # IPackageController
@@ -51,9 +53,15 @@ class EDPlugin(plugins.SingletonPlugin, DefaultTranslation):
         toolkit.add_public_directory(config_, 'public')
         toolkit.add_resource('fanstatic', 'ed')
 
+        activity_stream_string_functions['changed package'] = helpers.custom_activity_renderer
+
+
     # IRoutes
     def before_map(self, map):
         publish_controller = 'ckanext.ed.controller:StateUpdateController'
+        map.connect('dataset.workflow', '/dataset/workflow/{id}',
+                    controller='ckanext.ed.controller:WorkflowActivityStreamController',
+                    action='list_activities')
         map.connect('dashboard.requests', '/dashboard/requests',
                     controller='ckanext.ed.controller:PendingRequestsController',
                     action='list_requests')

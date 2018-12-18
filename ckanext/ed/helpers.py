@@ -163,3 +163,36 @@ def get_pending_datasets(user, include_rejected=False):
             'extras': {'from_dashboard': True},
         })['results']
     return pending_dataset
+
+
+def workflow_activity_create(activity, dataset_id, dataset_name):
+    activity_context = {'ignore_auth': True}
+    data_dict = {
+        'user_id': toolkit.c.user,
+        'object_id': dataset_id,
+        'activity_type': 'changed package',
+        'data': {
+            'workflow_activity': activity,
+            'package': {'name': dataset_name, 'id': dataset_id}
+        }
+    }
+    toolkit.get_action('activity_create')(activity_context, data_dict)
+
+
+def custom_activity_renderer(context, activity):
+    if 'workflow_activity' not in activity.get('data', {}):
+        # Default core one
+        return toolkit._("{actor} updated the dataset {dataset}")
+
+    activity = activity['data']['workflow_activity']
+
+    if activity == 'submitted_for_review':
+        return toolkit._("{actor} requested a review for new dataset {dataset}")
+    elif activity == 'resubmitted_for_review':
+        return toolkit._("{actor} made changes and requested a review for dataset {dataset}")
+    elif activity == 'dataset_approved':
+        return toolkit._("{actor} approved dataset {dataset} for publication")
+    elif activity == 'dataset_rejected':
+        return toolkit._("{actor} rejected dataset {dataset} for publication")
+
+    return toolkit._("{actor} updated the dataset {dataset}")

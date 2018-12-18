@@ -4,13 +4,39 @@ import logging
 from ckan import model
 from ckan.common import g, _, response
 from ckan.lib import base
+from ckan.logic import NotFound
 from ckan.plugins import toolkit
 from ckan.views.user import _extra_template_variables
 
-from ckanext.ed.helpers import get_storage_path_for, get_pending_datasets, is_admin
+from ckanext.ed.helpers import get_storage_path_for, get_pending_datasets, is_admin, workflow_activity_create
 from ckanext.ed.mailer import mail_package_publish_update_to_user, mail_package_publish_request_to_admins
 
-log = logging.getLogger(__name__)
+
+class WorkflowActivityStreamController(base.BaseController):
+    def list_activities(self, id):
+        '''Render package's workflow activity stream page.'''
+
+        context = {
+            'model': model, 'session': model.Session, 'user': toolkit.c.user,
+            'for_view': True,'auth_user_obj': toolkit.c.userobj
+        }
+        data_dict = {'id': id}
+        try:
+            toolkit.c.pkg_dict = toolkit.get_action('package_show')(context, data_dict)
+            toolkit.c.pkg = context['package']
+            toolkit.c.package_activity_stream = toolkit.get_action(
+                'package_activity_list_html')(
+                context, {
+                    'id': toolkit.c.pkg_dict['id'],
+                    'get_workflow_activities': True
+                })
+            dataset_type = toolkit.c.pkg_dict['type'] or 'dataset'
+        except NotFound:
+            base.abort(404, _('Dataset not found'))
+        except toolkit.NotAuthorized:
+            base.abort(403, _('Unauthorized to read dataset %s') % id)
+
+        return base.render('package/activity.html', {'dataset_type': dataset_type})
 
 
 class PendingRequestsController(base.BaseController):
@@ -89,21 +115,24 @@ def _make_action(package_id, action='reject', feedback=None):
             'message': 'Dataset "{0}" rejected',
             'event': 'rejection',
             'mail_func': mail_package_publish_update_to_user,
-            'flash_func': toolkit.h.flash_error
+            'flash_func': toolkit.h.flash_error,
+            'activity': 'dataset_rejected'
         },
         'approve': {
             'state': 'approved',
             'message': 'Dataset "{0}" approved',
             'event': 'approval',
             'mail_func': mail_package_publish_update_to_user,
-            'flash_func': toolkit.h.flash_success
+            'flash_func': toolkit.h.flash_success,
+            'activity': 'dataset_approved'
         },
         'resubmit': {
             'state': 'approval_pending',
             'message': 'Dataset "{0}" submitted',
             'event': 'request',
             'mail_func': mail_package_publish_request_to_admins,
-            'flash_func': toolkit.h.flash_success
+            'flash_func': toolkit.h.flash_success,
+            'activity': 'resubmitted_for_review'
         }
     }
     # check access and state
@@ -120,5 +149,7 @@ def _make_action(package_id, action='reject', feedback=None):
     )
     action_props[action]['flash_func'](
         action_props[action]['message'].format(data_dict['title']))
+    workflow_activity_create(action_props[action]['activity'],
+                                            data_dict['id'], data_dict['name'])
     toolkit.redirect_to(
         controller='package', action='read', id=data_dict['name'])
