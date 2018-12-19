@@ -149,7 +149,12 @@ def _make_action(package_id, action='reject', feedback=None):
     )
     action_props[action]['flash_func'](
         action_props[action]['message'].format(data_dict['title']))
-    workflow_activity_create(action_props[action]['activity'],
-                                            data_dict['id'], data_dict['name'])
+    workflow_activity_create(
+        activity=action_props[action]['activity'],
+        dataset_id=data_dict['id'],
+        dataset_name=data_dict['name'],
+        user=toolkit.c.user,
+        feedback=feedback
+    )
     toolkit.redirect_to(
         controller='package', action='read', id=data_dict['name'])

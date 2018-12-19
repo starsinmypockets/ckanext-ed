@@ -165,7 +165,7 @@ def package_create(context, data_dict):
     dataset_dict = core_package_create(context, data_dict)
     if dataset_dict.get('approval_state') == 'approval_pending':
         helpers.workflow_activity_create('submitted_for_review',
-                                    dataset_dict['id'], dataset_dict['name'])
+                dataset_dict['id'], dataset_dict['name'], context.get('user'))
         try:
             mail_package_publish_request_to_admins(context, dataset_dict)
         except MailerException:

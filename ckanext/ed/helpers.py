@@ -165,15 +165,17 @@ def get_pending_datasets(user, include_rejected=False):
     return pending_dataset
 
 
-def workflow_activity_create(activity, dataset_id, dataset_name):
+def workflow_activity_create(
+                    activity, dataset_id, dataset_name, user, feedback=None):
     activity_context = {'ignore_auth': True}
     data_dict = {
-        'user_id': toolkit.c.user,
+        'user_id': user,
         'object_id': dataset_id,
         'activity_type': 'changed package',
         'data': {
             'workflow_activity': activity,
-            'package': {'name': dataset_name, 'id': dataset_id}
+            'package': {'name': dataset_name, 'id': dataset_id},
+            'feedback': feedback
         }
     }
     toolkit.get_action('activity_create')(activity_context, data_dict)
