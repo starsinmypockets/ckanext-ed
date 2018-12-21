@@ -9,15 +9,27 @@
   {{ super() }}
 
   {% if c.pkg_dict.approval_state  == 'approval_pending' %}
-    <div class="alert alert-warning" role="alert">
+    <div class="review alert alert-warning" role="alert">
       <p>{% trans %}This dataset is waiting for an administrator approval.{% endtrans %}</p>
       {% if h.ed_is_admin(c.user, c.pkg_dict.owner_org) %}
-      {# TODO: remove style #}
-      <div style="margin-top: 10px">
-        <a href="/dataset-publish/{{ c.pkg_dict.id }}/approve" class="btn btn-primary">
-          {% trans %}Approve Dataset{% endtrans %}
+      <div>
+        {% if c.pkg_dict.private %}
+          <p>{% trans %}Note: The publisher marked this dataset as private.{% endtrans %}</p>
+          <a href="/dataset-publish/{{ c.pkg_dict.id }}/approve" class="btn btn-primary">
+            {% trans %}Approve and keep private{% endtrans %}
+          </a>
+          <a href="/dataset-publish/{{ c.pkg_dict.id }}/approve?make_public=true" class="btn btn-primary">
+            {% trans %}Approve and make public{% endtrans %}
+          </a>
+        {% else %}
+          <p>{% trans %}Note: The publisher marked this dataset as public.{% endtrans %}</p>
+          <a href="/dataset-publish/{{ c.pkg_dict.id }}/approve" class="btn btn-primary">
+            {% trans %}Approve Dataset{% endtrans %}
+          </a>
+        {% endif %}
+        <a class="btn btn-danger" href="/dataset-publish/{{ c.pkg_dict.id }}/reject" data-module="reject" data-module-content="{{ _('Please provide some feedback for the editor:') }} ">
+          {{ _('Reject Dataset') }}
         </a>
-        <a class="btn btn-danger" href="/dataset-publish/{{ c.pkg_dict.id }}/reject" data-module="reject" data-module-content="{{ _('Please provide some feedback for the editor:') }} ">{{ _('Reject Dataset') }}</a>
       </div>
       {% endif %}
 
