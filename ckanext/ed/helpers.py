@@ -203,3 +203,19 @@ def custom_activity_renderer(context, activity):
             return toolkit._("{actor} rejected dataset {dataset} for publication")
 
     return toolkit._("{actor} updated the dataset {dataset}")
+
+
+def get_latest_rejection_feedback(pkg_id):
+    context = {'ignore_auth': True}
+    data_dict = {
+        'id': pkg_id,
+        'get_workflow_activities': True
+    }
+
+    activities = toolkit.get_action('package_activity_list')(
+        context, data_dict)
+
+    for activity in activities:
+        if (activity['data']['workflow_activity'] == 'dataset_rejected' and
+                activity['data'].get('feedback')):
+            return activity['data']['feedback']

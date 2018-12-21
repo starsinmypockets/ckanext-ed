@@ -24,8 +24,16 @@
     </div>
   {% elif c.pkg_dict.approval_state  == 'rejected' %}
     {% if not h.ed_is_admin(c.user)%}
-    <div class="alert alert-warning" role="alert">
-      <p>{% trans %}This dataset request was rejected by an administrator. Please update it and resubmit for approval or delete it.{% endtrans %}</p>
+    <div class="review alert alert-warning" role="alert">
+      <p>{% trans %}This dataset request was rejected by an administrator. {% endtrans %}</p>
+      {% set feedback = h.ed_get_latest_rejection_feedback(c.pkg_dict.id) %}
+      {% if feedback %}
+        <p>{% trans %}The following feedback was provided: {% endtrans %}</p>
+        <div class="feedback">
+            <p>{{ feedback }}<p>
+        </div>
+      {% endif %}
+      <p>{% trans %}Please update it and resubmit for approval or delete it.{% endtrans %}</p>
       <div style="margin-top: 10px">
         <a class="btn btn-primary" href="/dataset-publish/{{ c.pkg_dict.id }}/resubmit">Resubmit</a>
         <a class="btn btn-danger" href="{% url_for controller='package', action='delete', id=c.pkg_dict.id %}" data-module="confirm-action" data-module-content="{{ _('Are you sure you want to delete this dataset?') }}">{% block delete_button_text %}{{ _('Delete') }}{% endblock %}</a>

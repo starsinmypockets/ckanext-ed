@@ -24,6 +24,7 @@ class EDPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'ed_get_most_popular_datasets': helpers.get_most_popular_datasets,
             'ed_get_total_views_for_dataset': helpers.get_total_views_for_dataset,
             'ed_get_pending_datasets': helpers.get_pending_datasets,
+            'ed_get_latest_rejection_feedback': helpers.get_latest_rejection_feedback,
         }
 
     # IActions
