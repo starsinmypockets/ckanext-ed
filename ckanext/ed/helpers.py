@@ -186,15 +186,20 @@ def custom_activity_renderer(context, activity):
         # Default core one
         return toolkit._("{actor} updated the dataset {dataset}")
 
-    activity = activity['data']['workflow_activity']
+    activity_name = activity['data']['workflow_activity']
 
-    if activity == 'submitted_for_review':
+    if activity_name == 'submitted_for_review':
         return toolkit._("{actor} requested a review for new dataset {dataset}")
-    elif activity == 'resubmitted_for_review':
+    elif activity_name == 'resubmitted_for_review':
         return toolkit._("{actor} made changes and requested a review for dataset {dataset}")
-    elif activity == 'dataset_approved':
+    elif activity_name == 'dataset_approved':
         return toolkit._("{actor} approved dataset {dataset} for publication")
-    elif activity == 'dataset_rejected':
-        return toolkit._("{actor} rejected dataset {dataset} for publication")
+    elif activity_name == 'dataset_rejected':
+        if activity['data'].get('feedback'):
+            return toolkit._(
+                "{actor} rejected dataset {dataset} for publication " +
+                "with the following feedback: %s" % activity['data']['feedback'])
+        else:
+            return toolkit._("{actor} rejected dataset {dataset} for publication")
 
     return toolkit._("{actor} updated the dataset {dataset}")
