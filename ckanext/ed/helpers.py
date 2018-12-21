@@ -163,3 +163,59 @@ def get_pending_datasets(user, include_rejected=False):
             'extras': {'from_dashboard': True},
         })['results']
     return pending_dataset
+
+
+def workflow_activity_create(
+                    activity, dataset_id, dataset_name, user, feedback=None):
+    activity_context = {'ignore_auth': True}
+    data_dict = {
+        'user_id': user,
+        'object_id': dataset_id,
+        'activity_type': 'changed package',
+        'data': {
+            'workflow_activity': activity,
+            'package': {'name': dataset_name, 'id': dataset_id},
+            'feedback': feedback
+        }
+    }
+    toolkit.get_action('activity_create')(activity_context, data_dict)
+
+
+def custom_activity_renderer(context, activity):
+    if 'workflow_activity' not in activity.get('data', {}):
+        # Default core one
+        return toolkit._("{actor} updated the dataset {dataset}")
+
+    activity_name = activity['data']['workflow_activity']
+
+    if activity_name == 'submitted_for_review':
+        return toolkit._("{actor} requested a review for new dataset {dataset}")
+    elif activity_name == 'resubmitted_for_review':
+        return toolkit._("{actor} made changes and requested a review for dataset {dataset}")
+    elif activity_name == 'dataset_approved':
+        return toolkit._("{actor} approved dataset {dataset} for publication")
+    elif activity_name == 'dataset_rejected':
+        if activity['data'].get('feedback'):
+            return toolkit._(
+                "{actor} rejected dataset {dataset} for publication " +
+                "with the following feedback: %s" % activity['data']['feedback'])
+        else:
+            return toolkit._("{actor} rejected dataset {dataset} for publication")
+
+    return toolkit._("{actor} updated the dataset {dataset}")
+
+
+def get_latest_rejection_feedback(pkg_id):
+    context = {'ignore_auth': True}
+    data_dict = {
+        'id': pkg_id,
+        'get_workflow_activities': True
+    }
+
+    activities = toolkit.get_action('package_activity_list')(
+        context, data_dict)
+
+    for activity in activities:
+        if (activity['data']['workflow_activity'] == 'dataset_rejected' and
+                activity['data'].get('feedback')):
+            return activity['data']['feedback']

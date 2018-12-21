@@ -4,6 +4,7 @@ from nose.tools import assert_raises
 
 from ckan.lib.helpers import url_for
 from ckan.lib.search import rebuild
+from ckan.logic import NotFound
 from ckan.plugins import toolkit
 from ckan.tests import helpers, factories
 
@@ -23,7 +24,6 @@ class TestPendingRequestsController(helpers.FunctionalTestBase):
     def setup(self):
         super(TestPendingRequestsController, self).setup()
         sysadmin = factories.Sysadmin()
-        self.extra_environ = {'REMOTE_USER': sysadmin['name'].encode('ascii')}
 
 
     def test_requests_tab_not_appears_for_member_on_dashboard(self):
@@ -342,6 +342,180 @@ class TestStateUpdateController(helpers.FunctionalTestBase):
         )
         assert resp.status_int, 302
 
+
+class TestWorkflowActivityStream(helpers.FunctionalTestBase):
+
+    @classmethod
+    def setup_class(cls):
+
+        helpers.reset_db()
+        super(TestWorkflowActivityStream, cls).setup_class()
+
+    @classmethod
+    def teardown_class(cls):
+        super(TestWorkflowActivityStream, cls).teardown_class()
+        helpers.reset_db()
+
+    def setup(self):
+        super(TestWorkflowActivityStream, self).setup()
+        self.pkg = 'test-dataset-1'
+        helpers.reset_db()
+        rebuild()
+        factories.User(name='george', id='george')
+        factories.User(name='john', id='john')
+        factories.User(name='paul', id='paul')
+        factories.Organization(
+            users=[
+                {'name': 'george', 'capacity': 'admin'},
+                {'name': 'john', 'capacity': 'editor'},
+                {'name': 'paul', 'capacity': 'reader'}
+            ],
+            name='us-ed-1',
+            id='us-ed-1'
+        )
+        # Dataset created by factories seem to use sysadmin so approval_state
+        # forced to be "approved". Creating packages this way to avoid that
+        context = {'user': 'john'}
+        data_dict = _create_dataset_dict(self.pkg, 'us-ed-1')
+        self.package = helpers.call_action('package_create', context, **data_dict)
+
+
+    @mock.patch('ckanext.ed.mailer.mail_user')
+    @mock.patch('ckanext.ed.mailer.render_jinja2')
+    def test_dataset_workflow_tab_admin_can_see(self, mock_jinja2, mock_mail_user):
+        app = self._get_test_app()
+        extra_environ = {'REMOTE_USER': 'george'}
+        resp = app.get(url=url_for(
+            '/dataset/workflow/{0}?id={1}'.format(self.package['name'], self.package['id']),
+        ),extra_environ=extra_environ)
+        assert 'Workflow Activity' in resp
+
+    @mock.patch('ckanext.ed.mailer.mail_user')
+    @mock.patch('ckanext.ed.mailer.render_jinja2')
+    def test_dataset_workflow_tab_editor_can_see(self, mock_jinja2, mock_mail_user):
+        app = self._get_test_app()
+        extra_environ = {'REMOTE_USER': 'john'}
+        resp = app.get(url=url_for(
+            '/dataset/workflow/{0}?id={1}'.format(self.package['name'], self.package['id']),
+        ),extra_environ=extra_environ)
+        assert 'Workflow Activity' in resp
+
+    @mock.patch('ckanext.ed.mailer.mail_user')
+    @mock.patch('ckanext.ed.mailer.render_jinja2')
+    def test_dataset_admin_can_see_submitted_for_review_in_activity_stream(self, mock_jinja2, mock_mail_user):
+        app = self._get_test_app()
+        extra_environ = {'REMOTE_USER': 'george'}
+        resp = app.get(url=url_for(
+            '/dataset/workflow/{0}?id={1}'.format(self.package['name'], self.package['id']),
+        ),extra_environ=extra_environ)
+        exp = 'requested a review for new dataset <span><a href="/dataset/{0}">{0}</a></span>'
+        assert exp.format(self.package['name']) in resp, resp
+
+    @mock.patch('ckanext.ed.mailer.mail_user')
+    @mock.patch('ckanext.ed.mailer.render_jinja2')
+    def test_dataset_editor_can_see_submitted_for_review_in_activity_stream(self, mock_jinja2, mock_mail_user):
+        app = self._get_test_app()
+        extra_environ = {'REMOTE_USER': 'john'}
+        resp = app.get(url=url_for(
+            '/dataset/workflow/{0}?id={1}'.format(self.package['name'], self.package['id']),
+        ),extra_environ=extra_environ)
+        exp = 'requested a review for new dataset <span><a href="/dataset/{0}">{0}</a></span>'
+        assert exp.format(self.package['name']) in resp
+
+    @mock.patch('ckanext.ed.mailer.mail_user')
+    @mock.patch('ckanext.ed.mailer.render_jinja2')
+    def test_dataset_admin_can_see_approved_in_activity_stream(self, mock_jinja2, mock_mail_user):
+        app = self._get_test_app()
+        extra_environ = {'REMOTE_USER': 'george'}
+        app.get(url=url_for(
+                    '/dataset-publish/{0}/approve'.format(self.package['id'])),
+                    extra_environ=extra_environ)
+        resp = app.get(url=url_for(
+            '/dataset/workflow/{0}?id={1}'.format(self.package['name'], self.package['id']),
+        ),extra_environ=extra_environ)
+        exp = 'approved dataset <span><a href="/dataset/{0}">{0}</a></span> for publication'
+        assert exp.format(self.package['name']) in resp, resp
+
+    @mock.patch('ckanext.ed.mailer.mail_user')
+    @mock.patch('ckanext.ed.mailer.render_jinja2')
+    def test_dataset_editor_can_see_approved_in_activity_stream(self, mock_jinja2, mock_mail_user):
+        app = self._get_test_app()
+        extra_environ = {'REMOTE_USER': 'george'}
+        app.get(url=url_for(
+                    '/dataset-publish/{0}/approve'.format(self.package['id'])),
+                    extra_environ=extra_environ)
+        extra_environ = {'REMOTE_USER': 'john'}
+        resp = app.get(url=url_for(
+            '/dataset/workflow/{0}?id={1}'.format(self.package['name'], self.package['id']),
+        ),extra_environ=extra_environ)
+        exp = 'approved dataset <span><a href="/dataset/{0}">{0}</a></span> for publication'
+        assert exp.format(self.package['name']) in resp
+
+    @mock.patch('ckanext.ed.mailer.mail_user')
+    @mock.patch('ckanext.ed.mailer.render_jinja2')
+    def test_dataset_admin_can_see_rejected_in_activity_stream(self, mock_jinja2, mock_mail_user):
+        app = self._get_test_app()
+        extra_environ = {'REMOTE_USER': 'george'}
+        app.get(url=url_for(
+                    '/dataset-publish/{0}/reject'.format(self.package['id'])),
+                    extra_environ=extra_environ)
+        resp = app.get(url=url_for(
+            '/dataset/workflow/{0}?id={1}'.format(self.package['name'], self.package['id']),
+        ),extra_environ=extra_environ)
+        exp = 'rejected dataset <span><a href="/dataset/{0}">{0}</a></span> for publication'
+        assert exp.format(self.package['name']) in resp, resp
+
+    @mock.patch('ckanext.ed.mailer.mail_user')
+    @mock.patch('ckanext.ed.mailer.render_jinja2')
+    def test_dataset_editor_can_see_rejected_in_activity_stream(self, mock_jinja2, mock_mail_user):
+        app = self._get_test_app()
+        extra_environ = {'REMOTE_USER': 'george'}
+        app.get(url=url_for(
+                    '/dataset-publish/{0}/reject'.format(self.package['id'])),
+                    extra_environ=extra_environ)
+        extra_environ = {'REMOTE_USER': 'john'}
+        resp = app.get(url=url_for(
+            '/dataset/workflow/{0}?id={1}'.format(self.package['name'], self.package['id']),
+        ),extra_environ=extra_environ)
+        exp = 'rejected dataset <span><a href="/dataset/{0}">{0}</a></span> for publication'
+        assert exp.format(self.package['name']) in resp
+
+    @mock.patch('ckanext.ed.mailer.mail_user')
+    @mock.patch('ckanext.ed.mailer.render_jinja2')
+    def test_dataset_admin_can_see_resubmited_in_activity_stream(self, mock_jinja2, mock_mail_user):
+        app = self._get_test_app()
+        extra_environ = {'REMOTE_USER': 'george'}
+        app.get(url=url_for(
+                    '/dataset-publish/{0}/reject'.format(self.package['id'])),
+                    extra_environ=extra_environ)
+        extra_environ = {'REMOTE_USER': 'john'}
+        app.get(url=url_for(
+                    '/dataset-publish/{0}/resubmit'.format(self.package['id'])),
+                    extra_environ=extra_environ)
+        extra_environ = {'REMOTE_USER': 'george'}
+        resp = app.get(url=url_for(
+            '/dataset/workflow/{0}?id={1}'.format(self.package['name'], self.package['id']),
+        ),extra_environ=extra_environ)
+        exp = 'made changes and requested a review for dataset <span><a href="/dataset/{0}">{0}</a></span>'
+        assert exp.format(self.package['name']) in resp, resp
+
+    @mock.patch('ckanext.ed.mailer.mail_user')
+    @mock.patch('ckanext.ed.mailer.render_jinja2')
+    def test_dataset_editor_can_see_resubmited_in_activity_stream(self, mock_jinja2, mock_mail_user):
+        app = self._get_test_app()
+        extra_environ = {'REMOTE_USER': 'george'}
+        app.get(url=url_for(
+                    '/dataset-publish/{0}/reject'.format(self.package['id'])),
+                    extra_environ=extra_environ)
+        extra_environ = {'REMOTE_USER': 'john'}
+        app.get(url=url_for(
+                    '/dataset-publish/{0}/resubmit'.format(self.package['id'])),
+                    extra_environ=extra_environ)
+        resp = app.get(url=url_for(
+            '/dataset/workflow/{0}?id={1}'.format(self.package['name'], self.package['id']),
+        ),extra_environ=extra_environ)
+        exp = 'made changes and requested a review for dataset <span><a href="/dataset/{0}">{0}</a></span>'
+        assert exp.format(self.package['name']) in resp
 
 def _create_dataset_dict(package_name, office_name='us-ed', private=False):
     return {

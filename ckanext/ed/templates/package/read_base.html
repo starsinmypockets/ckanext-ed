@@ -1,0 +1,8 @@
+{% ckan_extends %}
+
+{% block content_primary_nav %}
+  {{ super() }}
+  {% if h.check_access('package_update', {'user': c.user, 'id': c.pkg_dict.id}) %}
+    {{ h.build_nav_icon('dataset.workflow', _('Workflow Activity'), id=c.pkg_dict.name, icon='gavel') }}
+  {% endif %}
+{% endblock %}
