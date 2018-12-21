@@ -373,7 +373,7 @@ class TestWorkflowActivityStream(helpers.FunctionalTestBase):
         resp = app.get(url=url_for(
             '/dataset/workflow/{0}?id={1}'.format(self.package['name'], self.package['id']),
         ),extra_environ=extra_environ)
-        assert 'Workflow activity Stream' in resp
+        assert 'Workflow Activity' in resp
 
     @mock.patch('ckanext.ed.mailer.mail_user')
     @mock.patch('ckanext.ed.mailer.render_jinja2')
@@ -383,7 +383,7 @@ class TestWorkflowActivityStream(helpers.FunctionalTestBase):
         resp = app.get(url=url_for(
             '/dataset/workflow/{0}?id={1}'.format(self.package['name'], self.package['id']),
         ),extra_environ=extra_environ)
-        assert 'Workflow activity Stream' in resp
+        assert 'Workflow Activity' in resp
 
     @mock.patch('ckanext.ed.mailer.mail_user')
     @mock.patch('ckanext.ed.mailer.render_jinja2')
