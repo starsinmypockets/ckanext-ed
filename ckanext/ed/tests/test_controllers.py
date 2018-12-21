@@ -219,7 +219,7 @@ class TestStateUpdateController(helpers.FunctionalTestBase):
         # Dataset created by factories seem to use sysadmin so approval_state
         # forced to be "approved". Creating packages this way to avoid that
         context = {'user': 'john'}
-        data_dict = _create_dataset_dict(self.pkg, 'us-ed-1')
+        data_dict = _create_dataset_dict(self.pkg, 'us-ed-1', private=True)
         self.package = helpers.call_action('package_create', context, **data_dict)
 
 
@@ -290,6 +290,21 @@ class TestStateUpdateController(helpers.FunctionalTestBase):
             extra_environ=extra_environ
         )
         assert resp.status_int, 302
+
+    @mock.patch('ckanext.ed.mailer.mail_user')
+    @mock.patch('ckanext.ed.mailer.render_jinja2')
+    def test_dataset_approve_and_publish_for_admin(self, mock_jinja2, mock_mail_user):
+        app = self._get_test_app()
+        extra_environ = {'REMOTE_USER': 'george'}
+        updated = helpers.call_action('package_show', {'user': 'george'}, **{'id': self.package['id']})
+        # Make sure it's private before call
+        assert updated['private']
+        resp = app.get(url=url_for(
+            '/dataset-publish/{0}/approve?make_public=true'.format(self.package['id'])),
+            extra_environ=extra_environ
+        )
+        updated = helpers.call_action('package_show', {'user': 'george'}, **{'id': self.package['id']})
+        assert not updated['private']
 
     def test_dataset_resubmit_403_for_anonimous_users(self):
         app = self._get_test_app()

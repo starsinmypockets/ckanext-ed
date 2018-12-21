@@ -77,7 +77,10 @@ class DownloadController(base.BaseController):
 
 class StateUpdateController(base.BaseController):
     def approve(self, id):
-        _make_action(id, 'approve')
+        make_public = toolkit.request.params.get(
+            'make_public') == 'true'
+
+        _make_action(id, 'approve', make_public=make_public)
 
     def reject(self, id):
         feedback = toolkit.request.params.get(
@@ -108,7 +111,7 @@ def _raise_not_authz(id, action='reject'):
             raise toolkit.NotAuthorized
 
 
-def _make_action(package_id, action='reject', feedback=None):
+def _make_action(package_id, action='reject', feedback=None, make_public=None):
     action_props = {
         'reject': {
             'state': 'rejected',
@@ -120,7 +123,8 @@ def _make_action(package_id, action='reject', feedback=None):
         },
         'approve': {
             'state': 'approved',
-            'message': 'Dataset "{0}" approved',
+            'message': ('Dataset "{0}" approved and made public'
+                        if make_public else 'Dataset "{0}" approved'),
             'event': 'approval',
             'mail_func': mail_package_publish_update_to_user,
             'flash_func': toolkit.h.flash_success,
@@ -138,9 +142,12 @@ def _make_action(package_id, action='reject', feedback=None):
     # check access and state
     _raise_not_authz(package_id, action=action)
     context = {'model': model, 'user': toolkit.c.user}
-    data_dict = toolkit.get_action('package_patch')(context,
-        {'id': package_id, 'approval_state': action_props[action]['state']}
-    )
+    patch_data = {
+        'id': package_id, 'approval_state': action_props[action]['state']
+    }
+    if make_public:
+        patch_data['private'] = False
+    data_dict = toolkit.get_action('package_patch')(context, patch_data)
     action_props[action]['mail_func'](
         context,
         data_dict,
