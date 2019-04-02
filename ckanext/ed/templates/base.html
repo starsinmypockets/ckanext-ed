@@ -9,3 +9,8 @@
   {{ super() }}
   {% resource 'ed/css/custom.css' %}
 {% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  {% resource 'ed/js/select-tags.js' %}
+{% endblock %}

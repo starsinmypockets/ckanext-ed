@@ -29,6 +29,17 @@
       "field_name": "tag_string",
       "label": "Tags",
       "preset": "tag_string_autocomplete",
+      "form_snippet": "select-multiple-tags.html",
+      "choices": [
+        {
+          "value": "education",
+          "label": "Education"
+        },
+        {
+          "value": "ud-ed",
+          "label": "US-ED"
+        }
+      ],
       "required": true,
       "validators": "ignore_missing",
       "form_placeholder": "eg. university, public school etc.",
