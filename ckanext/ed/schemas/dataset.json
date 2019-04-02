@@ -53,6 +53,22 @@
       "help_text": "The publishing entity and optionally their parent organization(s)."
     },
     {
+      "field_name": "program",
+      "label": "Program Affiliation",
+      "preset" : "select",
+      "help_test": "The program this data profile is associated with.",
+      "choices": [
+        {
+          "value" : "housing",
+          "label": "Public Housing"
+        },
+        {
+          "value" :  "education",
+          "label" : "Free Education Study"
+        }
+      ]
+    },
+    {
       "field_name": "contact_name",
       "required": true,
       "label": "Contact Name",
