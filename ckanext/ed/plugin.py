@@ -85,6 +85,11 @@ class EDPlugin(plugins.SingletonPlugin, DefaultTranslation):
             action='download_zip'
         )
 
+        map.connect('help_url',
+                    '/help',
+                    controller='ckanext.ed.controller:HelpController',
+                    action="external_help")
+
         return map
 
     # IValidators

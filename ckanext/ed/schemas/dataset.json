@@ -81,6 +81,13 @@
       "help_text": "Contact person’s email for the asset."
     },
     {
+      "field_name": "help_url",
+      "required": false,
+      "label": "Get help for this Dateset",
+      "help_text": "Documentation and instructions for using this Dataset",
+      "display_snippet": "link.html"
+    },
+    {
       "field_name": "access_level",
       "label": "Public Access Level",
       "preset": "select",

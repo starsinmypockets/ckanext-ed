@@ -166,3 +166,10 @@ def _make_action(package_id, action='reject', feedback=None, make_public=None):
     )
     toolkit.redirect_to(
         controller='package', action='read', id=data_dict['name'])
+
+
+class HelpController(base.BaseController):
+    def external_help(self):
+        return toolkit.redirect_to('https://youtube.com')
+
+
