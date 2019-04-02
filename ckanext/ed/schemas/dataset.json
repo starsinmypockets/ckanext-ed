@@ -138,7 +138,8 @@
       "field_name": "url",
       "label": "URL",
       "required": true,
-      "preset": "resource_url_upload"
+      "preset": "resource_url_upload",
+      "help_text": "You can upload a file or import data using the source link."
     },
     {
       "field_name": "name",
