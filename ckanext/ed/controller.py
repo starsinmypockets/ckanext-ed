@@ -57,12 +57,12 @@ class PendingRequestsController(base.BaseController):
 class DownloadController(base.BaseController):
     def download_zip(self, zip_id):
         if not zip_id:
-            toolkit.abort(404, toolkit._('Resource data not found'))
+            toolkit.abort(404, toolkit._('Data not found'))
         file_name, package_name = zip_id.split('::')
         file_path = get_storage_path_for('temp-ed/' + file_name)
 
         if not os.path.isfile(file_path):
-            toolkit.abort(404, toolkit._('Resource data not found'))
+            toolkit.abort(404, toolkit._('Data not found'))
 
         if not package_name:
             package_name = 'resources'

@@ -21,15 +21,15 @@ Example:
   <li class="first {{ s1 }}">
     {% if s1 != 'complete' %}
       {% if h.ed_is_admin(c.user) %}
-        <span class="highlight">{{ _('Create dataset') }}</span>
+        <span class="highlight">{{ _('Create Date Profile') }}</span>
       {% else %}
-        <span class="highlight">{{ _('Request dataset') }}</span>
+        <span class="highlight">{{ _('Request Data Profile') }}</span>
       {% endif %}
     {% else %}
       {% if h.ed_is_admin(c.user) %}
-        <button class="highlight" name="save" value="go-dataset" type="submit">{{ _('Create dataset') }}</button>
+        <button class="highlight" name="save" value="go-dataset" type="submit">{{ _('Create Data Profile') }}</button>
       {% else %}
-        <button class="highlight" name="save" value="go-dataset" type="submit">{{ _('Request dataset') }}</button>
+        <button class="highlight" name="save" value="go-dataset" type="submit">{{ _('Request Data Profile') }}</button>
       {% endif %}
     {% endif %}
   </li>
