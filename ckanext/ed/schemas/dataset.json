@@ -53,6 +53,19 @@
       "help_text": "The publishing entity and optionally their parent organization(s)."
     },
     {
+      "field_name" : "helpdesk_email",
+      "required" : false,
+      "validators" : "ignore_missing email_validator",
+      "label" : "Helpdesk Email Contact",
+      "help_text" : "Contact this email for helpdesk assistance with this dataset."
+    },
+    {
+      "field_name" : "helpdesk_phone",
+      "required" : false,
+      "label" : "Helpdesk Phone Contact",
+      "help_text" : "Contact this phone number for helpdesk assistance with this dataset"
+    },
+    {
       "field_name": "program",
       "label": "Program Affiliation",
       "preset" : "select",
