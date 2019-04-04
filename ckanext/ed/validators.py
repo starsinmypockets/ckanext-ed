@@ -1,7 +1,10 @@
 import logging
+import re
 
 from ckan.plugins import toolkit
+import ckan.lib.navl.dictization_functions as df
 
+Invalid = df.Invalid
 log = logging.getLogger(__name__)
 
 
@@ -28,3 +31,20 @@ def state_validator(key, data, errors, context):
                 # If not admin, create as pending or keep state as was
                 state = state or 'approval_pending'
     data[key] = state
+
+
+#pattern from https://html.spec.whatwg.org/#e-mail-state-(type=email)
+email_pattern = re.compile(r"^(?!\.)(?!.*\.$)(?!.*?\.\.)[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9]"\
+                            "(?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9]"\
+                            "(?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")
+
+def email_validator(value):
+    if value:
+        try:
+            if not email_pattern.match(value):
+                raise Invalid('Please enter a valid email address.')
+        except TypeError:
+            raise Invalid('Please enter a valid email address.')
+    return value
+
+

@@ -95,5 +95,6 @@ class EDPlugin(plugins.SingletonPlugin, DefaultTranslation):
     # IValidators
     def get_validators(self):
         return {
-            'state_validator': validators.state_validator
+            'state_validator': validators.state_validator,
+            'email_validator': validators.email_validator,
         }
