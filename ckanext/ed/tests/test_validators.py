@@ -4,6 +4,47 @@ from ckan import model
 from ckan.tests import factories as core_factories
 from ckan.tests.helpers import call_action, FunctionalTestBase
 
+def returns_arg(function):
+    '''A decorator that tests that the decorated function returns the argument
+    that it is called with, unmodified.
+
+    :param function: the function to decorate
+    :type function: function
+
+    Usage:
+
+        @returns_arg
+        def call_validator(*args, **kwargs):
+            return validators.user_name_validator(*args, **kwargs)
+        call_validator(key, data, errors)
+
+    '''
+    def call_and_assert(arg, context=None):
+        if context is None:
+            context = {}
+        result = function(arg, context=context)
+        assert result == arg, (
+            'Should return the argument that was passed to it, unchanged '
+            '({arg})'.format(arg=repr(arg)))
+        return result
+    return call_and_assert
+
+
+def raises_Invalid(function):
+    '''A decorator that asserts that the decorated function raises
+    dictization_functions.Invalid.
+
+    Usage:
+
+        @raises_Invalid
+        def call_validator(*args, **kwargs):
+            return validators.user_name_validator(*args, **kwargs)
+        call_validator(key, data, errors)
+
+    '''
+    def call_and_assert(*args, **kwargs):
+        nose.tools.assert_raises(df.Invalid, function, *args, **kwargs)
+    return call_and_assert
 
 class TestValidators(FunctionalTestBase):
     def test_dataset_by_sysadmin_and_admin_is_not_approval_pending(self):
