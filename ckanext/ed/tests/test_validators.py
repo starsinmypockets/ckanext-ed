@@ -96,6 +96,34 @@ class TestValidators(FunctionalTestBase):
         dataset = call_action('package_show', context_editor, id='test-dataset')
         assert_equals(dataset['approval_state'], 'approved')
 
+    def test_email_validator_with_invalid_value(selfs):
+        invalid_values = [
+            '..test...test..@example.com',
+            'test @example.com',
+            'test@ example.com',
+            'test..test@example.com',
+            'test.test...@example.com',
+            '...test@example.com',
+        ]
+
+        for invalid_value in invalid_values:
+            @raises_Invalid
+            def call_validator(*args, **kwargs):
+                return validators.email_validator(*args, **kwargs)
+            call_validator(invalid_value, context={})
+
+    def test_email_validator_with_valid_value(self):
+        valid_values = [
+            'text@example.com',
+            'test.this@example.com',
+            'test.this@server.example.com',
+        ]
+
+        for valid_value in valid_values:
+            @returns_arg
+            def call_validator(*args, **kwargs):
+                return validators.email_validator(*args, **kwargs)
+            call_validator(valid_value)
 
 def _create_context(user):
     return {'model': model, 'user': user['name']}
