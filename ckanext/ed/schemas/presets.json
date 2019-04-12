@@ -2,5 +2,14 @@
   "scheming_presets_version": 1,
   "about": "Schema presets for US Dept. of Education",
   "about_url": "https://github.com/CivicActions/ckanext-ed",
-  "presets": []
+  "presets": [
+      {
+        "preset_name" : "checkbox",
+        "values" : {
+        "form_snippet" : "checkbox.html",
+        "display_snippet" : "checkbox.html",
+        "validators": "scheming_required"
+      }
+    }
+  ]
 }
