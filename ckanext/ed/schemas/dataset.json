@@ -90,6 +90,7 @@
     {
       "field_name": "contact_email",
       "required": true,
+      "validators": "ignore_missing email_validator",
       "label": "Contact Email",
       "help_text": "Contact person’s email for the asset."
     },
