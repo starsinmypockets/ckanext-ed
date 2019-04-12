@@ -14,8 +14,10 @@ Example:
 #}
 {% set s1 = stages[0] or 'active' %}
 {% set s2 = stages[1] or 'uncomplete' %}
+{% set s3 = stages[2] or 'uncomplete' %}
 {% if s1 != 'uncomplete' %}{% set class = 'stage-1' %}{% endif %}
 {% if s2 != 'uncomplete' %}{% set class = 'stage-2' %}{% endif %}
+{% if s3 != 'uncomplete' %}{% set class = 'stage-3' %}{% endif %}
 
 <ol class="stages {{ class }}">
   <li class="first {{ s1 }}">
@@ -40,8 +42,26 @@ Example:
       {% if s1 == 'active' %}
         {# stage 1 #}
         <button class="highlight" name="save" value="go-resources" type="submit">{{ _('Add data') }}</button>
+      {% elif s3 == 'active' %}
+        {# stage 3 #}
+        <button class="highlight" name="save" value="go-resources" type="submit">{{ _('Add Docs') }}</button>
       {% else %}
         {% link_for _('Add data'), named_route='dataset.new', class_="highlight" %}
+      {% endif %}
+    {% endif %}
+  </li>
+  <li class="last {{ s3 }}">
+    {% if s3 != 'complete' %}
+      <span class="highlight">{{ _('Add Docs') }}</span>
+    {% else %}
+      {% if s1 == 'active' %}
+        {# stage 1 #}
+        <button class="highlight" name="save" value="go-resources" type="submit">{{ _('Add Docs') }}</button>
+      {% elif s2 == 'active' %}
+        {# stage 2 #}
+        <button class="highlight" name="save" value="go-resources" type="submit">{{ _('Add Docs') }}</button>
+      {% else %}
+        {% link_for _('Add Docs'), named_route='dataset.new', class_="highlight" %}
       {% endif %}
     {% endif %}
   </li>

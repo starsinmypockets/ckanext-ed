@@ -170,7 +170,9 @@
       "label": "URL",
       "required": true,
       "preset": "resource_url_upload",
-      "help_text": "You can upload a file or import data using the source link."
+      "help_text": "You can upload a file or import data using the source link.",
+      "resource_type": "resource_only",
+      "validators": "dummy_validator"
     },
     {
       "field_name": "name",
@@ -183,12 +185,23 @@
       "label": "Description",
       "required": true,
       "form_snippet": "markdown.html",
-      "form_placeholder": "Some useful notes about the data"
+      "form_placeholder": "Some useful notes about the data",
+      "resource_type": "doc_only",
+      "validators": "dummy_validator"
     },
     {
       "field_name": "format",
       "label": "Format",
       "preset": "resource_format_autocomplete"
+    },
+    {
+      "field_name": "resource_type",
+      "form_snippet": null,
+      "validators": "resource_type_validator"
+    },
+    {
+      "field_name": "pinned",
+      "form_snippet": null
     },
     {
       "field_name": "Start Date",

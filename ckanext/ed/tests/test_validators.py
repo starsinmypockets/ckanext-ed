@@ -1,8 +1,68 @@
 from nose.tools import assert_equals
 
 from ckan import model
+from ckan.plugins import toolkit
 from ckan.tests import factories as core_factories
-from ckan.tests.helpers import call_action, FunctionalTestBase
+from ckan.tests.helpers import call_action, FunctionalTestBase, reset_db
+
+
+class TestDocsValidators(FunctionalTestBase):
+    def setup(self):
+        reset_db()
+        self.sysadmin = core_factories.Sysadmin()
+        self.orgname = 'us-ed-docs'
+        core_factories.Organization(name=self.orgname, id=self.orgname)
+
+    def test_resource_type_validator_regular_resource(self):
+        context = _create_context(self.sysadmin)
+        resources = [{'name': 'doc', 'url': '', 'description': 'doc', 'format': 'pdf'}]
+        data_dict = _create_dataset_dict('test-dataset-1', self.orgname, resources=resources)
+        call_action('package_create', context, **data_dict)
+        dataset = call_action('package_show', context, id='test-dataset-1')
+        assert dataset.get('resources')[0]['resource_type'] == 'regular-resource'
+
+    def test_resource_type_validator_doc(self):
+        context = _create_context(self.sysadmin)
+        context.update(is_doc=True)
+        resources = [{'name': 'doc', 'url': '', 'description': 'doc', 'format': 'pdf'}]
+        data_dict = _create_dataset_dict('test-dataset-2', self.orgname, resources=resources)
+        call_action('package_create', context, **data_dict)
+        dataset = call_action('package_show', context, id='test-dataset-2')
+        assert dataset.get('resources')[0]['resource_type'] == 'doc'
+
+    def test_resource_type_validator_not_modifies_if_type_is_present(self):
+        context = _create_context(self.sysadmin)
+        resources = [
+            {'name': 'doc', 'url': '', 'description': 'doc', 'format': 'pdf', 'resource_type': 'doc'}
+        ]
+        data_dict = _create_dataset_dict('test-dataset-3', self.orgname, resources=resources)
+        call_action('package_create', context, **data_dict)
+        dataset = call_action('package_show', context, id='test-dataset-3')
+        assert dataset.get('resources')[0]['resource_type'] == 'doc'
+
+    def test_resource_dummy_validator_for_resource_only(self):
+        context = _create_context(self.sysadmin)
+        context.update(is_doc=True)
+        resources = [
+            {'name': 'doc', 'description': 'doc', 'format': 'pdf'}
+        ]
+        data_dict = _create_dataset_dict('test-dataset-4', self.orgname, resources=resources)
+        call_action('package_create', context, **data_dict)
+        dataset = call_action('package_show', context, id='test-dataset-4')
+        assert dataset.get('resources')[0]['url'] == '', dataset.get('resources')[0]['url']
+
+    def test_resource_dummy_validator_for_doc_only(self):
+        context = _create_context(self.sysadmin)
+        resources = [
+            {'name': 'doc', 'format': 'pdf', 'url': ''}
+        ]
+        data_dict = _create_dataset_dict('test-dataset-4', self.orgname, resources=resources)
+        call_action('package_create', context, **data_dict)
+        dataset = call_action('package_show', context, id='test-dataset-4')
+        assert dataset.get('resources')[0]['description'] == ''
+
+    def teardown(slef):
+        reset_db()
 
 
 class TestValidators(FunctionalTestBase):
@@ -101,9 +161,10 @@ def _create_context(user):
     return {'model': model, 'user': user['name']}
 
 
-def _create_dataset_dict(package_name, office_name='us-ed'):
+def _create_dataset_dict(package_name, office_name='us-ed', resources=[]):
     return {
         'name': package_name,
+        'resources': resources,
         'contact_name': 'Stu Shepard',
         'program_code': '321',
         'access_level': 'public',

@@ -64,6 +64,11 @@ python setup.py develop
 pip install -r dev-requirements.txt
 cd -
 
+git clone https://github.com/okfn/ckanext-disqus
+cd ckanext-disqus
+python setup.py develop
+cd -
+
 echo "Installing ckanext-ed and its requirements..."
 python setup.py develop
 

@@ -90,10 +90,34 @@ class EDPlugin(plugins.SingletonPlugin, DefaultTranslation):
                     controller='ckanext.ed.controller:HelpController',
                     action="external_help")
 
+
+        ## Docs
+        map.connect('/dataset/new_resource/{id}',
+                    controller='ckanext.ed.controller:NewResourceController',
+                    action='new_resource')
+        map.connect('doc',
+                    '/dataset/new_doc/{id}',
+                    controller='ckanext.ed.controller:NewResourceController',
+                    action='new_doc')
+
+        map.connect('dataset.docs', '/dataset/docs/{id}',
+                    controller='ckanext.ed.controller:DocumentationController',
+                    action='read_doc')
+
+        map.connect('/dataset/docs/{dataset_id}/pin/{resource_id}',
+                    controller='ckanext.ed.controller:DocumentationController',
+                    action='pin')
+
+        map.connect('/dataset/docs/{dataset_id}/unpin/{resource_id}',
+                    controller='ckanext.ed.controller:DocumentationController',
+                    action='unpin')
+
         return map
 
     # IValidators
     def get_validators(self):
         return {
-            'state_validator': validators.state_validator
+            'state_validator': validators.state_validator,
+            'resource_type_validator': validators.resource_type_validator,
+            'dummy_validator': validators.dummy_validator
         }

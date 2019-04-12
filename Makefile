@@ -9,10 +9,10 @@ assets:
 	npx gulp less
 
 i18n_compile:
-	docker exec -t docker-ckan-ed_ckan-dev bash -c 'cd /srv/app/src_extensions/ckanext-ed && python setup.py compile_catalog -l en -f'
+	docker-compose -f ../../docker-compose.dev.yml exec ckan-dev bash -c 'cd /srv/app/src_extensions/ckanext-ed && python setup.py compile_catalog -l en -f'
 
 i18n_extract:
-	docker exec -t docker-ckan-ed_ckan-dev bash -c 'cd /srv/app/src_extensions/ckanext-ed && python setup.py extract_messages'
+	docker-compose -f ../../docker-compose.dev.yml exec ckan-dev bash -c 'cd /srv/app/src_extensions/ckanext-ed && python setup.py extract_messages'
 
 readme:
 	npx doctoc README.md

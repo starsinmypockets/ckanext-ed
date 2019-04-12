@@ -28,3 +28,30 @@ def state_validator(key, data, errors, context):
                 # If not admin, create as pending or keep state as was
                 state = state or 'approval_pending'
     data[key] = state
+
+
+def dummy_validator(key, data, errors, context):
+    '''inserts dummy values (empty string) into required fields according to resource type.
+    Eg if we are filling documentation resource, required fields for regular
+    resouces will be filled with empty string and vice-versa.
+    '''
+    is_doc = context.get('is_doc')
+    schema = toolkit.h.scheming_get_dataset_schema('dataset')
+    resource_schema = schema['resource_fields']
+    field_name = key[-1]
+    field_schema = list(filter(
+                    lambda x: x['field_name'] == field_name, resource_schema))[0]
+    if field_schema.get('required'):
+        if is_doc and (field_schema.get('resource_type') == 'resource_only'):
+            data[key] = ''
+        elif not is_doc and (field_schema.get('resource_type') == 'doc_only'):
+            data[key] = ''
+
+
+def resource_type_validator(key, data, errors, context):
+    is_doc = context.get('is_doc')
+    if data[key]:
+        return
+    data[key] = 'regular-resource'
+    if is_doc:
+        data[key] = 'doc'
