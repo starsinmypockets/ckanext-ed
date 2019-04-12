@@ -158,12 +158,6 @@
       "help_text": "The range of spatial applicability of a dataset. Could include a spatial region like a bounding box or a named place."
     },
     {
-      "field_name": "temporal",
-      "label": "Temporal",
-      "form_placeholder": "eg. 2000-01-15T00:45:00Z/2010-01-15T00:06:00Z",
-      "help_text": "The range of temporal applicability of a dataset (i.e., a start and end date of applicability for the data)."
-    },
-    {
       "field_name": "approval_state",
       "form_snippet": null,
       "validators": "state_validator",
@@ -195,6 +189,16 @@
       "field_name": "format",
       "label": "Format",
       "preset": "resource_format_autocomplete"
+    },
+    {
+      "field_name": "Start Date",
+      "label": "Data Relevance Start Date",
+      "preset": "date"
+    },
+    {
+      "field_name": "End Date",
+      "lable": "Data Relevance End Date",
+      "preset": "date"
     },
     {
       "field_name" : "publishing_approved",
