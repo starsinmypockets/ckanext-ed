@@ -160,6 +160,7 @@
     {
       "field_name": "approval_state",
       "form_snippet": null,
+      "display_snippet": null,
       "validators": "state_validator",
       "label": "Approved"
     }
