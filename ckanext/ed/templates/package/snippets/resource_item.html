@@ -3,11 +3,13 @@
 
 <li class="resource-item" data-id="{{ res.id }}" data-pinned="{{ res.pinned }}">
   {% block resource_item_title %}
-  {% if res.resource_type == 'doc' %}
-    {% if res.pinned == 'True' %}
-      {% link_for _('Unpin'), controller='ckanext.ed.controller:DocumentationController', action='unpin', dataset_id=c.pkg_dict.name, resource_id=res.id, class_='btn btn-primary', icon='map-marker'%}
-    {% else %}
-      {% link_for _('Pin'), controller='ckanext.ed.controller:DocumentationController', action='pin', dataset_id=c.pkg_dict.name, resource_id=res.id, class_='btn btn-primary', icon='map-marker'%}
+  {% if h.check_access('package_update', {'id': c.pkg_dict.id ,'user': c.user}) %}
+    {% if res.resource_type == 'doc' %}
+      {% if res.pinned == 'True' %}
+        {% link_for _('Unpin'), controller='ckanext.ed.controller:DocumentationController', action='unpin', dataset_id=c.pkg_dict.name, resource_id=res.id, class_='btn btn-primary', icon='map-marker'%}
+      {% else %}
+        {% link_for _('Pin'), controller='ckanext.ed.controller:DocumentationController', action='pin', dataset_id=c.pkg_dict.name, resource_id=res.id, class_='btn btn-primary', icon='map-marker'%}
+      {% endif %}
     {% endif %}
   {% endif %}
   <div class="checkbox checkbox-mark-for-download">

@@ -55,7 +55,6 @@ class TestNewResourceController(helpers.FunctionalTestBase):
         assert 'Finish' in resp
 
 
-
 class TestDocumentationController(helpers.FunctionalTestBase):
 
     @classmethod
@@ -82,46 +81,66 @@ class TestDocumentationController(helpers.FunctionalTestBase):
             {'name': 'this-is-doc', 'url': '', 'description': 'doc', 'format': 'pdf', 'resource_type': 'doc'},
             {'name': 'this-is-pinned-doc', 'url': '', 'description': 'doc', 'format': 'pdf', 'resource_type': 'doc', 'pinned': 'True'}
         ])
-        data_dict.update(state='draft')
+        # data_dict.update(state='draft')
         self.package = helpers.call_action('package_create', self.context, **data_dict)
         self.envs = {'REMOTE_USER': self.sysadmin['name'].encode('ascii')}
 
-    # def test_documentation_tab_appears_on_dataset_page(self):
-    #     app = self._get_test_app()
-    #     resp = app.get(url=url_for('/dataset/%s' % self.pkg), extra_environ=self.envs)
-    #     assert 'Documentation' in resp
-    #
-    # def test_dataset_tab_has_no_doc_resources(self):
-    #     app = self._get_test_app()
-    #     resp = app.get(url=url_for('/dataset/%s' % self.pkg), extra_environ=self.envs)
-    #     assert 'this-is-regular-resource' in resp, resp
-    #     assert 'this-is-doc' not in resp
-    #
-    # def test_documentation_tab_has_no_regulars_resources(self):
-    #     app = self._get_test_app()
-    #     resp = app.get(url=url_for('/dataset/docs/%s' % self.pkg), extra_environ=self.envs)
-    #     assert 'this-is-regular-resource' not in resp, resp
-    #     assert 'this-is-doc' in resp
-    #
-    # def test_documentation_tab_has_reorder_button(self):
-    #     app = self._get_test_app()
-    #     resp = app.get(url=url_for('/dataset/docs/%s' % self.pkg), extra_environ=self.envs)
-    #     assert 'reorder' in resp, resp
-    #
-    # def test_documentation_tab_has_no_explore_button_if_it_is_edit_mode(self):
-    #     app = self._get_test_app()
-    #     resp = app.get(url=url_for('/dataset/docs/%s?edit=true' % self.pkg), extra_environ=self.envs)
-    #     assert 'Explore' not in resp
-    #
-    # def test_documentation_tab_has_pin_button(self):
-    #     app = self._get_test_app()
-    #     resp = app.get(url=url_for('/dataset/docs/%s' % self.pkg), extra_environ=self.envs)
-    #     assert 'Pin' in resp
-    #
-    # def test_documentation_tab_has_unpin_button(self):
-    #     app = self._get_test_app()
-    #     resp = app.get(url=url_for('/dataset/docs/%s' % self.pkg), extra_environ=self.envs)
-    #     assert 'Unpin' in resp
+    def test_documentation_tab_appears_on_dataset_page(self):
+        app = self._get_test_app()
+        resp = app.get(url=url_for('/dataset/%s' % self.pkg), extra_environ=self.envs)
+        assert 'Documentation' in resp
+
+    def test_dataset_tab_has_no_doc_resources(self):
+        app = self._get_test_app()
+        resp = app.get(url=url_for('/dataset/%s' % self.pkg), extra_environ=self.envs)
+        assert 'this-is-regular-resource' in resp, resp
+        assert 'this-is-doc' not in resp
+
+    def test_documentation_tab_has_work_ok_if_anonymous(self):
+        app = self._get_test_app()
+        resp = app.get(url=url_for('/dataset/docs/%s' % self.pkg))
+        assert resp.status_int == 200
+
+    def test_documentation_tab_has_no_regulars_resources(self):
+        app = self._get_test_app()
+        resp = app.get(url=url_for('/dataset/docs/%s' % self.pkg), extra_environ=self.envs)
+        assert 'this-is-regular-resource' not in resp, resp
+        assert 'this-is-doc' in resp
+
+    def test_documentation_tab_has_reorder_button(self):
+        app = self._get_test_app()
+        resp = app.get(url=url_for('/dataset/docs/%s' % self.pkg), extra_environ=self.envs)
+        assert 'reorder' in resp, resp
+
+    def test_documentation_tab_has_no_add_new_doc_button_for_anonymous(self):
+        app = self._get_test_app()
+        resp = app.get(url=url_for('/dataset/docs/%s' % self.pkg))
+        assert 'Add new doc' not in resp, resp
+
+    def test_documentation_tab_has_no_explore_button_if_it_is_edit_mode(self):
+        app = self._get_test_app()
+        resp = app.get(url=url_for('/dataset/docs/%s?edit=true' % self.pkg), extra_environ=self.envs)
+        assert 'Explore' not in resp
+
+    def test_documentation_tab_has_pin_button(self):
+        app = self._get_test_app()
+        resp = app.get(url=url_for('/dataset/docs/%s' % self.pkg), extra_environ=self.envs)
+        assert 'Pin' in resp
+
+    def test_documentation_tab_has_no_pin_button_for_anonymous(self):
+        app = self._get_test_app()
+        resp = app.get(url=url_for('/dataset/docs/%s' % self.pkg))
+        assert 'Pin' not in resp
+
+    def test_documentation_tab_has_unpin_button(self):
+        app = self._get_test_app()
+        resp = app.get(url=url_for('/dataset/docs/%s' % self.pkg), extra_environ=self.envs)
+        assert 'Unpin' in resp
+
+    def test_documentation_tab_has_no_unpin_button_for_anonymous(self):
+        app = self._get_test_app()
+        resp = app.get(url=url_for('/dataset/docs/%s' % self.pkg))
+        assert 'Unpin' not in resp
 
     def test_pin_works(self):
         pinned_res_id = None
@@ -371,7 +390,7 @@ class TestStateUpdateController(helpers.FunctionalTestBase):
         self.package = helpers.call_action('package_create', context, **data_dict)
 
 
-    def test_dataset_reject_403_for_anonimous_users(self):
+    def test_dataset_reject_403_for_anonymous_users(self):
         app = self._get_test_app()
         with assert_raises(toolkit.NotAuthorized) as e:
             app.get(url=url_for('/dataset-publish/{0}/reject'.format(self.package['id']), status=403))
@@ -405,7 +424,7 @@ class TestStateUpdateController(helpers.FunctionalTestBase):
         )
         assert resp.status_int, 302
 
-    def test_dataset_approve_403_for_anonimous_users(self):
+    def test_dataset_approve_403_for_anonymous_users(self):
         app = self._get_test_app()
         with assert_raises(toolkit.NotAuthorized) as e:
             app.get(url=url_for('/dataset-publish/{0}/approve'.format(self.package['id']), status=403))
@@ -454,7 +473,7 @@ class TestStateUpdateController(helpers.FunctionalTestBase):
         updated = helpers.call_action('package_show', {'user': 'george'}, **{'id': self.package['id']})
         assert not updated['private']
 
-    def test_dataset_resubmit_403_for_anonimous_users(self):
+    def test_dataset_resubmit_403_for_anonymous_users(self):
         app = self._get_test_app()
         with assert_raises(toolkit.NotAuthorized) as e:
             app.get(url=url_for('/dataset-publish/{0}/resubmit'.format(self.package['id']), status=403))

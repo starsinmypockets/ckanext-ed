@@ -39,13 +39,13 @@ class DocumentationController(PackageController):
                    'user': c.user, 'for_view': True,
                    'auth_user_obj': c.userobj}
         data_dict = {'id': id, 'include_tracking': True}
-
-        try:
-            toolkit.check_access('package_update', context, data_dict)
-        except NotFound:
-            abort(404, _('Dataset not found'))
-        except NotAuthorized:
-            abort(403, _('User %r not authorized to edit %s') % (c.user, id))
+        if edit:
+            try:
+                toolkit.check_access('package_update', context, data_dict)
+            except NotFound:
+                abort(404, _('Dataset not found'))
+            except NotAuthorized:
+                abort(403, _('User %r not authorized to edit %s') % (c.user, id))
         # check if package exists
         try:
             c.pkg_dict = get_action('package_show')(context, data_dict)
