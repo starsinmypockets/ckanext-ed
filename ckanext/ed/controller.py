@@ -21,6 +21,33 @@ import ckan.lib.navl.dictization_functions as dict_fns
 from ckanext.ed.helpers import get_storage_path_for, get_pending_datasets, is_admin, workflow_activity_create
 from ckanext.ed.mailer import mail_package_publish_update_to_user, mail_package_publish_request_to_admins
 from ckan.controllers.package import PackageController
+from ckan.controllers.user import UserController
+import ckan.plugins as p
+
+
+from ckan.common import config
+from paste.deploy.converters import asbool
+
+import ckan.lib.navl.dictization_functions as dictization_functions
+
+log = logging.getLogger(__name__)
+
+
+abort = base.abort
+render = base.render
+
+check_access = logic.check_access
+get_action = logic.get_action
+NotFound = logic.NotFound
+NotAuthorized = logic.NotAuthorized
+ValidationError = logic.ValidationError
+UsernamePasswordError = logic.UsernamePasswordError
+
+DataError = dictization_functions.DataError
+unflatten = dictization_functions.unflatten
+
+
+
 
 abort = base.abort
 
@@ -412,3 +439,13 @@ def _make_action(package_id, action='reject', feedback=None, make_public=None):
 class HelpController(base.BaseController):
     def external_help(self):
         return toolkit.redirect_to('https://youtube.com')
+
+
+class CustomeUserController(UserController):
+    def me(self, locale=None):
+        if not c.user:
+            h.redirect_to(locale=locale, controller='user', action='login',
+                          id=None)
+        user_ref = c.userobj.get_reference_preferred_for_uri()
+        # do what seems to be a flask redirect
+        h.redirect_to('dashboard.datasets')

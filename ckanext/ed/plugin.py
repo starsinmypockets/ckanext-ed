@@ -90,6 +90,9 @@ class EDPlugin(plugins.SingletonPlugin, DefaultTranslation):
                     controller='ckanext.ed.controller:HelpController',
                     action="external_help")
 
+        map.connect('/user/logged_in',
+                    controller='ckanext.ed.controller:CustomeUserController',
+                    action="logged_in")
 
         ## Docs
         map.connect('/dataset/new_resource/{id}',
