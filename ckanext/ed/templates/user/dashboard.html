@@ -17,11 +17,6 @@
         </div>
         <ul class="nav nav-tabs">
           {{ h.build_nav_icon('dashboard.index', _('News feed')) }}
-          {% if h.ed_is_admin(c.user) or h.check_access('package_create', {'user': c.user}) %}
-            {% set pending_datasets = h.ed_get_pending_datasets(c.userobj.id, not h.ed_is_admin(c.user)) %}
-            {% set tab_name = 'Pending dataset requests (%s)'|format(pending_datasets|length) %}
-            {{ h.build_nav_icon('dashboard.requests', _(tab_name)) }}
-          {% endif %}
           {{ h.build_nav_icon('dashboard.datasets', _('My Datasets')) }}
           {{ h.build_nav_icon('dashboard.organizations', _('My Organizations')) }}
           {{ h.build_nav_icon('dashboard.groups', _('My Groups')) }}

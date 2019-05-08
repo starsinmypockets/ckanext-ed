@@ -20,11 +20,7 @@
                   <span class="username">{{ c.userobj.display_name }}</span>
                 </a>
         </li>
-        {% set pending_datasets = [] %}
-        {% if h.ed_is_admin(c.user) or h.check_access('package_create', {'user': c.user}) %}
-          {% set pending_datasets = h.ed_get_pending_datasets(c.userobj.id, not h.ed_is_admin(c.user)) %}
-        {% endif %}
-        {% set new_activities = h.new_activities() + (pending_datasets | length) %}
+        {% set new_activities = h.new_activities() %}
         <li class="notifications {% if new_activities > 0 %}notifications-important{% endif %}">
           {% set notifications_tooltip = ngettext('Dashboard (%(num)d new item)', 'Dashboard (%(num)d new items)', new_activities)
           %}

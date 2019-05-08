@@ -32,7 +32,6 @@ class EDPlugin(plugins.SingletonPlugin, DefaultTranslation):
     def get_actions(self):
         return {
             'ed_prepare_zip_resources': actions.prepare_zip_resources,
-            'package_create': actions.package_create,
             'package_show': actions.package_show,
             'package_activity_list': actions.package_activity_list,
             'dashboard_activity_list': actions.dashboard_activity_list,

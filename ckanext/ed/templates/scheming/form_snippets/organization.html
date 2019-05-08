@@ -4,7 +4,7 @@
 {% block package_metadata_fields_visibility %}
   <div class="control-group form-group control-medium">
     <label for="field-private" class="control-label">
-        <span title="This field is required" class="control-required">*</span> 
+        <span title="This field is required" class="control-required">*</span>
         {{ _('Visibility') }}
     </label>
     <div class="controls">
@@ -15,7 +15,7 @@
       </select>
     </div>
     {{- form.info(
-        text="Datasets are private by default, meaning only members of the same office and administrators can access them. If made public, once approved all users of the site will be able to access and download them.",
+        text="Datasets are private by default, meaning only members of the same office and administrators can access them. If made public, all users of the site will be able to access and download them.",
         inline=false
         ) -}}
   </div>
