@@ -1,5 +1,3 @@
-import ckan.logic as logic
-from ckan import model
 from ckan.plugins import toolkit
 from ckan.common import config
 import os
@@ -219,3 +217,24 @@ def get_latest_rejection_feedback(pkg_id):
         if (activity['data']['workflow_activity'] == 'dataset_rejected' and
                 activity['data'].get('feedback')):
             return activity['data']['feedback']
+
+def quality_mark(package):
+    """
+    :param pacakge:
+        Package dictionary
+    :return: (boolean, boolean)
+         [0] - True if there's at least one machine readable resource.
+         [1] - True if there's at least one document resource.
+    """
+    at_least_one_machine_resource = \
+        any([True for r in package['resources'] if r['format']=='CSV' or
+                                            r['format'] == 'XML' or
+                                            r['mimetype'] == 'text/csv' or
+                                            r['mimetype'] == 'text/json' or
+                                            r['mimetype'] == 'application/json' or
+                                            r['url_type']!='upload' and r['url']!=''])
+    at_least_one_document_resource = \
+        any([True for r in package['resources'] if r['resource_type']=='doc'])
+
+    return { 'machine' : at_least_one_machine_resource,
+             'doc' : at_least_one_document_resource }
