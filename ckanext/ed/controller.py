@@ -135,7 +135,7 @@ class NewResourceController(base.BaseController):
                     data_provided = True
                     break
 
-            if not data_provided and save_action != "go-dataset-complete":
+            if not data_provided and "go-dataset-complete" not in save_action:
                 if save_action == 'go-dataset':
                     # go to final stage of adddataset
                     h.redirect_to(controller='package', action='edit', id=id)
@@ -198,7 +198,7 @@ class NewResourceController(base.BaseController):
             elif save_action == 'go-dataset':
                 # go to first stage of add dataset
                 h.redirect_to(controller='package', action='edit', id=id)
-            elif save_action == 'go-dataset-complete':
+            elif 'go-dataset-complete' in save_action:
                 # go to first stage of add dataset
                 h.redirect_to(controller='package', action='read', id=id)
             elif save_action == 'docs' or save_action == 'doc-again-from-doc':
@@ -237,6 +237,8 @@ class NewResourceController(base.BaseController):
         template = 'package/new_resource_not_draft.html'
         if pkg_dict['state'].startswith('draft'):
             vars['stage'] = ['complete', 'active']
+            if is_doc:
+                vars['stage'] = ['complete', 'complete', 'active']
             template = 'package/new_resource.html'
         return toolkit.render_snippet(template, data=vars)
 

@@ -197,6 +197,7 @@
     },
     {
       "field_name": "resource_type",
+      "display_snippet": null,
       "form_snippet": null,
       "validators": "resource_type_validator"
     },

@@ -1,5 +1,6 @@
 import logging
 
+import logic
 from ckan.plugins import toolkit
 
 log = logging.getLogger(__name__)
@@ -49,9 +50,18 @@ def dummy_validator(key, data, errors, context):
 
 
 def resource_type_validator(key, data, errors, context):
-    is_doc = context.get('is_doc')
     if data[key]:
         return
-    data[key] = 'regular-resource'
-    if is_doc:
-        data[key] = 'doc'
+    resource_info = {}
+    try:
+        # When updating resource hidden fields are still gettin empty values
+        # We need to check if resource already exists and if so check it's resource_type
+        resource_id = data[(u'resources', key[1], u'id')]
+        resource_info = logic.get_action('resource_show')(
+            {'user': context['user']},
+            {'id': resource_id, 'resource_id': resource_id}
+        )
+    except KeyError:
+        pass
+    is_doc = context.get('is_doc') or resource_info.get('resource_type') == 'doc'
+    data[key] = 'doc' if is_doc else 'regular-resource'
