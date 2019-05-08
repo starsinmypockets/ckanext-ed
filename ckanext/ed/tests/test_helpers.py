@@ -151,9 +151,7 @@ class TestHelpers(test_helpers.FunctionalTestBase):
             'upload': test_csv_resource
         }
 
-        # Mock url_for as using a test request context interferes with the FS mocking
         result = test_helpers.call_action('resource_create', context, **params)
-
         dataset = test_helpers.call_action('package_show', id=package['id'])
         quality_mark = helpers.quality_mark(dataset)
         assert_equals(
@@ -198,7 +196,6 @@ class TestHelpers(test_helpers.FunctionalTestBase):
             'upload': test_json_resource
         }
         result = test_helpers.call_action('resource_create', context, **params)
-
         dataset = test_helpers.call_action('package_show', id=package['id'])
         quality_mark = helpers.quality_mark(dataset)
         assert_equals(
@@ -219,9 +216,9 @@ class TestHelpers(test_helpers.FunctionalTestBase):
         }
 
         result = test_helpers.call_action('resource_create', context, **params)
-
         dataset = test_helpers.call_action('package_show', id=package['id'])
         quality_mark = helpers.quality_mark(dataset)
         assert_equals(
             (quality_mark['machine'], quality_mark['doc']), (True, False)
         )
+

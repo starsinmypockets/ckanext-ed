@@ -222,9 +222,9 @@ def quality_mark(package):
     """
     :param pacakge:
         Package dictionary
-    :return: (boolean, boolean)
-         [0] - True if there's at least one machine readable resource.
-         [1] - True if there's at least one document resource.
+    :return: dict
+         ['machine'] - True if there's at least one machine readable resource.
+         ['doc'] - True if there's at least one document resource.
     """
     at_least_one_machine_resource = \
         any([True for r in package['resources'] if r['format']=='CSV' or
@@ -233,8 +233,11 @@ def quality_mark(package):
                                             r['mimetype'] == 'text/json' or
                                             r['mimetype'] == 'application/json' or
                                             r['url_type']!='upload' and r['url']!=''])
+
+
+
     at_least_one_document_resource = \
-        any([True for r in package['resources'] if r['resource_type']=='doc'])
+        any([True for r in package['resources'] if r.get('resource_type')=='doc'])
 
     return { 'machine' : at_least_one_machine_resource,
              'doc' : at_least_one_document_resource }
