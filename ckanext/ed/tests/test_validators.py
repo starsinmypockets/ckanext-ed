@@ -91,6 +91,19 @@ class TestDocsValidators(FunctionalTestBase):
         dataset = call_action('package_show', context, id='test-dataset-4')
         assert dataset.get('resources')[0]['description'] == ''
 
+    def test_resource_dummy_validator_for_remains_as_is_on_update(self):
+        context = _create_context(self.sysadmin)
+        res_meta = {'name': 'regular-resource', 'format': 'csv', 'url': '', 'description': 'Very Good Description'}
+        resources = [res_meta]
+        data_dict = _create_dataset_dict('test-dataset-4', self.orgname, resources=resources)
+        call_action('package_create', context, **data_dict)
+        dataset = call_action('package_show', context, id='test-dataset-4')
+        res_meta.update({'id': dataset['resources'][0]['id'], 'url': 'https://ckan.io'})
+        call_action('resource_update', context, **res_meta)
+        res = call_action('resource_show', context, id=res_meta['id'])
+        assert res['description'] == 'Very Good Description'
+        assert res['url'] == 'https://ckan.io'
+
     def teardown(slef):
         reset_db()
 

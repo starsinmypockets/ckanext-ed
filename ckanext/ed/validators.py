@@ -36,6 +36,8 @@ def dummy_validator(key, data, errors, context):
     Eg if we are filling documentation resource, required fields for regular
     resouces will be filled with empty string and vice-versa.
     '''
+    if data[key]:
+        return
     is_doc = context.get('is_doc')
     schema = toolkit.h.scheming_get_dataset_schema('dataset')
     resource_schema = schema['resource_fields']

@@ -206,7 +206,7 @@ class NewResourceController(base.BaseController):
                     get_action('resource_update')(context, data)
                 else:
                     get_action('resource_create')(context, data)
-            except ValidationError as e:
+            except (ValidationError, ckan.logic.ValidationError) as e:
                 errors = e.error_dict
                 error_summary = e.error_summary
                 return self.new_resource(id, data, errors, error_summary)
