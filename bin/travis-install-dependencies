@@ -69,6 +69,11 @@ cd ckanext-disqus
 python setup.py develop
 cd -
 
+git clone https://github.com/keitaroinc/ckanext-pages
+cd ckanext-pages
+python setup.py develop
+cd -
+
 echo "Installing ckanext-ed and its requirements..."
 python setup.py develop
 

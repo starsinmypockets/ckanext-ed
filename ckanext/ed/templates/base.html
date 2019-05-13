@@ -1,16 +1,26 @@
 {% ckan_extends %}
 
 {% block links %}
-  <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,500,500i,700,700i" rel="stylesheet">
-  {{ super() }}
+    
+    <!--[if IE]>
+    <script src="{{ h.url_for_static('/classList.min.js') }}"></script>
+    <![endif]-->
+
+    {% resource 'pages/css/medium-editor.css' %}
+    {% resource 'pages/js/medium-editor.js' %}
+    {% resource 'pages/js/pages-editor.js' %}
 {% endblock %}
 
 {% block styles %}
   {{ super() }}
-  {% resource 'ed/css/custom.css' %}
+  {% resource 'ed/css/uswds.css' %}
+  {% resource 'ed/css/theme/styles.css' %}
 {% endblock %}
+
 
 {% block scripts %}
   {{ super() }}
+  {% resource 'ed/js/uswds.js' %}
   {% resource 'ed/js/select-tags.js' %}
+
 {% endblock %}

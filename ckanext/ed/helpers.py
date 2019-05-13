@@ -241,3 +241,13 @@ def quality_mark(package):
 
     return { 'machine' : at_least_one_machine_resource,
              'doc' : at_least_one_document_resource }
+
+def get_org_for_package(package):
+    """
+
+    :param package:
+    :return: organization name
+    """
+    return (
+        package['organization']['title']
+    )

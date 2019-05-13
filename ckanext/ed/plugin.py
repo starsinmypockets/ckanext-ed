@@ -26,6 +26,7 @@ class EDPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'ed_get_pending_datasets': helpers.get_pending_datasets,
             'ed_get_latest_rejection_feedback': helpers.get_latest_rejection_feedback,
             'quality_mark' : helpers.quality_mark,
+            'get_org_for_package' : helpers.get_org_for_package,
         }
 
     # IActions
@@ -53,6 +54,8 @@ class EDPlugin(plugins.SingletonPlugin, DefaultTranslation):
 
     # IConfigurer
     def update_config(self, config_):
+
+
         toolkit.add_template_directory(config_, 'templates')
         toolkit.add_public_directory(config_, 'public')
         toolkit.add_resource('fanstatic', 'ed')
