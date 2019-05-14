@@ -39,7 +39,7 @@ $theme-color-primary-family:        'blue' !default;
 $theme-color-primary-lightest:      false !default;
 $theme-color-primary-lighter:       'blue-10' !default;
 $theme-color-primary-light:         'blue-30' !default;
-$theme-color-primary:               'blue-60v' !default;
+$theme-color-primary:               'blue-50' !default;
 $theme-color-primary-vivid:         'blue-warm-60v' !default;
 $theme-color-primary-dark:          'blue-warm-70v' !default;
 $theme-color-primary-darker:        'blue-warm-80v' !default;
@@ -134,3 +134,7 @@ $theme-link-active-color:             'primary-darker' !default;
 
 $theme-color-alternate: #405d77;
 $theme-color-alternate-dark: #3e474e;
+$theme-color-main: #00274A;
+
+$theme-grey-light: #f8f8f8;
+$theme-grey-dark: #f4f4f4;

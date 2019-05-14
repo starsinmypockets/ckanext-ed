@@ -1,0 +1,109 @@
+{% extends "page.html" %}
+
+{% block subtitle %}{{ _('About') }}{% endblock %}
+
+{% block breadcrumb_content %}
+  <li class="active">{% link_for _('About'), 'home.about' %}</li>
+{% endblock %}
+
+{% block wrapper_class %}-custom{% endblock %}
+
+
+
+{% block secondary_content %}
+    <div class="sidebar_content_wrap">
+        <h4 class="side-heading">About Us</h4>
+
+        <nav id="spy">
+            <ul class="sidebar-nav nav">
+                <li class="sidebar-brand"  class="active">
+                    <a href="#anch0">U.S Department of Education</a>
+                </li>
+                <li>
+                    <a href="#anch1" data-scroll>
+                        About Ed Open Data
+                    </a>
+                </li>
+                <li>
+                    <a href="#anch2" data-scroll>
+                        Why use Open Data
+                    </a>
+                </li>
+                <li>
+                    <a href="#anch3" data-scroll>
+                        Get Involved
+                    </a>
+                </li>
+                <li>
+                    <a href="#anch4" data-scroll>
+                        Our Offices
+                    </a>
+                </li>
+                <li>
+                    <a href="#anch5" data-scroll>
+                        More about CKAN
+                    </a>
+                </li>
+                
+            </ul>
+        </nav>
+    </div>
+{% endblock %}
+
+
+{% block primary %}
+  <div class="col-sm-9 col-md-9 col-lg-7">
+        <article class="module">
+            <div class="module-content about-pg">
+            {% block about %}
+                <img src="base/images/dept-of-ed-logo.png" id="anch0" width=280/> <br/> <br/>
+                <p>ED's mission is to promote student achievement and preparation for global competitiveness by fostering educational excellence and ensuring equal access.</p>
+
+                <p>ED was created in 1980 by combining offices from several federal agencies. ED's 4,400 employees and $68 billion budget are dedicated to:</p>
+                  
+                <ul>
+                    <li>Establishing policies on federal financial aid for education, and distributing as well as monitoring those funds.</li>
+                    <li>Monitoring those funds</li>
+                    <li>Collecting data on America's schools and disseminating research.</li>
+                    <li>Focusing national attention on key educational issues.</li>
+                    <li>Prohibiting discrimination and ensuring equal access to education.</li>
+                </ul>  
+                 
+                <h2 id="anch1">{{ _('About Ed Open Data') }}</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec maximus sapien. Phasellus sit amet nisi porta, gravida lectus quis, laoreet nunc. Donec lobortis at libero et bibendum. Integer ultrices egestas dolor, at mattis est dapibus nec. Duis faucibus elit at faucibus ornare. Vestibulum viverra nulla risus, at cursus magna commodo id. Nulla facilisi. Cras iaculis cursus turpis id bibendum. Pellentesque eget lectus quis justo feugiat posuere eu et felis. Sed lacinia tortor a lorem eleifend ultrices. Phasellus eu finibus nisl, vel malesuada magna. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+
+                <p>Donec eget mi volutpat, iaculis enim vitae, porta lorem. Maecenas finibus augue at pretium lobortis. Mauris accumsan nisl vel placerat scelerisque. Nulla sit amet magna pulvinar, elementum turpis vitae, molestie dolor. Praesent congue, neque at suscipit aliquam, mi purus sollicitudin tellus, vel vehicula nibh orci sit amet risus. Integer facilisis elementum tempor. Suspendisse potenti.</p>
+                  
+                <p>Etiam vel est sit amet risus dignissim tempus nec ut tortor. Curabitur eu consequat metus, sit amet lacinia est. Nunc cursus quis ex eget lacinia. Phasellus non ultricies orci. Pellentesque condimentum vitae ante quis elementum. Proin eu nibh tincidunt, convallis sem ac, sodales justo. Curabitur finibus libero hendrerit nulla vestibulum vulputate. </p>
+                
+
+                <h2 id="anch2">{{ _('Why use open data') }}</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec maximus sapien. Phasellus sit amet nisi porta, gravida lectus quis, laoreet nunc. Donec lobortis at libero et bibendum. Integer ultrices egestas dolor, at mattis est dapibus nec. Duis faucibus elit at faucibus ornare. Vestibulum viverra nulla risus, at cursus magna commodo id. </p>
+
+
+                <h2 id="anch3">{{ _('Get Involved') }}</h2>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec maximus sapien. Phasellus sit amet nisi porta, gravida lectus quis, laoreet nunc. Donec lobortis at libero et bibendum. Integer ultrices egestas dolor, at mattis est dapibus nec. Duis faucibus elit at faucibus ornare. Vestibulum viverra nulla risus, at cursus magna commodo id. Nulla facilisi. Cras iaculis cursus turpis id bibendum. Pellentesque eget lectus quis justo feugiat posuere eu et felis. Sed lacinia tortor a lorem eleifend ultrices. Phasellus eu finibus nisl, vel malesuada magna. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+  
+                  <p>Donec eget mi volutpat, iaculis enim vitae, porta lorem. Maecenas finibus augue at pretium lobortis. Mauris accumsan nisl vel placerat scelerisque. Nulla sit amet magna pulvinar, elementum turpis vitae, molestie dolor. Praesent congue, neque at suscipit aliquam, mi purus sollicitudin tellus, vel vehicula nibh orci sit amet risus. Integer facilisis elementum tempor. Suspendisse potenti.</p>
+                    
+                  <p>Etiam vel est sit amet risus dignissim tempus nec ut tortor. Curabitur eu consequat metus, sit amet lacinia est. Nunc cursus quis ex eget lacinia. Phasellus non ultricies orci. Pellentesque condimentum vitae ante quis elementum. Proin eu nibh tincidunt, convallis sem ac, sodales justo. Curabitur finibus libero hendrerit nulla vestibulum vulputate. </p>
+                
+                <h2 id="anch4">{{ _('Our Offices') }}</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec maximus sapien. Phasellus sit amet nisi porta, gravida lectus quis, laoreet nunc. Donec lobortis at libero et bibendum. Integer ultrices egestas dolor, at mattis est dapibus nec. Duis faucibus elit at faucibus ornare. Vestibulum viverra nulla risus, at cursus magna commodo id. Nulla facilisi. Cras iaculis cursus turpis id bibendum. Pellentesque eget lectus quis justo feugiat posuere eu et felis. Sed lacinia tortor a lorem eleifend ultrices. Phasellus eu finibus nisl, vel malesuada magna. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+
+                
+
+                <h2 id="anch5">{{ _('More About CKAN') }}</h2>
+                <p>Donec eget mi volutpat, iaculis enim vitae, porta lorem. Maecenas finibus augue at pretium lobortis. Mauris accumsan nisl vel placerat scelerisque. Nulla sit amet magna pulvinar, elementum turpis vitae, molestie dolor. Praesent congue, neque at suscipit aliquam, mi purus sollicitudin tellus, vel vehicula nibh orci sit amet risus. Integer facilisis elementum tempor. Suspendisse potenti.</p>
+                 
+
+                <div class="discover-data">
+                    <h3>Discover & Publish Data</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec maximus sapien. Phasellus sit amet nisi porta, gravida lectus quis.</p>
+                    <a class="usa-button" href="{{ h.url_for(controller='package', action='search') }}">View Datasets</a>
+                </div>
+            {% endblock %}
+            </div>
+        </article>
+  </div>
+{% endblock %}

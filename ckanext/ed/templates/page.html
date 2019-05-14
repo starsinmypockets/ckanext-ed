@@ -2,22 +2,10 @@
 
 {%- block content %}
     {% block toolbar %}
-      <div class="toolbar">
-        <div class="container">
-        {% block breadcrumb %}
-          {% if self.breadcrumb_content() | trim %}
-            <ol class="breadcrumb">
-              {% snippet 'snippets/home_breadcrumb_item.html' %}
-              {% block breadcrumb_content %}{% endblock %}
-            </ol>
-          {% endif %}
-        {% endblock %}
-        </div>
-      </div>
     {% endblock %}
 
     {% block maintag %}<div role="main">{% endblock %}
-      <div id="content" class="container">
+      <div id="content" class="container-fluid">
         {% block main_content %}
           {% block flash %}
             <div class="flash-messages">
@@ -36,7 +24,9 @@
             {% endblock %}
 
             {% block secondary %}
-              {{ super() }}
+              <aside class="sidebar">
+                {% block secondary_content %}{% endblock %}
+              </aside>
             {% endblock %}
 
             {% block primary %}
