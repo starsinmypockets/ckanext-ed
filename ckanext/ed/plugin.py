@@ -14,6 +14,7 @@ class EDPlugin(plugins.SingletonPlugin, DefaultTranslation):
     plugins.implements(plugins.IRoutes, inherit=True)
     plugins.implements(plugins.IValidators)
     plugins.implements(plugins.IPackageController, inherit=True)
+    plugins.implements(plugins.IFacets)
 
     # ITemplateHelpers
     def get_helpers(self):
@@ -128,3 +129,12 @@ class EDPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'resource_type_validator': validators.resource_type_validator,
             'dummy_validator': validators.dummy_validator
         }
+
+    def dataset_facets(self, facets_dict, package_type):
+        from collections import OrderedDict
+        facets_dict = OrderedDict({})
+        facets_dict['groups'] = "Major Topics"
+        facets_dict['tags'] = "Tags"
+        facets_dict['organization'] = "Publishers"
+        return facets_dict
+
