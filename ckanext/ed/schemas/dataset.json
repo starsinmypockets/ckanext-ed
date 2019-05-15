@@ -30,16 +30,8 @@
       "label": "Tags",
       "preset": "tag_string_autocomplete",
       "form_snippet": "select-multiple-tags.html",
-      "choices": [
-        {
-          "value": "education",
-          "label": "Education"
-        },
-        {
-          "value": "ud-ed",
-          "label": "US-ED"
-        }
-      ],
+      "choices_helper": "load_choices",
+      "choices_file_path": "ckanext.ed.schemas.assets:tags.json",
       "required": true,
       "validators": "ignore_missing",
       "form_placeholder": "eg. university, public school etc.",
@@ -70,16 +62,8 @@
       "label": "Program Affiliation",
       "preset" : "select",
       "help_test": "The program this data profile is associated with.",
-      "choices": [
-        {
-          "value" : "housing",
-          "label": "Public Housing"
-        },
-        {
-          "value" :  "education",
-          "label" : "Free Education Study"
-        }
-      ]
+      "choices_helper": "load_choices",
+      "choices_file_path": "ckanext.ed.schemas.assets:programs.json"
     },
     {
       "field_name": "contact_name",
@@ -143,7 +127,8 @@
       "field_name": "license_id",
       "form_snippet": "license.html",
       "help_text": "License definitions and additional information can be found at http://opendefinition.org/",
-      "label": "License"
+      "label": "License",
+      "default": "US-PDDL-1.0"
     },
     {
       "field_name": "rights",

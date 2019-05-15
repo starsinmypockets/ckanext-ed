@@ -2,6 +2,8 @@ from ckan.plugins import toolkit
 from ckan.common import config
 import os
 import logging
+import inspect
+import json
 
 from datetime import datetime
 
@@ -251,3 +253,21 @@ def get_org_for_package(package):
     return (
         package['organization']['title']
     )
+
+
+def load_meta_file(file_path):
+    """
+    Given a path like "ckanext.ed.schemas:choices.json"
+    find the second part relative to the import path of the first
+    """
+    module_name, file_name = file_path.split(':', 1)
+    module = __import__(module_name, fromlist=[''])
+    file_path = os.path.join(os.path.dirname(inspect.getfile(module)),
+                             file_name)
+    return open(file_path)
+
+
+def load_choices(field_meta=None):
+    file = load_meta_file(field_meta.get('choices_file_path'))
+    json_data = json.load(file)
+    return json_data

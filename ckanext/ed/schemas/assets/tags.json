@@ -1,0 +1,294 @@
+[
+  {
+    "value": "act-scores",
+    "label": "act-scores"
+  },
+  {
+    "value": "adult-literacy",
+    "label": "adult-literacy"
+  },
+  {
+    "value": "advanced-mathematics-and-science",
+    "label": "Advanced-mathematics-and-science"
+  },
+  {
+    "value": "arts",
+    "label": "arts"
+  },
+  {
+    "value": "international-comparisons-of-achievement",
+    "label": "international-comparisons-of-achievement"
+  },
+  {
+    "value": "long-term-trends-in-reading-and-mathematics-achievement",
+    "label": "long-term-trends-in-reading-and-mathematics-achievement"
+  },
+  {
+    "value": "mathematics",
+    "label": "mathematics"
+  },
+  {
+    "value": "reading",
+    "label": "reading"
+  },
+  {
+    "value": "sat-scores",
+    "label": "sat-scores"
+  },
+  {
+    "value": "science",
+    "label": "science"
+  },
+  {
+    "value": "state-by-state-rankings",
+    "label": "state-by-state-rankings"
+  },
+  {
+    "value": "child-care",
+    "label": "child-care"
+  },
+  {
+    "value": "early-literacy-activities",
+    "label": "early-literacy-activities"
+  },
+  {
+    "value": "knowledge-and-skills-of-young-children",
+    "label": "knowledge-and-skills-of-young-children"
+  },
+  {
+    "value": "preprimary-education-enrollment",
+    "label": "preprimary-education-enrollment"
+  },
+  {
+    "value": "bullying",
+    "label": "bullying"
+  },
+  {
+    "value": "career-and-technical-education",
+    "label": "career-and-technical-education"
+  },
+  {
+    "value": "charter-schools",
+    "label": "charter-schools"
+  },
+  {
+    "value": "closed-schools",
+    "label": "closed-schools"
+  },
+  {
+    "value": "computer-and-internet-use",
+    "label": "computer-and-internet-use"
+  },
+  {
+    "value": "condition-of-public-school-facilities",
+    "label": "condition-of-public-school-facilities"
+  },
+  {
+    "value": "distance-learning",
+    "label": "distance-learning"
+  },
+  {
+    "value": "dropout-rates",
+    "label": "dropout-rates"
+  },
+  {
+    "value": "educational-institutions",
+    "label": "educational-institutions"
+  },
+  {
+    "value": "english-language-learners",
+    "label": "english-language-learners"
+  },
+  {
+    "value": "enrollment-trends",
+    "label": "enrollment-trends"
+  },
+  {
+    "value": "expenditures",
+    "label": "expenditures"
+  },
+  {
+    "value": "high-school-graduation-rates",
+    "label": "high-school-graduation-rates"
+  },
+  {
+    "value": "homeschooling",
+    "label": "homeschooling"
+  },
+  {
+    "value": "knowledge-and-skills-at-kindergarten",
+    "label": "knowledge-and-skills-at-kindergarten"
+  },
+  {
+    "value": "public-and-private-school-comparison",
+    "label": "public-and-private-school-comparison"
+  },
+  {
+    "value": "public-school-choice-programs",
+    "label": "public-school-choice-programs"
+  },
+  {
+    "value": "free-or-reduced-price-lunch",
+    "label": "free-or-reduced-price-lunch"
+  },
+  {
+    "value": "school-crime",
+    "label": "school-crime"
+  },
+  {
+    "value": "school-id-codes-and-searches",
+    "label": "school-ID-codes-and-searches"
+  },
+  {
+    "value": "school-safety-and-security",
+    "label": "school-safety-and-security"
+  },
+  {
+    "value": "school-uniforms",
+    "label": "school-uniforms"
+  },
+  {
+    "value": "stem-by-gender",
+    "label": "stem-by-gender"
+  },
+  {
+    "value": "state-level statistics",
+    "label": "state-level statistics"
+  },
+  {
+    "value": "students-with-disabilities",
+    "label": "students-with-disabilities"
+  },
+  {
+    "value": "teacher-qualifications",
+    "label": "teacher-qualifications"
+  },
+  {
+    "value": "teacher-trends",
+    "label": "teacher-trends"
+  },
+  {
+    "value": "title-i",
+    "label": "title-i"
+  },
+  {
+    "value": "transportation",
+    "label": "transportation"
+  },
+  {
+    "value": "violence-prevention",
+    "label": "violence-prevention"
+  },
+  {
+    "value": "library",
+    "label": "library"
+  },
+  {
+    "value": "adult-learning",
+    "label": "adult-learning"
+  },
+  {
+    "value": "adult-skills-in-international-context",
+    "label": "adult-skills-in-international-context"
+  },
+  {
+    "value": "college-crime",
+    "label": "college-crime"
+  },
+  {
+    "value": "degrees-conferred-by-race-and-sex",
+    "label": "degrees-conferred-by-race-and-sex"
+  },
+  {
+    "value": "distance-learning",
+    "label": "distance-learning"
+  },
+  {
+    "value": "educational-attainment",
+    "label": "educational-attainment"
+  },
+  {
+    "value": "employment-rates-of-college-graduates",
+    "label": "employment-rates-of-college-graduates"
+  },
+  {
+    "value": "endowments",
+    "label": "endowments"
+  },
+  {
+    "value": "enrollment",
+    "label": "enrollment"
+  },
+  {
+    "value": "expenditures",
+    "label": "expenditures"
+  },
+  {
+    "value": "financial-aid",
+    "label": "financial-aid"
+  },
+  {
+    "value": "graduation-rates",
+    "label": "graduation-rates"
+  },
+  {
+    "value": "highest-enrollment ",
+    "label": "highest-enrollment "
+  },
+  {
+    "value": "historically-black-colleges-and-universities",
+    "label": "historically-black-colleges-and-universities"
+  },
+  {
+    "value": "hbcu",
+    "label": "hbcu"
+  },
+  {
+    "value": "transition-to-college",
+    "label": "transition-to-college"
+  },
+  {
+    "value": "income-of-young-adults",
+    "label": "income-of-young-adults"
+  },
+  {
+    "value": "international-comparisons-of-education-outcomes",
+    "label": "international-comparisons-of-education-outcomes"
+  },
+  {
+    "value": "most-popular-majors",
+    "label": "most-popular-majors"
+  },
+  {
+    "value": "nces-surveys-on-students-and-teachers",
+    "label": "NCES-surveys-on-students-and-teachers"
+  },
+  {
+    "value": "race-ethnicity-of-college-faculty",
+    "label": "race-ethnicity-of-college-faculty"
+  },
+  {
+    "value": "student-debt",
+    "label": "student-debt"
+  },
+  {
+    "value": "students-with-disabilities",
+    "label": "students-with-disabilities"
+  },
+  {
+    "value": "sustainable-development-goals",
+    "label": "sustainable-development-goals"
+  },
+  {
+    "value": "time-to-degree",
+    "label": "time-to-degree"
+  },
+  {
+    "value": "title-ix",
+    "label": "title-ix"
+  },
+  {
+    "value": "tuition-costs-of-colleges-and-universities",
+    "label": "tuition-costs-of-colleges-and-universities"
+  }
+]
