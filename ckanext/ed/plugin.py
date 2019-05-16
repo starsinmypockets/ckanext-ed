@@ -14,7 +14,7 @@ class EDPlugin(plugins.SingletonPlugin, DefaultTranslation):
     plugins.implements(plugins.IRoutes, inherit=True)
     plugins.implements(plugins.IValidators)
     plugins.implements(plugins.IPackageController, inherit=True)
-    plugins.implements(plugins.IFacets)
+    plugins.implements(plugins.IFacets, inherit=True)
 
     # ITemplateHelpers
     def get_helpers(self):
@@ -137,4 +137,3 @@ class EDPlugin(plugins.SingletonPlugin, DefaultTranslation):
         facets_dict['tags'] = "Tags"
         facets_dict['organization'] = "Publishers"
         return facets_dict
-

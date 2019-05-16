@@ -9,6 +9,62 @@ from ckan.logic import NotFound
 from ckan.plugins import toolkit
 from ckan.tests import helpers, factories
 
+class TestBasicControllers(helpers.FunctionalTestBase):
+    @classmethod
+    def setup_class(cls):
+        helpers.reset_db()
+        super(TestBasicControllers, cls).setup_class()
+
+    @classmethod
+    def teardown_class(cls):
+        super(TestBasicControllers, cls).teardown_class()
+        helpers.reset_db()
+
+    def setup(self):
+        super(TestBasicControllers, self).setup()
+        helpers.reset_db()
+        self.sysadmin = factories.Sysadmin()
+        self.pkg = 'test-dataset-base'
+        self.orgname = 'us-ed-base'
+        factories.Organization(name=self.orgname, id=self.orgname)
+        context = _create_context(self.sysadmin)
+        data_dict = _create_dataset_dict(self.pkg, self.orgname, private=False)
+        self.package = helpers.call_action('package_create', context, **data_dict)
+        self.envs = {'REMOTE_USER': self.sysadmin['name'].encode('ascii')}
+        self.app = self._get_test_app()
+
+    def test_home_page_is_ok_for_anonimous(self):
+        resp = self.app.get(url=url_for('/'))
+        assert resp.status_int == 200
+
+    def test_home_page_is_ok_for_sysadmin(self):
+        resp = self.app.get(url=url_for('/'), extra_environ=self.envs)
+        assert resp.status_int == 200
+
+    def test_dataset_page_is_ok_for_anonimous(self):
+        resp = self.app.get(url=url_for('/dataset'))
+        assert resp.status_int == 200
+
+    def test_dataset_page_is_ok_for_sysadmin(self):
+        resp = self.app.get(url=url_for('/dataset'), extra_environ=self.envs)
+        assert resp.status_int == 200
+
+    def test_org_page_is_ok_for_anonimous(self):
+        resp = self.app.get(url=url_for('/organization/%s' % self.orgname))
+        assert resp.status_int == 200
+
+    def test_org_page_is_ok_for_sysadmin(self):
+        resp = self.app.get(url=url_for('/organization/%s' % self.orgname), extra_environ=self.envs)
+        assert resp.status_int == 200
+
+    def test_pakage_page_is_ok_for_anonimous(self):
+        resp = self.app.get(url=url_for('/dataset/%s' % self.pkg))
+        assert resp.status_int == 200
+
+    def test_pakage_page_is_ok_for_sysadmin(self):
+        resp = self.app.get(url=url_for('/dataset/%s' % self.pkg), extra_environ=self.envs)
+        assert resp.status_int == 200
+
 class TestNewResourceController(helpers.FunctionalTestBase):
 
     @classmethod
