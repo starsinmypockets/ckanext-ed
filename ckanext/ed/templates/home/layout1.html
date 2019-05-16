@@ -1,17 +1,204 @@
-<div role="main" class="hero">
+{% block custom_styles %}
+<style>
+  .site-search {
+    display:none;
+  }
+
+  header.masthead {
+    box-shadow: none;
+  }
+</style>
+{% endblock %}
+
+<!-- Hero Section -->
+<div class="hero" id="hero">
   <div class="container">
-    <div class="row row1">
-      <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 col2">
-        {% block stats %} {% snippet 'home/snippets/stats.html' %} {% endblock %} {% block search %} {% snippet 'home/snippets/search.html'
-        %} {% endblock %}
-      </div>
-      <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 col1">
-        {% block promoted %} {% snippet 'home/snippets/promoted.html' %} {% endblock %}
+    <div class="row">
+      <div class="col-sm-10 col-sm-offset-1">
+        <div class="hero-content">
+          <h1>America's education data</h1>
+          <h4>Datasets from U.S Department of Education</h4>
+          {% block stats %} 
+            {% endblock %} {% block search %} 
+            {% snippet 'home/snippets/search.html' %}
+          {% endblock %}
+        </div>
       </div>
     </div>
   </div>
 </div>
 
+<!-- Categories and Major Topics -->
+<div class="container">
+    <div class="row">
+      <div class="col-sm-12 col-md-12">
+
+        <div class="home-categories">
+        <h3>Datasets by category</h3>
+
+        <div class="card-custom categories-card shadow">
+
+                  <div class="col-links-1">
+                    <ul>
+                      <li>
+                        <a href="#">Civil Rights Data Collection <span>12</span></a>
+                      </li>
+                      <li>
+                        <a href="#">College Scorecard <span>32</span></a>
+                      </li>
+                      <li>
+                        <a href="#">Post Secondary Education S ... <span>32</span></a>
+                      </li>
+                      <li>
+                        <a href="#">Vocational Training <span>9</span></a>
+                      </li>
+                      <li>
+                        <a href="#">National Student Loan <span>41</span></a>
+                      </li>
+                      <li>
+                        <a href="#">Education Records <span>7</span></a>
+                      </li>
+                      <li>
+                        <a href="#">Bi-lingual Schooling <span>11</span></a>
+                      </li>
+                      <li>
+                        <a href="#">Placement Data <span>21</span></a>
+                      </li>
+                      <li>
+                          <a href="#">Advanced Schooling <span>5</span></a>
+                        </li>
+                    </ul>
+                  </div>
+
+                  <div class="col-links-2">
+                    <ul>
+                      <li>
+                        <a href="#">K-12 <span>19</span></a>
+                      </li>
+                      <li>
+                        <a href="#">Junior School Records <span>8</span></a>
+                      </li>
+                      <li>
+                        <a href="#">Universities Catalogue <span>17</span></a>
+                      </li>
+                      <li>
+                        <a href="#">Bi-lingual Schooling <span>4</span></a>
+                      </li>
+                      <li>
+                        <a href="#">Education Loans <span>7</span></a>
+                      </li>
+                      <li>
+                        <a href="#">Primary Education & Loans <span>15</span></a>
+                      </li>
+                      <li>
+                        <a href="#">Student Loans <span>23</span></a>
+                      </li>
+                    </ul>
+                  </div>
+                
+                
+                <div class="col-tags" data-simplebar>
+
+                  <div class="tag-group">
+                      <h5>A</h5>
+                      <a href="#" class="tag-custom">#accountability 18</a>
+                      <a href="#"  class="tag-custom">#adequate-yearly-progress 21</a>
+                      <a href="#"  class="tag-custom">#accreditation 31</a>
+                      <a href="#"  class="tag-custom">#advanced-placement 17</a>
+                  </div>
+                  <div class="tag-group">
+                      <h5>B</h5>
+                      <a href="#"  class="tag-custom">#accountability 18</a>
+                      <a href="#"  class="tag-custom">#adequate-yearly-progress 21</a>
+                      <a href="#"  class="tag-custom">#accreditation 31</a>
+                      <a href="#"  class="tag-custom">#advanced-placement 17</a>
+                  </div>
+                  <div class="tag-group">
+                      <h5>C</h5>
+                      <a href="#"  class="tag-custom">#accountability 18</a>
+                      <a href="#"  class="tag-custom">#adequate-yearly-progress 21</a>
+                      <a href="#"  class="tag-custom">#accreditation 31</a>
+                      <a href="#"  class="tag-custom">#advanced-placement 17</a>
+                  </div>
+                  <div class="tag-group">
+                      <h5>D</h5>
+                      <a href="#"  class="tag-custom">#accountability 18</a>
+                      <a href="#"  class="tag-custom">#adequate-yearly-progress 21</a>
+                      <a href="#"  class="tag-custom">#accreditation 31</a>
+                      <a href="#"  class="tag-custom">#advanced-placement 17</a>
+                  </div>
+                </div>
+
+
+                <p class="clearfix"></p>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Treanding and New Data -->
+<div class="container">
+
+  <div class="row">
+    <div class="col-sm-12 col-md-12">
+
+      <div class="trending-new">
+        <div class="row">
+          <div class="col-md-6">
+              <h4>Trending datasets</h4>
+
+              <div class="trending-data card-custom-plain">
+                  {% set most_popular_datasets = h.ed_get_most_popular_datasets(limit=5) %}
+                  {% if most_popular_datasets %}
+                      {% for dataset in most_popular_datasets %}
+                      <div class="list-item">
+                        <img src="/base/images/trending-data.png" class="trending-icon" alt="New Data"/>
+                        <a href="{{ h.url_for(controller='package', action='read', id=dataset.name) }}" class="dataset-name">{{ dataset.title }}</a>
+                        <p class="office-name">{{ dataset.organization.title }}</p>
+                      </div>
+                      {% endfor %}
+                  {% else %}
+                    <div class="list-item">
+                      <p class="dataset-name">{{ _('No datasets available.') }}</p>
+                    </div>
+                  {% endif %}
+              </div>
+          </div>
+
+          <div class="col-md-6">
+              <h4>New Data</h4>
+
+              <div class="new-data card-custom-plain">
+                  {% set recent_datasets = h.ed_get_recently_updated_datasets(limit=5) %}
+                  {% if recent_datasets %}
+                      {% for dataset in recent_datasets %}
+                      <div class="list-item">
+                        <img src="/base/images/new-data.png" class="new-data-icon" alt="New Data"/>
+                        <a href="{{ h.url_for(controller='package', action='read', id=dataset.name) }}" class="dataset-name">{{ dataset.title }}</a>
+                        <p class="office-name">{{ dataset.organization.title }}</p>
+                      </div>
+                      {% endfor %}
+                  {% else %}
+                    <div class="list-item">
+                      <p class="dataset-name">{{ _('No datasets available.') }}</p>
+                    </div>
+                  {% endif %}
+               </div>
+
+          </div>
+
+        </div>
+
+    </div>
+  </div>
+</div>
+
+<p class="page-name page-home hidden">home</p>
+
+<!-- Categories and Major Topics  
 <div role="main">
   <div class="container">
     {% set groups = h.ed_get_groups() %} {% if groups %}
@@ -33,69 +220,9 @@
     </div>
     {% endif %}
   </div>
+-->
 
 
-  <div class="container">
-    <div class="row">
-      <div class="module-datasets col-lg-6 col-md-12 col-sm-12 col-xs-12">
-        {% set recent_datasets = h.ed_get_recently_updated_datasets(limit=5) %}
-        <h3 class="title"><i class="fa fa-clock-o"></i> {{_('Recent Datasets')}}</h3>
-          {% if recent_datasets %}
-          <ul class="module-recent list-unstyled">
-            {% for dataset in recent_datasets %}
-            <li><i class="fa fa-database"></i> <a href="{{ h.url_for(controller='package', action='read', id=dataset.name) }}">{{
-                dataset.title }}</a></li>
-            {% endfor %}
-          </ul>
-          {% else %}
-          <p>{{ _('No datasets available.') }}</p>
-          {% endif %}
-      </div>
-      <div class="module-datasets col-lg-6 col-md-12 col-sm-12 col-xs-12">
-        {% set most_popular_datasets = h.ed_get_most_popular_datasets(limit=5) %}
-        <h3 class="title"><i class="fa fa-line-chart"></i> {{_('Most Popular Datasets')}}</h3>
-          {% if most_popular_datasets %}
-          <ul class="module-recent list-unstyled">
-            {% for dataset in most_popular_datasets %}
-            <li><i class="fa fa-database"></i> <a href="{{ h.url_for(controller='package', action='read', id=dataset.name) }}">{{
-                dataset.title }}</a></li>
-            {% endfor %}
-          </ul>
-          {% else %}
-          <p>{{ _('No datasets available.') }}</p>
-          {% endif %}
-      </div>
-    </div>
-  </div>
 
 
-{% set recent_blogs = h.get_recent_blog_posts(3) %}
 
-{% if recent_blogs %}
-<div role="main" class="blog-bg">
-    <div class="container">
-      <div class="blogs">
-        <div class="blogs-header">
-          <h3 class="blogs-header-title">{{ _('Recent Blog Posts') }}</h3>
-          {% set blog_url = h.url(controller='ckanext.pages.controller:PagesController', action='blog_index') %}
-          <a class="btn btn-small btn-primary" href="{{ blog_url }}">{{ _('Blog Аrchive') }}</a>
-        </div>
-        <div class="blogs-items-container">
-          {% for article in recent_blogs %}
-            {% set article_url = h.url_for(controller='ckanext.pages.controller:PagesController', action='blog_show', page='/' + article.name) %}
-            <a href="{{ article_url }}" class="blogs-item">
-              {% if article.image %}
-                <figure class="blogs-item-photo">
-                  <img src="{{ article.image }}">
-                </figure>
-              {% endif %}
-              <span class="blogs-item-title">{{ article.title or article.name }}</span>
-              <span class="blogs-item-description">{{ h.markdown_extract(article.content) }}</span>
-            </a>
-          {% endfor %}
-        </div>
-      </div>
-
-    </div>
-</div>
-{% endif %}
