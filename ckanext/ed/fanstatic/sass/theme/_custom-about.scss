@@ -1,0 +1,24 @@
+/* About Page */
+.about-pg {
+    h2 {
+        @include typeset($theme-font-role-ui,'lg',1);
+        font-weight:600;
+        color:$theme-color-main;
+        padding-top:70px;
+    }
+
+    .discover-data {
+        background-color:$theme-grey-light;
+        padding:20px;
+        margin-top:60px;
+
+        h3 {
+            margin: 0;
+            padding: 0;
+        }
+
+        p {
+            padding:5px 0 0 0;
+        }
+    }
+}

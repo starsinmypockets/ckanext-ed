@@ -3,6 +3,8 @@ var less = require('gulp-less');
 var cleanCSS = require('gulp-clean-css');
 var autoprefixer = require('gulp-autoprefixer');
 var sass = require('gulp-sass');
+var minCss = require('gulp-minify-css')
+var rename = require('gulp-rename')
 // var sourcemaps = require('gulp-sourcemaps'); - Uncomment when developing
 
 sass.compiler = require('node-sass');
@@ -10,8 +12,14 @@ sass.compiler = require('node-sass');
 // Rebuild css from Sass
 gulp.task('sass', function () {
   return gulp.src('ckanext/ed/fanstatic/sass/**/*.scss')
-    .pipe(sass().on('error', sass.logError))
-    .pipe(gulp.dest('ckanext/ed/fanstatic/css'));
+    .pipe(sass({
+         outputStyle : 'expanded'
+      }).on('error', sass.logError))
+    .pipe(gulp.dest('ckanext/ed/fanstatic/css'))
+
+    .pipe(minCss())
+      .pipe(rename({ extname: '.min.css' }))
+      .pipe(gulp.dest('ckanext/ed/fanstatic/css'))
 });
 
 // Rebuild CSS from LESS
