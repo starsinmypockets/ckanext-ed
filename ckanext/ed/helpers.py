@@ -272,3 +272,12 @@ def load_choices(field_meta=None):
     file = load_meta_file(field_meta.get('choices_file_path'))
     json_data = json.load(file)
     return json_data
+
+def alphabetize_tags(tag_items):
+    import operator
+    ## we are sorting by tag_items['display_name']
+    sorted_tags = sorted(tag_items, key=lambda x: x['display_name'])
+    return sorted_tags
+
+
+    

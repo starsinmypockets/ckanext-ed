@@ -40,95 +40,43 @@
 
                   <div class="col-links-1">
                     <ul>
-                      <li>
-                        <a href="#">Civil Rights Data Collection <span>12</span></a>
-                      </li>
-                      <li>
-                        <a href="#">College Scorecard <span>32</span></a>
-                      </li>
-                      <li>
-                        <a href="#">Post Secondary Education S ... <span>32</span></a>
-                      </li>
-                      <li>
-                        <a href="#">Vocational Training <span>9</span></a>
-                      </li>
-                      <li>
-                        <a href="#">National Student Loan <span>41</span></a>
-                      </li>
-                      <li>
-                        <a href="#">Education Records <span>7</span></a>
-                      </li>
-                      <li>
-                        <a href="#">Bi-lingual Schooling <span>11</span></a>
-                      </li>
-                      <li>
-                        <a href="#">Placement Data <span>21</span></a>
-                      </li>
-                      <li>
-                          <a href="#">Advanced Schooling <span>5</span></a>
+                      {% for item in c.search_facets.groups['items'][:9] %}
+                        <li>
+                            {% set href = "/dataset?groups=" + item.name %}
+                            <a href="{{ href }}">
+                                {{ item['display_name'] }}
+                                <span>{{ item.count }}</span></a>
                         </li>
+                      {% endfor %}
                     </ul>
                   </div>
-
                   <div class="col-links-2">
                     <ul>
-                      <li>
-                        <a href="#">K-12 <span>19</span></a>
-                      </li>
-                      <li>
-                        <a href="#">Junior School Records <span>8</span></a>
-                      </li>
-                      <li>
-                        <a href="#">Universities Catalogue <span>17</span></a>
-                      </li>
-                      <li>
-                        <a href="#">Bi-lingual Schooling <span>4</span></a>
-                      </li>
-                      <li>
-                        <a href="#">Education Loans <span>7</span></a>
-                      </li>
-                      <li>
-                        <a href="#">Primary Education & Loans <span>15</span></a>
-                      </li>
-                      <li>
-                        <a href="#">Student Loans <span>23</span></a>
-                      </li>
+                      {% for category in c.search_facets.groups['items'][9:] %}
+                        <li>
+                            {% set href = "/dataset?groups=" + item.name %}
+                            <a href="{{ href }}">{{ category['display_name'] }}<span>{{ category.count }}</span></a>
+                        </li>
+                      {% endfor %}
                     </ul>
                   </div>
-                
-                
-                <div class="col-tags" data-simplebar>
+               <div class="col-tags" data-simplebar> 
 
-                  <div class="tag-group">
-                      <h5>A</h5>
-                      <a href="#" class="tag-custom">#accountability 18</a>
-                      <a href="#"  class="tag-custom">#adequate-yearly-progress 21</a>
-                      <a href="#"  class="tag-custom">#accreditation 31</a>
-                      <a href="#"  class="tag-custom">#advanced-placement 17</a>
-                  </div>
-                  <div class="tag-group">
-                      <h5>B</h5>
-                      <a href="#"  class="tag-custom">#accountability 18</a>
-                      <a href="#"  class="tag-custom">#adequate-yearly-progress 21</a>
-                      <a href="#"  class="tag-custom">#accreditation 31</a>
-                      <a href="#"  class="tag-custom">#advanced-placement 17</a>
-                  </div>
-                  <div class="tag-group">
-                      <h5>C</h5>
-                      <a href="#"  class="tag-custom">#accountability 18</a>
-                      <a href="#"  class="tag-custom">#adequate-yearly-progress 21</a>
-                      <a href="#"  class="tag-custom">#accreditation 31</a>
-                      <a href="#"  class="tag-custom">#advanced-placement 17</a>
-                  </div>
-                  <div class="tag-group">
-                      <h5>D</h5>
-                      <a href="#"  class="tag-custom">#accountability 18</a>
-                      <a href="#"  class="tag-custom">#adequate-yearly-progress 21</a>
-                      <a href="#"  class="tag-custom">#accreditation 31</a>
-                      <a href="#"  class="tag-custom">#advanced-placement 17</a>
-                  </div>
-                </div>
+                      {% set sorted_tags = h.alphabetize_tags(c.search_facets.tags['items']) %}
+                      {% set previous_letter = none %}
+                      {% for tag in sorted_tags %}
 
+                      {% if previous_letter != tag['name'][0].lower() %}
+                            {% if previous_letter != none %} </div> {% endif %}
+                            <div class="tag-group">
+                                <h5> {{ tag['name'][0].upper() }}</h5>
+                                {% set previous_letter = tag['name'][0].lower() %}
+                           {% endif %}
+                            {% set href = "/dataset?tags=" + tag['name'] %}
+                            <a href="{{ href }}" class="tag-custom">#{{ tag['display_name'] }}</a>
+
+                      {% endfor %}
+               </div>
 
                 <p class="clearfix"></p>
             </div>

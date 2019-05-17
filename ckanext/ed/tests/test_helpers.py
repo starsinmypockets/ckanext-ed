@@ -222,3 +222,36 @@ class TestHelpers(test_helpers.FunctionalTestBase):
             (quality_mark['machine'], quality_mark['doc']), (True, False)
         )
 
+    def test_alphabetize_tags(self):
+        tags_list = [
+            {'count': 1, 
+            'display_name': u'sat-scores', 
+            'name': u'sat-scores'}, 
+            {'count': 1, 
+            'display_name': u'mathematics', 
+            'name': u'mathematics'}, 
+            {'count': 1, 
+            'display_name': u'international-comparisons-of-achievement', 
+            'name': u'international-comparisons-of-achievement'}, 
+            {'count': 1, 'display_name': u'act-scores', 'name': u'act-scores'}
+        ]
+        excpeted_result = [
+            {'count': 1, 'display_name': u'act-scores', 'name': u'act-scores'},
+            {'count': 1, 
+            'display_name': u'international-comparisons-of-achievement', 
+            'name': u'international-comparisons-of-achievement'}, 
+            {'count': 1, 
+            'display_name': u'mathematics', 
+            'name': u'mathematics'},               
+            {'count': 1, 
+            'display_name': u'sat-scores', 
+            'name': u'sat-scores'}
+        ]
+        result = helpers.alphabetize_tags(tags_list)
+        assert_equals(result, excpeted_result)
+        
+
+
+
+
+

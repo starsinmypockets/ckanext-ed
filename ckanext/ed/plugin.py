@@ -28,7 +28,8 @@ class EDPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'ed_get_latest_rejection_feedback': helpers.get_latest_rejection_feedback,
             'quality_mark' : helpers.quality_mark,
             'get_org_for_package' : helpers.get_org_for_package,
-            'load_choices': helpers.load_choices
+            'load_choices': helpers.load_choices,
+            'alphabetize_tags' : helpers.alphabetize_tags,
         }
 
     # IActions
