@@ -61,9 +61,10 @@
       "field_name": "program",
       "label": "Program Affiliation",
       "preset" : "select",
-      "help_test": "The program this data profile is associated with.",
+      "help_text": "The program this data profile is associated with.",
       "choices_helper": "load_choices",
-      "choices_file_path": "ckanext.ed.schemas.assets:programs.json"
+      "choices_file_path": "ckanext.ed.schemas.assets:programs.json",
+      "form_attrs": {"data-module": "autocomplete"}
     },
     {
       "field_name": "contact_name",
