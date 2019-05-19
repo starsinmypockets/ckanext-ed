@@ -40,12 +40,12 @@
 
                   <div class="col-links-1">
                     <ul>
-                      {% for item in c.search_facets.groups['items'][:9] %}
+                      {% for category in c.search_facets.groups['items'][:9] %}
                         <li>
-                            {% set href = "/dataset?groups=" + item.name %}
+                            {% set href = "/dataset?groups=" + category.name %}
                             <a href="{{ href }}">
-                                {{ item['display_name'] }}
-                                <span>{{ item.count }}</span></a>
+                                {{ h.truncate(category['display_name'], 22) }}
+                                <span>{{ category.count }}</span></a>
                         </li>
                       {% endfor %}
                     </ul>
@@ -54,8 +54,8 @@
                     <ul>
                       {% for category in c.search_facets.groups['items'][9:] %}
                         <li>
-                            {% set href = "/dataset?groups=" + item.name %}
-                            <a href="{{ href }}">{{ category['display_name'] }}<span>{{ category.count }}</span></a>
+                            {% set href = "/dataset?groups=" + category.name %}
+                            <a href="{{ href }}">{{ h.truncate(category['display_name'], 22) }}<span>{{ category.count }}</span></a>
                         </li>
                       {% endfor %}
                     </ul>
@@ -73,7 +73,7 @@
                                 {% set previous_letter = tag['name'][0].lower() %}
                            {% endif %}
                             {% set href = "/dataset?tags=" + tag['name'] %}
-                            <a href="{{ href }}" class="tag-custom">#{{ tag['display_name'] }}</a>
+                            <a href="{{ href }}" class="tag-custom">#{{  h.truncate(tag['display_name'].lower(), 22) }}</a>
 
                       {% endfor %}
                </div>
