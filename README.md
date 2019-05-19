@@ -1,5 +1,7 @@
 # ckanext-ed
 
+[![Build Status](https://travis-ci.org/CivicActions/ckanext-ed.svg?branch=master)](https://travis-ci.org/CivicActions/ckanext-ed)
+
 This is the main repo for the US Department of Education ckan-based project. This documentation covers all of the development aspects.
 
 ## Table of contents
