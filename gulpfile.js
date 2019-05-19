@@ -13,7 +13,7 @@ sass.compiler = require('node-sass');
 gulp.task('sass', function () {
   return gulp.src('ckanext/ed/fanstatic/sass/**/*.scss')
     .pipe(sass({
-         outputStyle : 'expanded'
+         outputStyle : 'compressed'
       }).on('error', sass.logError))
     .pipe(gulp.dest('ckanext/ed/fanstatic/css'))
 

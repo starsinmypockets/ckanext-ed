@@ -15,3 +15,23 @@
     </div>
   {% endif %}
 {% endblock %}
+
+{% block search_sortby %}
+    {% if sorting %}
+      <div class="form-select form-group control-order-by">
+        <label for="field-order-by"  class="col-sm-2 control-label">{{ _('Sort') }}</label>
+        <select id="field-order-by" name="sort" class="form-control">
+          {% for label, value in sorting %}
+            {% if label and value %}
+              <option value="{{ value }}"{% if sorting_selected == value %} selected="selected"{% endif %}>{{ label }}</option>
+            {% endif %}
+          {% endfor %}
+        </select>
+        </div>
+        
+        {% block search_sortby_button %}
+        <button class="btn btn-default js-hide" type="submit">{{ _('Go') }}</button>
+        {% endblock %}
+    {% endif %}
+  {% endblock %}
+

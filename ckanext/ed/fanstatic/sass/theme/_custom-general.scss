@@ -321,6 +321,7 @@ header.masthead {
     .sidebar_content_wrap {
         max-height:90vh;
         overflow-y:auto;
+        padding-bottom:150px;
 
         top:calc(50px + #{$fixedTop-padding});
         position:relative;
@@ -367,12 +368,11 @@ header.masthead {
             a:hover {
                 background-color:$theme-grey-dark;
             }
-
-            
         }
 
-        padding-bottom:28px;
-        border-bottom:1px solid color($theme-color-base-lighter);
+        padding-bottom:10px;
+        border-bottom:0px solid color($theme-color-base-lighter);
+
 
         .usa-checkbox__label {
             span {
@@ -387,11 +387,15 @@ header.masthead {
         padding-left: 30px;
         padding-right: 20px;
     } 
-
-
+    
     .module-footer {
-        padding:0;
-        border:0;
+        border-top:0;
+        padding: 0 20px 20px 30px;
+        border-bottom:1px solid color($theme-color-base-lighter);
+        a {
+            font-weight:400;
+            color:$theme-color-main;
+        }
     }
 }
 

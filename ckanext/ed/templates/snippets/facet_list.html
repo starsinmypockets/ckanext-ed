@@ -26,20 +26,22 @@
                       </input>
                   {% endfor %}
                 </ul>
-              </nav>
+              
 
               <p class="module-footer">
                 {% if h.get_param_int('_%s_limit' % name) %}
                   {% if h.has_more_facets(name) %}
-                    <a href="{{ h.remove_url_param('_%s_limit' % name, replace=0, extras=extras, alternative_url=alternative_url) }}" class="read-more">{{ _('Show More {facet_type}').format(facet_type=title) }}</a>
+                    <a href="{{ h.remove_url_param('_%s_limit' % name, replace=0, extras=extras, alternative_url=alternative_url) }}" class="read-more">Show all <img src="/fanstatic/ed/img/angle-arrow-down-primary-hover.svg" alt="Show more" width=8/> </a>
                   {% endif %}
                 {% else %}
-                  <a href="{{ h.remove_url_param('_%s_limit' % name, extras=extras, alternative_url=alternative_url) }}" class="read-more">{{ _('Show Only Popular {facet_type}').format(facet_type=title) }}</a>
+                  <a href="{{ h.remove_url_param('_%s_limit' % name, extras=extras, alternative_url=alternative_url) }}" class="read-more">Show less  <img src="/fanstatic/ed/img/angle-arrow-up-primary-hover.svg" alt="Show less" width=8/></a>
                 {% endif %}
               </p>
             {% else %}
               <p class="module-content empty">{{ _('There are no {facet_type} that match this search').format(facet_type=title) }}</p>
             {% endif %}
+
+            </nav>
             {% endwith %}
           {% endblock %}
  
