@@ -1,348 +1,8 @@
 [
   {
-    "value": "018-001",
-    "label": "Grants to Local Educational Agencies (Title I) (CFDA # 84.010)",
-    "code": "018:001"
-  },
-  {
-    "value": "018-002",
-    "label": "School Improvement State Grants (CFDA # 84.377)",
-    "code": "018:002"
-  },
-  {
-    "value": "018-003",
-    "label": "Striving Readers (CFDA # 84.371)",
-    "code": "018:003"
-  },
-  {
-    "value": "018-004",
-    "label": "Migrant (CFDA # 84.011)",
-    "code": "018:004"
-  },
-  {
-    "value": "018-005",
-    "label": "Neglected and Delinquent (CFDA # 84.013)",
-    "code": "018:005"
-  },
-  {
-    "value": "018-006",
-    "label": "Evaluation",
-    "code": "018:006"
-  },
-  {
-    "value": "018-007",
-    "label": "Special Programs for Migrant Students (CFDA # 84.141, 84.149)",
-    "code": "018:007"
-  },
-  {
-    "value": "018-008",
-    "label": "High School Graduation Initiative (CFDA # 84.360)",
-    "code": "018:008"
-  },
-  {
-    "value": "018-009",
-    "label": "Payments for Federally Connected Children",
-    "code": "018:009"
-  },
-  {
-    "value": "018-010",
-    "label": "Facilities Maintenance",
-    "code": "018:010"
-  },
-  {
-    "value": "018-011",
-    "label": "Construction",
-    "code": "018:011"
-  },
-  {
-    "value": "018-012",
-    "label": "Payments for Federal Property",
-    "code": "018:012"
-  },
-  {
-    "value": "018-013",
-    "label": "Improving Teacher Quality State Grants (CFDA # 84.367)",
-    "code": "018:013"
-  },
-  {
-    "value": "018-014",
-    "label": "Mathematics and Science Partnerships (CFDA # 84.366)",
-    "code": "018:014"
-  },
-  {
     "value": "018-015",
     "label": "21st Century Community Learning Centers (CFDA # 84.287)",
     "code": "018:015"
-  },
-  {
-    "value": "018-016",
-    "label": "State Assessments (CFDA # 84.369)",
-    "code": "018:016"
-  },
-  {
-    "value": "018-017",
-    "label": "Education of Homeless Children & Youth (CFDA # 84.196)",
-    "code": "018:017"
-  },
-  {
-    "value": "018-018",
-    "label": "Education for Native Hawaiians (CFDA # 84.362)",
-    "code": "018:018"
-  },
-  {
-    "value": "018-019",
-    "label": "Alaska Native Education Equity (CFDA # 84.356)",
-    "code": "018:019"
-  },
-  {
-    "value": "018-020",
-    "label": "Training and Advisory Services",
-    "code": "018:020"
-  },
-  {
-    "value": "018-021",
-    "label": "Rural Education (CFDA # 84.358)",
-    "code": "018:021"
-  },
-  {
-    "value": "018-022",
-    "label": "Supplemental Education Grants (CFDA # 84.841)",
-    "code": "018:022"
-  },
-  {
-    "value": "018-023",
-    "label": "Comprehensive Centers (CFDA # 84.283)",
-    "code": "018:023"
-  },
-  {
-    "value": "018-024",
-    "label": "Grants to Local Educational Agencies (CFDA # 84.060)",
-    "code": "018:024"
-  },
-  {
-    "value": "018-025",
-    "label": "Special Programs for Indian Children (CFDA # 84.299)",
-    "code": "018:025"
-  },
-  {
-    "value": "018-026",
-    "label": "National Activities (CFDA # 84.850)",
-    "code": "018:026"
-  },
-  {
-    "value": "018-027",
-    "label": "Safe & Drug-free Schools and Communities National Programs (CFDA # 84.184)",
-    "code": "018:027"
-  },
-  {
-    "value": "018-028",
-    "label": "Elementary and Secondary School Counseling (CFDA # 84.215)",
-    "code": "018:028"
-  },
-  {
-    "value": "018-029",
-    "label": "Physical Education Program (CFDA # 84.215)",
-    "code": "018:029"
-  },
-  {
-    "value": "018-030",
-    "label": "Promise Neighborhoods (CFDA # 84.215)",
-    "code": "018:030"
-  },
-  {
-    "value": "018-031",
-    "label": "Race to The Top Fund (CFDA # 84.395, 84.412, 84.416)",
-    "code": "018:031"
-  },
-  {
-    "value": "018-032",
-    "label": "Investing in Innovation Fund (CFDA # 84.396)",
-    "code": "018:032"
-  },
-  {
-    "value": "018-033",
-    "label": "Teacher Incentive Fund Grants (CFDA # 84.374)",
-    "code": "018:033"
-  },
-  {
-    "value": "018-034",
-    "label": "Transition to Teaching (CFDA # 84.350)",
-    "code": "018:034"
-  },
-  {
-    "value": "018-035",
-    "label": "School Leadership (CFDA # 84.363)",
-    "code": "018:035"
-  },
-  {
-    "value": "018-036",
-    "label": "Charter Schools Grants (CFDA # 84.282)",
-    "code": "018:036"
-  },
-  {
-    "value": "018-037",
-    "label": "Credit Enhancement for Charter School Facilities (CFDA # 84.354)",
-    "code": "018:037"
-  },
-  {
-    "value": "018-038",
-    "label": "Magnet Schools Assistance (CFDA # 84.165)",
-    "code": "018:038"
-  },
-  {
-    "value": "018-039",
-    "label": "Advanced Placement (CFDA # 84.330)",
-    "code": "018:039"
-  },
-  {
-    "value": "018-040",
-    "label": "Ready-to-Learn Television (CFDA # 84.295)",
-    "code": "018:040"
-  },
-  {
-    "value": "018-041",
-    "label": "FIE Programs of National Significance (CFDA # 84.215)",
-    "code": "018:041"
-  },
-  {
-    "value": "018-042",
-    "label": "Arts in Education (CFDA # 84.351) ",
-    "code": "018:042"
-  },
-  {
-    "value": "018-043",
-    "label": "English Learner Education (CFDA # 84.365)",
-    "code": "018:043"
-  },
-  {
-    "value": "018-044",
-    "label": "Grants to States (CFDA # 84.027)",
-    "code": "018:044"
-  },
-  {
-    "value": "018-045",
-    "label": "Preschool Grants (CFDA # 84.173)",
-    "code": "018:045"
-  },
-  {
-    "value": "018-046",
-    "label": "Grants for Infants and Families (CFDA # 84.181)",
-    "code": "018:046"
-  },
-  {
-    "value": "018-047",
-    "label": "State Personnel Development (CFDA # 84.323)",
-    "code": "018:047"
-  },
-  {
-    "value": "018-048",
-    "label": "Technical Assistance and Dissemination (CFDA # 84.326)",
-    "code": "018:048"
-  },
-  {
-    "value": "018-049",
-    "label": "Personnel Preparation (CFDA # 84.323)",
-    "code": "018:049"
-  },
-  {
-    "value": "018-050",
-    "label": "Parent Information Centers (CFDA # 84.328)",
-    "code": "018:050"
-  },
-  {
-    "value": "018-051",
-    "label": "Educational, Technology, Media, and Materials (CFDA # 84.327)",
-    "code": "018:051"
-  },
-  {
-    "value": "018-052",
-    "label": "Special Olympics Education Programs (CFDA # 84.380)",
-    "code": "018:052"
-  },
-  {
-    "value": "018-053",
-    "label": "PROMISE: Promoting Readiness of Minors in SSI (CFDA # 84.418P)",
-    "code": "018:053"
-  },
-  {
-    "value": "018-054",
-    "label": "Vocational Rehabilitation State Grants",
-    "code": "018:054"
-  },
-  {
-    "value": "018-055",
-    "label": "Client Assistance State Grants (CFDA # 84.161)",
-    "code": "018:055"
-  },
-  {
-    "value": "018-056",
-    "label": "Training (CFDA # 84.133)",
-    "code": "018:056"
-  },
-  {
-    "value": "018-057",
-    "label": "Demonstration and Training Programs (CFDA # 84.235)",
-    "code": "018:057"
-  },
-  {
-    "value": "018-058",
-    "label": "Migrant and Seasonal Farmworkers (CFDA # 84.128)",
-    "code": "018:058"
-  },
-  {
-    "value": "018-059",
-    "label": "Protection & Advocacy of Individual Rights (CFDA # 84.240)",
-    "code": "018:059"
-  },
-  {
-    "value": "018-060",
-    "label": "Supported Employment State Grants (CFDA # 84.187)",
-    "code": "018:060"
-  },
-  {
-    "value": "018-061",
-    "label": "Independent Living",
-    "code": "018:061"
-  },
-  {
-    "value": "018-062",
-    "label": "Helen Keller National Center for Deaf-Blind Youths and Adults (CFDA # 84.904)",
-    "code": "018:062"
-  },
-  {
-    "value": "018-063",
-    "label": "National Institute on Disability and Rehabilitation Research (CFDA # 84.133)",
-    "code": "018:063"
-  },
-  {
-    "value": "018-064",
-    "label": "Assistive Technology Programs (CFDA # 84.224)",
-    "code": "018:064"
-  },
-  {
-    "value": "018-065",
-    "label": "American Printing House for the Blind (CFDA # 84.906)",
-    "code": "018:065"
-  },
-  {
-    "value": "018-066",
-    "label": "National Technical Institute for the Deaf (CFDA # 84.908)",
-    "code": "018:066"
-  },
-  {
-    "value": "018-067",
-    "label": "Gallaudet University (CFDA # 84.910)",
-    "code": "018:067"
-  },
-  {
-    "value": "018-068",
-    "label": "Career and Technical Education State Grants (CFDA # 84.048)",
-    "code": "018:068"
-  },
-  {
-    "value": "018-069",
-    "label": "National Programs (CFDA # 84.051)",
-    "code": "018:069"
   },
   {
     "value": "018-070",
@@ -350,39 +10,129 @@
     "code": "018:070"
   },
   {
-    "value": "018-071",
-    "label": "National Leadership Activities (CFDA # 84.051)",
-    "code": "018:071"
+    "value": "018-039",
+    "label": "Advanced Placement (CFDA # 84.330)",
+    "code": "018:039"
   },
   {
-    "value": "018-072",
-    "label": "Federal Pell Grants (CFDA # 84.063)",
-    "code": "018:072"
+    "value": "018-019",
+    "label": "Alaska Native Education Equity (CFDA # 84.356)",
+    "code": "018:019"
   },
   {
-    "value": "018-073",
-    "label": "Federal Supplemental Educational Opportunity Grants (SEOG) (CFDA # 84.007)",
-    "code": "018:073"
+    "value": "018-065",
+    "label": "American Printing House for the Blind (CFDA # 84.906)",
+    "code": "018:065"
   },
   {
-    "value": "018-074",
-    "label": "Federal Work-Study (CFDA # 84.033)",
-    "code": "018:074"
+    "value": "018-042",
+    "label": "Arts in Education (CFDA # 84.351) ",
+    "code": "018:042"
   },
   {
-    "value": "018-075",
-    "label": "Iraq and Afghanistan Service Grants (CFDA # 84.408)",
-    "code": "018:075"
+    "value": "018-109",
+    "label": "Assessment (CFDA # 84.902)",
+    "code": "018:109"
   },
   {
-    "value": "018-076",
-    "label": "New Loan Subsidies",
-    "code": "018:076"
+    "value": "018-064",
+    "label": "Assistive Technology Programs (CFDA # 84.224)",
+    "code": "018:064"
   },
   {
-    "value": "018-077",
-    "label": "TEACH Grants ",
-    "code": "018:077"
+    "value": "018-068",
+    "label": "Career and Technical Education State Grants (CFDA # 84.048)",
+    "code": "018:068"
+  },
+  {
+    "value": "018-036",
+    "label": "Charter Schools Grants (CFDA # 84.282)",
+    "code": "018:036"
+  },
+  {
+    "value": "018-100",
+    "label": "Child Care Access Means Parents in School (CFDA # 84.335)",
+    "code": "018:100"
+  },
+  {
+    "value": "018-055",
+    "label": "Client Assistance State Grants (CFDA # 84.161)",
+    "code": "018:055"
+  },
+  {
+    "value": "018-103",
+    "label": "College Access Challenge Grant Program (CFDA # 84.378A)",
+    "code": "018:103"
+  },
+  {
+    "value": "018-105",
+    "label": "College Housing and Academic Facilities Loans Program",
+    "code": "018:105"
+  },
+  {
+    "value": "018-023",
+    "label": "Comprehensive Centers (CFDA # 84.283)",
+    "code": "018:023"
+  },
+  {
+    "value": "018-011",
+    "label": "Construction",
+    "code": "018:011"
+  },
+  {
+    "value": "018-037",
+    "label": "Credit Enhancement for Charter School Facilities (CFDA # 84.354)",
+    "code": "018:037"
+  },
+  {
+    "value": "018-057",
+    "label": "Demonstration and Training Programs (CFDA # 84.235)",
+    "code": "018:057"
+  },
+  {
+    "value": "018-090",
+    "label": "Developing Hispanic-Serving Institutions (CFDA # 84.031)",
+    "code": "018:090"
+  },
+  {
+    "value": "018-018",
+    "label": "Education for Native Hawaiians (CFDA # 84.362)",
+    "code": "018:018"
+  },
+  {
+    "value": "018-017",
+    "label": "Education of Homeless Children & Youth (CFDA # 84.196)",
+    "code": "018:017"
+  },
+  {
+    "value": "018-051",
+    "label": "Educational, Technology, Media, and Materials (CFDA # 84.327)",
+    "code": "018:051"
+  },
+  {
+    "value": "018-028",
+    "label": "Elementary and Secondary School Counseling (CFDA # 84.215)",
+    "code": "018:028"
+  },
+  {
+    "value": "018-043",
+    "label": "English Learner Education (CFDA # 84.365)",
+    "code": "018:043"
+  },
+  {
+    "value": "018-006",
+    "label": "Evaluation",
+    "code": "018:006"
+  },
+  {
+    "value": "018-041",
+    "label": "FIE Programs of National Significance (CFDA # 84.215)",
+    "code": "018:041"
+  },
+  {
+    "value": "018-010",
+    "label": "Facilities Maintenance",
+    "code": "018:010"
   },
   {
     "value": "018-078",
@@ -395,89 +145,14 @@
     "code": "018:079"
   },
   {
-    "value": "018-080",
-    "label": "Strengthening Institutions (CFDA # 84.031)",
-    "code": "018:080"
+    "value": "018-072",
+    "label": "Federal Pell Grants (CFDA # 84.063)",
+    "code": "018:072"
   },
   {
-    "value": "018-081",
-    "label": "Strengthening Tribally Controlled Colleges and Universities (CFDA # 84.031)",
-    "code": "018:081"
-  },
-  {
-    "value": "018-082",
-    "label": "Strengthening Alaska Native and Native Hawaii-serving Institutions (CFDA # 84.031)",
-    "code": "018:082"
-  },
-  {
-    "value": "018-083",
-    "label": "Strengthening HBCUs (CFDA # 84.031)",
-    "code": "018:083"
-  },
-  {
-    "value": "018-084",
-    "label": "Strengthening Historically Black Graduate Institutions (CFDA # 84.031)",
-    "code": "018:084"
-  },
-  {
-    "value": "018-085",
-    "label": "Master’s Degree Programs at HBCUs and Predominantly Black Institutions (CFDA # 84.382)",
-    "code": "018:085"
-  },
-  {
-    "value": "018-086",
-    "label": "Strengthening Predominantly Black Institutions (CFDA # 84.031P; 84.382A)",
-    "code": "018:086"
-  },
-  {
-    "value": "018-087",
-    "label": "Strengthening Asian American and Native American Pacific Islander-Serving Institutions (CFDA # 84.031L; 84.382B)",
-    "code": "018:087"
-  },
-  {
-    "value": "018-088",
-    "label": "Strengthening Native American-serving Nontribal Institutions (CFDA # 84.031; 84.382)",
-    "code": "018:088"
-  },
-  {
-    "value": "018-089",
-    "label": "Minority Science and Engineering Improvement (CFDA # 84.120)",
-    "code": "018:089"
-  },
-  {
-    "value": "018-090",
-    "label": "Developing Hispanic-Serving Institutions (CFDA # 84.031)",
-    "code": "018:090"
-  },
-  {
-    "value": "018-091",
-    "label": "Mandatory Developing HIS STEM and Articulation Program (CFDA # 84.031)",
-    "code": "018:091"
-  },
-  {
-    "value": "018-092",
-    "label": "Prompting Postbaccalaureate Opportunities for Hispanic American (CFDA # 84.031)",
-    "code": "018:092"
-  },
-  {
-    "value": "018-093",
-    "label": "International Education and Foreign Language Studies (CFDA # 84.015, 84.016, 84.017, 84.018, 84.019, 84.021, 84.022, 84.153, 84.220, 84.229, 84.274, 84.337)",
-    "code": "018:093"
-  },
-  {
-    "value": "018-094",
-    "label": "Fund for the improvement of Postsecondary Education (CFDA # 84.116)",
-    "code": "018:094"
-  },
-  {
-    "value": "018-095",
-    "label": "Model Transition Programs for Student With Intellectual Disabilities Into Higher Education (CFDA # 84.407)",
-    "code": "018:095"
-  },
-  {
-    "value": "018-096",
-    "label": "Tribally Controlled Postsecondary Career and Technical Institutions (CFDA # 84.245)",
-    "code": "018:096"
+    "value": "018-073",
+    "label": "Federal Supplemental Educational Opportunity Grants (SEOG) (CFDA # 84.007)",
+    "code": "018:073"
   },
   {
     "value": "018-097",
@@ -485,24 +160,14 @@
     "code": "018:097"
   },
   {
-    "value": "018-098",
-    "label": "Gaining Early Awareness and Readiness for Undergraduate Programs (CFDA # 84.334)",
-    "code": "018:098"
+    "value": "018-074",
+    "label": "Federal Work-Study (CFDA # 84.033)",
+    "code": "018:074"
   },
   {
-    "value": "018-099",
-    "label": "Graduate Assistance in Areas of National Need (CFDA # 84.200)",
-    "code": "018:099"
-  },
-  {
-    "value": "018-100",
-    "label": "Child Care Access Means Parents in School (CFDA # 84.335)",
-    "code": "018:100"
-  },
-  {
-    "value": "018-101",
-    "label": "Teacher Quality Partnership (CFDA # 84.336)",
-    "code": "018:101"
+    "value": "018-094",
+    "label": "Fund for the improvement of Postsecondary Education (CFDA # 84.116)",
+    "code": "018:094"
   },
   {
     "value": "018-102",
@@ -510,19 +175,49 @@
     "code": "018:102"
   },
   {
-    "value": "018-103",
-    "label": "College Access Challenge Grant Program (CFDA # 84.378A)",
-    "code": "018:103"
+    "value": "018-098",
+    "label": "Gaining Early Awareness and Readiness for Undergraduate Programs (CFDA # 84.334)",
+    "code": "018:098"
   },
   {
-    "value": "018-104",
-    "label": "Howard University (CFDA # 84.915)",
-    "code": "018:104"
+    "value": "018-067",
+    "label": "Gallaudet University (CFDA # 84.910)",
+    "code": "018:067"
   },
   {
-    "value": "018-105",
-    "label": "College Housing and Academic Facilities Loans Program",
-    "code": "018:105"
+    "value": "018-099",
+    "label": "Graduate Assistance in Areas of National Need (CFDA # 84.200)",
+    "code": "018:099"
+  },
+  {
+    "value": "018-046",
+    "label": "Grants for Infants and Families (CFDA # 84.181)",
+    "code": "018:046"
+  },
+  {
+    "value": "018-024",
+    "label": "Grants to Local Educational Agencies (CFDA # 84.060)",
+    "code": "018:024"
+  },
+  {
+    "value": "018-001",
+    "label": "Grants to Local Educational Agencies (Title I) (CFDA # 84.010)",
+    "code": "018:001"
+  },
+  {
+    "value": "018-044",
+    "label": "Grants to States (CFDA # 84.027)",
+    "code": "018:044"
+  },
+  {
+    "value": "018-062",
+    "label": "Helen Keller National Center for Deaf-Blind Youths and Adults (CFDA # 84.904)",
+    "code": "018:062"
+  },
+  {
+    "value": "018-008",
+    "label": "High School Graduation Initiative (CFDA # 84.360)",
+    "code": "018:008"
   },
   {
     "value": "018-106",
@@ -530,44 +225,109 @@
     "code": "018:106"
   },
   {
-    "value": "018-107",
-    "label": "Research and Statistics",
-    "code": "018:107"
+    "value": "018-104",
+    "label": "Howard University (CFDA # 84.915)",
+    "code": "018:104"
   },
   {
-    "value": "018-108",
-    "label": "Regional Educational Laboratories",
-    "code": "018:108"
+    "value": "018-013",
+    "label": "Improving Teacher Quality State Grants (CFDA # 84.367)",
+    "code": "018:013"
   },
   {
-    "value": "018-109",
-    "label": "Assessment (CFDA # 84.902)",
-    "code": "018:109"
+    "value": "018-061",
+    "label": "Independent Living",
+    "code": "018:061"
   },
   {
-    "value": "018-110",
-    "label": "Research in Special Education (CFDA # 84.324)",
-    "code": "018:110"
+    "value": "018-093",
+    "label": "International Education and Foreign Language Studies (CFDA # 84.015, 84.016, 84.017, 84.018, 84.019, 84.021, 84.022, 84.153, 84.220, 84.229, 84.274, 84.337)",
+    "code": "018:093"
   },
   {
-    "value": "018-111",
-    "label": "Statewide Data Systems (CFDA # 84.372)",
-    "code": "018:111"
+    "value": "018-032",
+    "label": "Investing in Innovation Fund (CFDA # 84.396)",
+    "code": "018:032"
   },
   {
-    "value": "018-112",
-    "label": "Special Education Studies and Evaluations (CFDA # 84.329)",
-    "code": "018:112"
+    "value": "018-075",
+    "label": "Iraq and Afghanistan Service Grants (CFDA # 84.408)",
+    "code": "018:075"
   },
   {
-    "value": "018-113",
-    "label": "Program Administration",
-    "code": "018:113"
+    "value": "018-038",
+    "label": "Magnet Schools Assistance (CFDA # 84.165)",
+    "code": "018:038"
   },
   {
-    "value": "018-114",
-    "label": "Student Aid Administration",
-    "code": "018:114"
+    "value": "018-091",
+    "label": "Mandatory Developing HIS STEM and Articulation Program (CFDA # 84.031)",
+    "code": "018:091"
+  },
+  {
+    "value": "018-085",
+    "label": "Master\u2019s Degree Programs at HBCUs and Predominantly Black Institutions (CFDA # 84.382)",
+    "code": "018:085"
+  },
+  {
+    "value": "018-014",
+    "label": "Mathematics and Science Partnerships (CFDA # 84.366)",
+    "code": "018:014"
+  },
+  {
+    "value": "018-004",
+    "label": "Migrant (CFDA # 84.011)",
+    "code": "018:004"
+  },
+  {
+    "value": "018-058",
+    "label": "Migrant and Seasonal Farmworkers (CFDA # 84.128)",
+    "code": "018:058"
+  },
+  {
+    "value": "018-089",
+    "label": "Minority Science and Engineering Improvement (CFDA # 84.120)",
+    "code": "018:089"
+  },
+  {
+    "value": "018-095",
+    "label": "Model Transition Programs for Student With Intellectual Disabilities Into Higher Education (CFDA # 84.407)",
+    "code": "018:095"
+  },
+  {
+    "value": "018-026",
+    "label": "National Activities (CFDA # 84.850)",
+    "code": "018:026"
+  },
+  {
+    "value": "018-063",
+    "label": "National Institute on Disability and Rehabilitation Research (CFDA # 84.133)",
+    "code": "018:063"
+  },
+  {
+    "value": "018-071",
+    "label": "National Leadership Activities (CFDA # 84.051)",
+    "code": "018:071"
+  },
+  {
+    "value": "018-069",
+    "label": "National Programs (CFDA # 84.051)",
+    "code": "018:069"
+  },
+  {
+    "value": "018-066",
+    "label": "National Technical Institute for the Deaf (CFDA # 84.908)",
+    "code": "018:066"
+  },
+  {
+    "value": "018-005",
+    "label": "Neglected and Delinquent (CFDA # 84.013)",
+    "code": "018:005"
+  },
+  {
+    "value": "018-076",
+    "label": "New Loan Subsidies",
+    "code": "018:076"
   },
   {
     "value": "018-115",
@@ -580,8 +340,248 @@
     "code": "018:116"
   },
   {
+    "value": "018-053",
+    "label": "PROMISE: Promoting Readiness of Minors in SSI (CFDA # 84.418P)",
+    "code": "018:053"
+  },
+  {
+    "value": "018-050",
+    "label": "Parent Information Centers (CFDA # 84.328)",
+    "code": "018:050"
+  },
+  {
+    "value": "018-012",
+    "label": "Payments for Federal Property",
+    "code": "018:012"
+  },
+  {
+    "value": "018-009",
+    "label": "Payments for Federally Connected Children",
+    "code": "018:009"
+  },
+  {
+    "value": "018-049",
+    "label": "Personnel Preparation (CFDA # 84.323)",
+    "code": "018:049"
+  },
+  {
+    "value": "018-029",
+    "label": "Physical Education Program (CFDA # 84.215)",
+    "code": "018:029"
+  },
+  {
+    "value": "018-045",
+    "label": "Preschool Grants (CFDA # 84.173)",
+    "code": "018:045"
+  },
+  {
     "value": "018-000",
-    "label": "(Primary Program Not Available)",
+    "label": "Primary Program Not Available",
     "code": "018:000"
+  },
+  {
+    "value": "018-113",
+    "label": "Program Administration",
+    "code": "018:113"
+  },
+  {
+    "value": "018-030",
+    "label": "Promise Neighborhoods (CFDA # 84.215)",
+    "code": "018:030"
+  },
+  {
+    "value": "018-092",
+    "label": "Prompting Postbaccalaureate Opportunities for Hispanic American (CFDA # 84.031)",
+    "code": "018:092"
+  },
+  {
+    "value": "018-059",
+    "label": "Protection & Advocacy of Individual Rights (CFDA # 84.240)",
+    "code": "018:059"
+  },
+  {
+    "value": "018-031",
+    "label": "Race to The Top Fund (CFDA # 84.395, 84.412, 84.416)",
+    "code": "018:031"
+  },
+  {
+    "value": "018-040",
+    "label": "Ready-to-Learn Television (CFDA # 84.295)",
+    "code": "018:040"
+  },
+  {
+    "value": "018-108",
+    "label": "Regional Educational Laboratories",
+    "code": "018:108"
+  },
+  {
+    "value": "018-107",
+    "label": "Research and Statistics",
+    "code": "018:107"
+  },
+  {
+    "value": "018-110",
+    "label": "Research in Special Education (CFDA # 84.324)",
+    "code": "018:110"
+  },
+  {
+    "value": "018-021",
+    "label": "Rural Education (CFDA # 84.358)",
+    "code": "018:021"
+  },
+  {
+    "value": "018-027",
+    "label": "Safe & Drug-free Schools and Communities National Programs (CFDA # 84.184)",
+    "code": "018:027"
+  },
+  {
+    "value": "018-002",
+    "label": "School Improvement State Grants (CFDA # 84.377)",
+    "code": "018:002"
+  },
+  {
+    "value": "018-035",
+    "label": "School Leadership (CFDA # 84.363)",
+    "code": "018:035"
+  },
+  {
+    "value": "018-112",
+    "label": "Special Education Studies and Evaluations (CFDA # 84.329)",
+    "code": "018:112"
+  },
+  {
+    "value": "018-052",
+    "label": "Special Olympics Education Programs (CFDA # 84.380)",
+    "code": "018:052"
+  },
+  {
+    "value": "018-025",
+    "label": "Special Programs for Indian Children (CFDA # 84.299)",
+    "code": "018:025"
+  },
+  {
+    "value": "018-007",
+    "label": "Special Programs for Migrant Students (CFDA # 84.141, 84.149)",
+    "code": "018:007"
+  },
+  {
+    "value": "018-016",
+    "label": "State Assessments (CFDA # 84.369)",
+    "code": "018:016"
+  },
+  {
+    "value": "018-047",
+    "label": "State Personnel Development (CFDA # 84.323)",
+    "code": "018:047"
+  },
+  {
+    "value": "018-111",
+    "label": "Statewide Data Systems (CFDA # 84.372)",
+    "code": "018:111"
+  },
+  {
+    "value": "018-082",
+    "label": "Strengthening Alaska Native and Native Hawaii-serving Institutions (CFDA # 84.031)",
+    "code": "018:082"
+  },
+  {
+    "value": "018-087",
+    "label": "Strengthening Asian American and Native American Pacific Islander-Serving Institutions (CFDA # 84.031L; 84.382B)",
+    "code": "018:087"
+  },
+  {
+    "value": "018-083",
+    "label": "Strengthening HBCUs (CFDA # 84.031)",
+    "code": "018:083"
+  },
+  {
+    "value": "018-084",
+    "label": "Strengthening Historically Black Graduate Institutions (CFDA # 84.031)",
+    "code": "018:084"
+  },
+  {
+    "value": "018-080",
+    "label": "Strengthening Institutions (CFDA # 84.031)",
+    "code": "018:080"
+  },
+  {
+    "value": "018-088",
+    "label": "Strengthening Native American-serving Nontribal Institutions (CFDA # 84.031; 84.382)",
+    "code": "018:088"
+  },
+  {
+    "value": "018-086",
+    "label": "Strengthening Predominantly Black Institutions (CFDA # 84.031P; 84.382A)",
+    "code": "018:086"
+  },
+  {
+    "value": "018-081",
+    "label": "Strengthening Tribally Controlled Colleges and Universities (CFDA # 84.031)",
+    "code": "018:081"
+  },
+  {
+    "value": "018-003",
+    "label": "Striving Readers (CFDA # 84.371)",
+    "code": "018:003"
+  },
+  {
+    "value": "018-114",
+    "label": "Student Aid Administration",
+    "code": "018:114"
+  },
+  {
+    "value": "018-022",
+    "label": "Supplemental Education Grants (CFDA # 84.841)",
+    "code": "018:022"
+  },
+  {
+    "value": "018-060",
+    "label": "Supported Employment State Grants (CFDA # 84.187)",
+    "code": "018:060"
+  },
+  {
+    "value": "018-077",
+    "label": "TEACH Grants ",
+    "code": "018:077"
+  },
+  {
+    "value": "018-033",
+    "label": "Teacher Incentive Fund Grants (CFDA # 84.374)",
+    "code": "018:033"
+  },
+  {
+    "value": "018-101",
+    "label": "Teacher Quality Partnership (CFDA # 84.336)",
+    "code": "018:101"
+  },
+  {
+    "value": "018-048",
+    "label": "Technical Assistance and Dissemination (CFDA # 84.326)",
+    "code": "018:048"
+  },
+  {
+    "value": "018-056",
+    "label": "Training (CFDA # 84.133)",
+    "code": "018:056"
+  },
+  {
+    "value": "018-020",
+    "label": "Training and Advisory Services",
+    "code": "018:020"
+  },
+  {
+    "value": "018-034",
+    "label": "Transition to Teaching (CFDA # 84.350)",
+    "code": "018:034"
+  },
+  {
+    "value": "018-096",
+    "label": "Tribally Controlled Postsecondary Career and Technical Institutions (CFDA # 84.245)",
+    "code": "018:096"
+  },
+  {
+    "value": "018-054",
+    "label": "Vocational Rehabilitation State Grants",
+    "code": "018:054"
   }
 ]
