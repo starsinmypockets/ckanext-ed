@@ -29,7 +29,7 @@ class EDPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'quality_mark' : helpers.quality_mark,
             'get_org_for_package' : helpers.get_org_for_package,
             'load_choices': helpers.load_choices,
-            'alphabetize_tags' : helpers.alphabetize_tags,
+            'alphabetize_dict' : helpers.alphabetize_dict,
         }
 
     # IActions

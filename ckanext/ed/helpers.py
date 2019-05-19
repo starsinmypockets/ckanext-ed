@@ -1,12 +1,12 @@
-from ckan.plugins import toolkit
-import os
-import logging
-import inspect
+from datetime import datetime
 import json
+import inspect
+import logging
+import os
 
 from ckan.common import config, is_flask_request, c, request
+from ckan.plugins import toolkit
 
-from datetime import datetime
 
 log = logging.getLogger()
 
@@ -254,7 +254,7 @@ def get_org_for_package(package):
     return (
         package['organization']['title']
     )
-  
+
 
 def load_meta_file(file_path):
     """
@@ -273,11 +273,7 @@ def load_choices(field_meta=None):
     json_data = json.load(file)
     return json_data
 
-def alphabetize_tags(tag_items):
-    import operator
-    ## we are sorting by tag_items['display_name']
-    sorted_tags = sorted(tag_items, key=lambda x: x['display_name'])
-    return sorted_tags
 
-
-    
+def alphabetize_dict(items, sort_by='display_name'):
+    sorted_dict = sorted(items, key=lambda x: x.get('sort_by'))
+    return sorted_dict

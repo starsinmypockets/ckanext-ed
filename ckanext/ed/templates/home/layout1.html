@@ -62,7 +62,7 @@
                   </div>
                <div class="col-tags" data-simplebar> 
 
-                      {% set sorted_tags = h.alphabetize_tags(c.search_facets.tags['items']) %}
+                      {% set sorted_tags = h.alphabetize_dict(c.search_facets.tags['items']) %}
                       {% set previous_letter = none %}
                       {% for tag in sorted_tags %}
 

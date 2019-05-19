@@ -222,7 +222,7 @@ class TestHelpers(test_helpers.FunctionalTestBase):
             (quality_mark['machine'], quality_mark['doc']), (True, False)
         )
 
-    def test_alphabetize_tags(self):
+    def test_alphabetize_dict(self):
         tags_list = [
             {'count': 1, 
             'display_name': u'sat-scores', 
@@ -247,7 +247,7 @@ class TestHelpers(test_helpers.FunctionalTestBase):
             'display_name': u'sat-scores', 
             'name': u'sat-scores'}
         ]
-        result = helpers.alphabetize_tags(tags_list)
+        result = helpers.alphabetize_dict(tags_list)
         assert_equals(result, excpeted_result)
         
 
