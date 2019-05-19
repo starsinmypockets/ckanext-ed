@@ -1,22 +1,27 @@
 {% ckan_extends %}
+          {% block facet_list_heading %}
+          <h4 class="side-heading">
+            {% set title = title or h.get_facet_title(name) %}
+            {{ title }}
+          </h4>
+          {% endblock %}
           {% block facet_list_items %}
             {% with items = items or h.get_facet_items_dict(name) %}
             {% if items %}
               <nav>
-                <ul class="{{ nav_class or 'list-unstyled nav nav-simple nav-facet' }}">
+                <ul class="sidebar-nav nav pad-left">
                   {% for item in items %}
                     {% set href = h.remove_url_param(name, item.name, extras=extras, alternative_url=alternative_url) if item.active else h.add_url_param(new_params={name: item.name}, extras=extras, alternative_url=alternative_url) %}
                     {% set label = label_function(item) if label_function else item.display_name %}
                     {% set label_truncated = h.truncate(label, 22) if not label_function else label %}
                     {% set count = count_label(item['count']) if count_label else ('%d' % item['count']) %}
                     {% set item_id = "".join(label.split()) %}
-                      <input id='{{ item_id }}' type="checkbox" name="{{ label if label != label_truncated else '' }}"
-                             class="{{ nav_item_class or 'nav-item' }} {% if item.active %} active {% endif %}"
-                             {% if item.active %} checked {% endif %} onClick="javascript: item_ref = document.getElementById('{{ item_id }}'); 
-                                       window.location.href = '{{ href }}'">
-                          <span class="item-label">{{ label_truncated }}</span>
-                          <span class="hidden separator"> - </span>
-                          <span class="item-count badge">{{ count }}</span>
+                      <div class="usa-checkbox" onClick="javascript: item_ref = document.getElementById('{{ item_id }}'); 
+                      window.location.href = '{{ href }}'">
+                        <input id='{{ item_id }}' {% if item.active %} checked {% endif %}  class="usa-checkbox__input {{ nav_item_class or 'nav-item' }} {% if item.active %} active {% endif %}" type="checkbox" name="{{ label if label != label_truncated else '' }}" >
+                        <label class="usa-checkbox__label" for="truth">{{ label_truncated }} <span>{{ count }}</span></label>
+                      </div>
+                      
 
                       </input>
                   {% endfor %}

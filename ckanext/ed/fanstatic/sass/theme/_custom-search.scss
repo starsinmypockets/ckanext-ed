@@ -1,0 +1,38 @@
+.dataset-item {
+    border-bottom:0;
+    padding-bottom: 0;
+    margin-bottom: 0;
+
+    .font-body-lg {
+        a {
+            @include typeset($theme-font-role-heading,'lg',1);
+            color:$theme-color-main;
+        }
+        margin-bottom:5px;
+    }
+
+    .font-body-3xs {
+        margin-bottom: 16px;
+    }
+    
+    .dataset-total-views {
+        padding-top:25px;
+        @include typeset($theme-font-role-heading,'3xs',1);
+        color:$theme-color-main;
+        font-weight:600;
+
+        span {
+            padding-right:20px;
+
+            img {
+                margin-top: -3px;
+                max-width: 13px;
+                margin-right: 8px;
+            }
+        }
+    }
+}
+
+.package-item:hover {
+    border-color:$theme-color-blue;   
+}

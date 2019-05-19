@@ -221,6 +221,8 @@ header.masthead {
     background-color:$theme-color-alternate-dark !important;
     background-image:none;
     color:#fff;
+    position:relative;
+    z-index:10;
 
     li {
         @include u-font-size('body', 'xs')
@@ -312,12 +314,12 @@ header.masthead {
 
 .sidebar {
     min-height: 100vh;
-    padding: 0 0 20px 0;
+    padding: 10px 0 20px 0;
     float:left;
     color:$theme-color-main;
 
     .sidebar_content_wrap {
-        max-height:80vh;
+        max-height:90vh;
         overflow-y:auto;
 
         top:calc(50px + #{$fixedTop-padding});
@@ -336,6 +338,7 @@ header.masthead {
         color: $theme-color-main;
         padding-left:30px;
         padding-right:20px;
+        padding-top:18px;
     }
 
     .side-content {
@@ -364,11 +367,43 @@ header.masthead {
             a:hover {
                 background-color:$theme-grey-dark;
             }
+
+            
         }
 
-        padding-bottom:38px;
+        padding-bottom:28px;
         border-bottom:1px solid color($theme-color-base-lighter);
+
+        .usa-checkbox__label {
+            span {
+                color: $theme-color-green;
+                @include u-font-size('body', '3xs');
+                padding-left: 12px;
+            }
+        }
     }
+
+    .nav,.module-content {
+        padding-left: 30px;
+        padding-right: 20px;
+    } 
+
+
+    .module-footer {
+        padding:0;
+        border:0;
+    }
+}
+
+
+.sidebar .nav, .sidebar .module-content {
+    padding-left: 0px; 
+    padding-right: 0px;
+}
+
+.nav.pad-left,.sidebar .module-content {
+    padding-left:30px;
+    padding-right:20px;
 }
 
 .module-content {
@@ -405,6 +440,7 @@ p.clearfix {
     border-radius: 3px;
     margin-bottom: 4px;
     display:table;
+    text-transform: lowercase;
 }
 
 .tag-custom:hover {
@@ -420,3 +456,11 @@ p.clearfix {
 .simplebar-scrollbar:before {
     background: #cecece !important;
 }
+
+label:after {
+    content: "";
+}
+
+
+
+@include customGridWidths(20.5%);
