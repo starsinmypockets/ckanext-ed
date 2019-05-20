@@ -16,13 +16,20 @@
                     {% set label_truncated = h.truncate(label, 22) if not label_function else label %}
                     {% set count = count_label(item['count']) if count_label else ('%d' % item['count']) %}
                     {% set item_id = "".join(label.split()) %}
+                    {% if name!="tags" %}
                       <div class="usa-checkbox" onClick="javascript: item_ref = document.getElementById('{{ item_id }}'); 
                       window.location.href = '{{ href }}'">
                         <input id='{{ item_id }}' {% if item.active %} checked {% endif %}  class="usa-checkbox__input {{ nav_item_class or 'nav-item' }} {% if item.active %} active {% endif %}" type="checkbox" name="{{ label if label != label_truncated else '' }}" >
                         <label class="usa-checkbox__label" for="truth">{{ label_truncated }} <span>{{ count }}</span></label>
                       </div>
-                      
-
+                    {% else %}
+                        <div>
+                            {{ href }}
+                            {{ label }}
+                            {{ label_truncated }}
+                            {{ item.active }}
+                        </div>
+                    {% endif %}
                       </input>
                   {% endfor %}
                 </ul>
