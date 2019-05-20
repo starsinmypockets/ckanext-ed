@@ -1,0 +1,26 @@
+.full-height-pg {
+    min-height:100vh;
+    background-color:#fff;
+    width:100%;
+    padding-top:20px;
+
+    h1 {
+        font-size: 2.4rem;
+        font-weight: 500;
+        margin-bottom:0;
+    }
+
+    p {
+        margin-top:0;
+        padding-top:5px !important;
+        color:$theme-color-main;
+    }
+
+    form {
+        margin-top:30px;
+        
+        .reg-link {
+            color:$theme-color-blue;
+        }
+    }
+}

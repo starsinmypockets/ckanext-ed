@@ -4,3 +4,42 @@
   {{ h.build_nav_icon('dataset.docs', _('Documentation'), id=c.pkg_dict.name, icon='book') }}
   {{ super() }}
 {% endblock %}
+
+{% block secondary_content %}
+
+  {% block secondary_help_content %}{% endblock %}
+
+  {% block package_info %}
+    {% snippet 'package/snippets/info.html', pkg=pkg %}
+  {% endblock %}
+
+  <div class="row">
+    <div class="col-md-2">
+      <label>Updated</label>
+      <span>March 1, 2019</span>
+    </div>
+  
+    <div class="col-md-2">
+      <label>License</label>
+      <span>March 1, 2019</span>
+    </div>
+  
+    {% block package_organization %}
+      {% if pkg.organization %}
+        <div class="col-md-2">
+          <label>Publisher</label>
+          <span>{{ pkg.organization.title }}</span>
+        </div>
+      {% endif %}
+    {% endblock %}  
+    
+  
+    <div class="col-md-2">
+      <label>Tags</label>
+      <span>March 1, 2019</span>
+    </div>
+  </div>
+  
+  
+
+{% endblock %}

@@ -73,3 +73,12 @@
 .package-item:hover {
     border-color:$theme-color-blue;   
 }
+
+.full-height-pg {
+    .module {
+        @media screen and (min-width:1200px){
+            padding-left: 60px;
+            padding-right: 60px;
+        }
+    }
+}

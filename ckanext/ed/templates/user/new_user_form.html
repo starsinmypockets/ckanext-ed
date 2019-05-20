@@ -1,0 +1,38 @@
+{% import "macros/form.html" as form %}
+
+<form id="user-register-form" action="" method="post">
+  {{ form.errors(error_summary) }}
+
+  <div class="row">
+      <div class="col-md-6">
+            {{ form.input("fullname", id="field-fullname", label=_("Full Name"), placeholder=_("Joe Bloggs"), value=data.fullname, error=errors.fullname, classes=["control-medium"]) }}
+  
+      </div>
+      <div class="col-md-6">
+            {{ form.input("name", id="field-username", label=_("Username"), placeholder=_("username"), value=data.name, error=errors.name, classes=["control-medium"], is_required=True) }}
+      </div>
+  </div>
+  {{ form.input("email", id="field-email", label=_("Email"), type="email", placeholder=_("joe@example.com"), value=data.email, error=errors.email, classes=["control-medium"], is_required=True) }}
+  {{ form.input("password1", id="field-password", label=_("Password"), type="password", placeholder="••••••••", value=data.password1, error=errors.password1, classes=["control-medium"], is_required=True) }}
+  {{ form.input("password2", id="field-confirm-password", label=_("Confirm"), type="password", placeholder="••••••••", value=data.password2, error=errors.password1, classes=["control-medium"], is_required=True) }}
+
+  {% if g.recaptcha_publickey %}
+    {% snippet "user/snippets/recaptcha.html", public_key=g.recaptcha_publickey %}
+  {% endif %}
+
+  {{ form.required_message() }}
+  
+    <div class="row">
+        <div class="col-md-7">
+            <p>Already have an account? <a href="{{ h.url_for('user.login') }}" class="reg-link">Sign-in</a></p>
+        </div>
+        <div class="col-md-5">
+            <div class="form-actions">
+                {% block form_actions %}
+                <button class="usa-button" type="submit" name="save">{{ _("Create Account") }}</button>
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+ 
+</form>

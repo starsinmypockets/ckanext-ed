@@ -1,0 +1,26 @@
+{% ckan_extends %}
+
+{% block subtitle %}{{ _('Logged Out') }}{% endblock %}
+
+
+{% block wrapper_class %}-custom{% endblock %}
+
+
+    {% block primary %}
+    <div class="full-height-pg text-center">
+
+        {% block primary_content %}
+        <section class="module">
+            <div class="module-content">
+            <h1 class="page-heading">
+                {% block page_heading %}{{ _('Logged Out') }}{% endblock %}
+            </h1>
+            <p>{% trans %}You are now logged out.{% endtrans %}</p>
+
+            <a class="usa-button" href="{{ h.url_for('home.index') }}" >Go to Home</a>
+            </div>
+        </section>
+        {% endblock %}
+
+    </div>
+    {% endblock %}

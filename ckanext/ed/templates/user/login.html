@@ -1,0 +1,32 @@
+{% extends "page.html" %}
+
+{% block subtitle %}{{ _('Login') }}{% endblock %}
+
+{% block breadcrumb_content %}
+  <li class="active">{{ h.nav_link(_('Login'), named_route='user.login') }}</li>
+{% endblock %}
+
+{% block wrapper_class %}-custom{% endblock %}
+
+{% block primary %}
+<div class="full-height-pg">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+                <section class="module">
+                    <div class="module-content">
+                        <div class="text-center">
+                            <h1 class="page-heading">{% block page_heading %}{{ _('Sign-in') }}{% endblock %}</h1>
+                            <p>Welcome Back, Please sign-in to your account</p>
+                        </div>  
+                        {% block form %}
+                        {% snippet "user/snippets/login_form.html", action=g.login_handler, error_summary=error_summary %}
+                        {% endblock %}
+                    </div>
+                </section>
+        </div>
+    </div>
+  
+</div>
+{% endblock %}
+
+{% block secondary %} {% endblock %}

@@ -1,0 +1,29 @@
+{% ckan_extends %}
+
+{% block wrapper_class %}-custom{% endblock %}
+
+{% block primary %}
+<div class="full-height-pg">
+    <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        {% block primary_content %}
+        <article class="module">
+            <div class="module-content">
+            {% block primary_content_inner %}
+            <div class="text-center">
+                <h1 class="page-heading">
+                    {% block page_heading %}{{ _('Register Account') }}{% endblock %}
+                </h1>
+                <p>Create datasets, categories and other exciting things</p>
+            </div>
+            {{ form | safe }}
+            {% endblock %}
+            </div>
+        </article>
+        {% endblock %}
+    </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block secondary %} {% endblock %}
