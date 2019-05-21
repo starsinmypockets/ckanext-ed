@@ -5,6 +5,10 @@
     {{ h.build_nav_icon('dataset.docs', _('Docs'), id=c.pkg_dict.name, icon='book') }}
     {{ h.build_nav_icon('dataset.disqus', _('Disqus'), id=c.pkg_dict.name, icon='book') }}
     {{ h.build_nav_icon('dataset_showcase_list', _('Usage'), id=pkg.name) }}
+
+    {% if h.ed_is_admin(c.user) %}
+         {{ h.build_nav_icon('dataset_groups', _('Groups'), id=pkg.name) }}
+    {% endif %}
 {% endblock %}
 
 
