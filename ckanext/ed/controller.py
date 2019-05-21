@@ -449,3 +449,31 @@ class CustomeUserController(UserController):
         user_ref = c.userobj.get_reference_preferred_for_uri()
         # do what seems to be a flask redirect
         h.redirect_to('dashboard.datasets')
+
+
+class DisqusController(PackageController):
+    def read_disqus(self, id):
+        context = {'model': model, 'session': model.Session,
+                   'user': c.user, 'for_view': True,
+                   'auth_user_obj': c.userobj}
+        data_dict = {'id': id, 'include_tracking': True}
+
+        # check if package exists
+        try:
+            c.pkg_dict = get_action('package_show')(context, data_dict)
+            c.pkg = context['package']
+        except (NotFound, NotAuthorized):
+            abort(404, _('Dataset not found'))
+
+        package_type = c.pkg_dict['type'] or 'dataset'
+        self._setup_template_variables(context, {'id': id},
+                                       package_type=package_type)
+
+        return toolkit.render('package/disqus.html',
+                      extra_vars={'dataset_type': package_type})
+        # check if package exists
+        try:
+            c.pkg_dict = get_action('package_show')(context, data_dict)
+            c.pkg = context['package']
+        except (NotFound, NotAuthorized):
+            abort(404, _('Dataset not found'))

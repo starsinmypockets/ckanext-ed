@@ -1,0 +1,39 @@
+{% extends "package/read_base.html" %}
+{% block scripts %}
+  {{ super() }}
+  {% resource 'ed/js/confirm-reject.js' %}
+{% endblock %}
+
+{% block wrapper_class %}-custom{% endblock %}
+
+{% block primary_content_inner %}
+
+
+    <div class="inner-sidebar">
+      <section class="module module-narrow module-shallow">
+          <h4 class="side-heading"> Helpdesk </h4>
+          <a href="#" class="underline">crdc-help@ed.gov</a>
+          <a href="#">123-456-7891</a>
+      </section>
+
+      <section class="module module-narrow module-shallow">
+          <h4 class="side-heading"> Data steward </h4>
+          <a href="#">Jane Doe</a>
+          <a href="#" class="underline">jane.doe@ed.gov</a>
+      </section>
+
+    </div>
+
+    <div class="inner-primary">
+      <div class="title">
+          <h3>Discuss the data</h3>
+          <p>Share your feedback and ideas with our community</p>
+      </div>
+
+      {% block disqus_comments %}
+          {{ h.disqus_comments() }}
+      {% endblock %}
+    </div>
+    <p class="clearfix"></p>
+
+{% endblock %}

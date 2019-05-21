@@ -121,6 +121,10 @@ class EDPlugin(plugins.SingletonPlugin, DefaultTranslation):
                     controller='ckanext.ed.controller:DocumentationController',
                     action='unpin')
 
+        map.connect('dataset.disqus', '/dataset/{id}/disqus',
+                    controller='ckanext.ed.controller:DisqusController',
+                    action='read_disqus')
+
         return map
 
     # IValidators

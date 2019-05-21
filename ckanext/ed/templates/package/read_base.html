@@ -1,9 +1,12 @@
 {% ckan_extends %}
 
 {% block content_primary_nav %}
-  {{ h.build_nav_icon('dataset.docs', _('Documentation'), id=c.pkg_dict.name, icon='book') }}
-  {{ super() }}
+    {{ h.build_nav_icon('dataset_read', _('Dataset'), id=pkg.name) }}
+    {{ h.build_nav_icon('dataset.docs', _('Docs'), id=c.pkg_dict.name, icon='book') }}
+    {{ h.build_nav_icon('dataset.disqus', _('Disqus'), id=c.pkg_dict.name, icon='book') }}
+    {{ h.build_nav_icon('dataset_showcase_list', _('Usage'), id=pkg.name) }}
 {% endblock %}
+
 
 {% block secondary_content %}
 
@@ -13,17 +16,17 @@
     {% snippet 'package/snippets/info.html', pkg=pkg %}
   {% endblock %}
 
-  <div class="row">
-    <div class="col-md-2">
+  <div class="row main-info">
+    <div class="col-custom">
       <label>Updated</label>
       <span>March 1, 2019</span>
     </div>
-  
+
     <div class="col-md-2">
       <label>License</label>
-      <span>March 1, 2019</span>
+      <span>Creative Commons Attribution</span>
     </div>
-  
+
     {% block package_organization %}
       {% if pkg.organization %}
         <div class="col-md-2">
@@ -31,15 +34,17 @@
           <span>{{ pkg.organization.title }}</span>
         </div>
       {% endif %}
-    {% endblock %}  
-    
-  
-    <div class="col-md-2">
+    {% endblock %}
+
+
+    <div class="col-md-3">
       <label>Tags</label>
-      <span>March 1, 2019</span>
+      <a href="#" class="tag-custom">#entrollment</a>
+      <a href="#" class="tag-custom">#equity</a>
+      <a href="#" class="tag-custom">#civil-rights</a>
     </div>
   </div>
-  
-  
+
+
 
 {% endblock %}

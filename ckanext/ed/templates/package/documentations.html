@@ -4,6 +4,8 @@
   {% extends "package/read_base.html" %}
 {% endif %}
 
+{% block wrapper_class %}-custom{% endblock %}
+
 {% set has_reorder = c.pkg_dict and c.pkg_dict.resources and c.pkg_dict.resources|length > 0 %}
 {% set docs_here = {} %}
 

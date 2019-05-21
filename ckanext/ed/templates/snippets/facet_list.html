@@ -23,12 +23,7 @@
                         <label class="usa-checkbox__label" for="truth">{{ label_truncated }} <span>{{ count }}</span></label>
                       </div>
                     {% else %}
-                        <div>
-                            {{ href }}
-                            {{ label }}
-                            {{ label_truncated }}
-                            {{ item.active }}
-                        </div>
+                        <a href="{{ href }}" class="tag-custom {{ item.active }}">#{{ label_truncated }}</a>
                     {% endif %}
                       </input>
                   {% endfor %}

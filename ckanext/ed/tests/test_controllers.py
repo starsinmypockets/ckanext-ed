@@ -144,7 +144,7 @@ class TestDocumentationController(helpers.FunctionalTestBase):
     def test_documentation_tab_appears_on_dataset_page(self):
         app = self._get_test_app()
         resp = app.get(url=url_for('/dataset/%s' % self.pkg), extra_environ=self.envs)
-        assert 'Documentation' in resp
+        assert 'Docs' in resp
 
     def test_dataset_tab_has_no_doc_resources(self):
         app = self._get_test_app()

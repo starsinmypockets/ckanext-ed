@@ -15,11 +15,11 @@ $fixedTop-padding: 1px;
 
 @mixin customGridWidths($sideBar) {
 
-    .sidebar {
+    .sidebar,.inner-sidebar {
         width:$sideBar;
     }
 
-    .content-main {
+    .content-main,.inner-primary {
         width:calc(100% - #{$sideBar});
     }
 
@@ -397,6 +397,12 @@ header.masthead {
             color:$theme-color-main;
         }
     }
+
+    .tag-custom {
+        display:inline-block;
+        margin-bottom: 2px;
+        margin-right: 2px;
+    }
 }
 
 
@@ -447,8 +453,17 @@ p.clearfix {
     text-transform: lowercase;
 }
 
+.tag-custom.True {
+    background-color:$theme-color-blue;
+    color:#fff;
+}
+
 .tag-custom:hover {
     background-color:$theme-grey-darker;
+}
+
+.tag-custom.True:hover {
+    background-color:color($theme-color-primary);
 }
 
 .simplebar-track.simplebar-vertical .simplebar-scrollbar:before {
@@ -485,4 +500,7 @@ label:after {
     margin-bottom:0;
 }
 
+.pad-none {
+    padding:0;
+}
 @include customGridWidths(20.5%);
