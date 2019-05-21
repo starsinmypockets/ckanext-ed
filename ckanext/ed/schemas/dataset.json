@@ -142,6 +142,16 @@
       "label": "Spatial",
       "form_placeholder": "eg. Lincoln, Nebraska",
       "help_text": "The range of spatial applicability of a dataset. Could include a spatial region like a bounding box or a named place."
+    }, 
+    {
+      "field_name": "start_date",
+      "label": "Data Relevance Start Date",
+      "preset": "date"
+    },
+    {
+      "field_name": "end_date",
+      "lable": "Data Relevance End Date",
+      "preset": "date"
     },
     {
       "field_name": "approval_state",
@@ -190,16 +200,6 @@
     {
       "field_name": "pinned",
       "form_snippet": null
-    },
-    {
-      "field_name": "Start Date",
-      "label": "Data Relevance Start Date",
-      "preset": "date"
-    },
-    {
-      "field_name": "End Date",
-      "lable": "Data Relevance End Date",
-      "preset": "date"
     },
     {
       "field_name" : "publishing_approved",

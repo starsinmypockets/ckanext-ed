@@ -141,4 +141,8 @@ class EDPlugin(plugins.SingletonPlugin, DefaultTranslation):
         facets_dict['groups'] = "Major Topics"
         facets_dict['tags'] = "Tags"
         facets_dict['organization'] = "Publishers"
+        facets_dict['res_format'] = "Formats"
+        facets_dict['spatial'] = "Geography"
+        facets_dict['license_id'] = "License"
+        facets_dict['start_date'] = "Years"
         return facets_dict

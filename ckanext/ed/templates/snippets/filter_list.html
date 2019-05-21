@@ -1,0 +1,22 @@
+{% extends 'snippets/facet_list.html' %}
+{{ super() }}
+{% block facet_list_items %}
+    {% with items = items or h.get_facet_items_dict(name) %}
+    {% if items %} 
+        {% set select_id = "".join(name.split()) %}
+        <select id='{{ select_id }}' onchange="javascript: item_ref = document.getElementById('{{ select_id }}');
+                                        window.location.href = item_ref.value;">
+           {% for item in items %}
+            {% set href = h.remove_url_param(name, item.name, extras=extras, alternative_url=alternative_url) if item.active else h.add_url_param(new_params={name: item.name}, extras=extras, alternative_url=alternative_url) %}
+            {% set label = label_function(item) if label_function else item.display_name %}
+            {% set label_truncated = h.truncate(label, 22) if not label_function else label %}
+            {% set count = count_label(item['count']) if count_label else ('%d' % item['count']) %}
+            <option value="{{ href }}" {% if item.active %} selected {% endif %}>{{ label_truncated }}</option> 
+           {% endfor %}
+        </select>
+    {% else %}
+      <p class="module-content empty">{{ _('There are no {facet_type} that match this search').format(facet_type=title) }}</p>
+    {% endif %}
+    {% endwith %}
+{% endblock %}
+
