@@ -20,12 +20,6 @@ function calcSidebarHeight(){
 function calcScrollLocation(){
     var scroll = $(window).scrollTop();
 
-     //>=, not <=
-    if (scroll >= 90) {
-        $('.sidebar_content_wrap').addClass("fixed");
-    } else {
-        $('.sidebar_content_wrap').removeClass("fixed");
-    }
 }
 
 
@@ -39,6 +33,15 @@ $(document).ready(function(){
         renderParticles();
     }
     
+    if(page=="search"){
+        if ($(window).width() >= 768) {
+            new SimpleBar($('#scrollbar')[0]);
+        }
+    }
+
+    var navHeight = $("#nav-wrapper").outerHeight();
+    $("body").css("paddingTop",navHeight);
+    console.log(navHeight);
 }); 
 
 function renderParticles(){

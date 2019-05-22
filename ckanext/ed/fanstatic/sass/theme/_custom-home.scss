@@ -6,7 +6,7 @@
     background-repeat: no-repeat;
     background-size: 630px 630px;
     background-position-x: 76%;
-    background-position-y: 0%;
+    background-position-y: -10%;
     position:relative;
     overflow:hidden;
 
@@ -48,8 +48,14 @@
 
             .search-input.search-giant input {
                 @include u-font-size('body', 'xs');
+                border-radius:4px;
                 padding: 14px 14px 14px 50px;
                 color: color($theme-color-base-darkest);
+
+                @media screen and (max-width:768px){
+                    padding-left:14px;
+                    padding-right:50px;
+                }
             }
 
             .search-input.search-giant input::placeholder {
@@ -58,8 +64,17 @@
 
             .search-input.search-giant button {
                 margin-top: -10px;
-                left: 15px;
+                width: 18px;
             }
+
+
+            @media screen and (min-width:1024px){
+                .search-input.search-giant button {
+                    margin-top: -10px;
+                    left: 15px;
+                }
+            }
+
             .search-input.search-giant button i {
                 font-size: 18px;
                 width: 18px;

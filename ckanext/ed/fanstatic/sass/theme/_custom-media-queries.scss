@@ -10,7 +10,6 @@
     @include customGridWidths(0%);
 
     .sidebar {
-        display:none;
 
         .sidebar_content_wrap {
             padding-bottom:0;
@@ -18,12 +17,11 @@
     }
 
     .sidebar.secondary {
-        display: block;
         height:auto;
         min-height: 0;
         width:100%;
-        position:fixed;
-        z-index:100;
+        position:relative;
+        z-index:120;
     }
 
     .module-content {
@@ -56,6 +54,11 @@
             text-align:left;
         }
     }
+
+    .sidebar_content_wrap.fixed {
+        position: static !important;
+        top: 0 !important;
+    }
 }
 
 @media screen and (min-width:1920px){
@@ -85,6 +88,11 @@
         margin-left:30px;
     }
 
+    header.masthead {
+        .nav-logo {
+            margin-right:20px;
+        }
+    }
 }
 
 @media screen and (min-width:1200px) and (max-width:1919px){

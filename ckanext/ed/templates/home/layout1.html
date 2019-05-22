@@ -7,6 +7,10 @@
   header.masthead {
     box-shadow: none;
   }
+
+  header.masthead {
+    border-bottom:0px solid transparent;
+  }
 </style>
 {% endblock %}
 
@@ -73,7 +77,7 @@
                                 {% set previous_letter = tag['name'][0].lower() %}
                            {% endif %}
                             {% set href = "/dataset?tags=" + tag['name'] %}
-                            <a href="{{ href }}" class="tag-custom">#{{  h.truncate(tag['display_name'].lower(), 22) }}</a>
+                            <a href="{{ href }}" class="tag-custom">#{{  h.truncate(tag['display_name'].lower(), 22) }} <span>{{ tag.count }}</span></a>
 
                       {% endfor %}
                </div>
