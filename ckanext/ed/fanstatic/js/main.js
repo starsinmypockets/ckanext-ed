@@ -41,7 +41,6 @@ $(document).ready(function(){
 
     var navHeight = $("#nav-wrapper").outerHeight();
     $("body").css("paddingTop",navHeight);
-    console.log(navHeight);
 }); 
 
 function renderParticles(){

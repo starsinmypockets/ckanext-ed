@@ -277,3 +277,8 @@ def load_choices(field_meta=None):
 def alphabetize_dict(items, sort_by='display_name'):
     sorted_dict = sorted(items, key=lambda x: x.get(sort_by))
     return sorted_dict
+
+def get_any(list_, key=None):
+    if key is not None:
+        return any(i[key] for i in list_)
+    return any(list_)

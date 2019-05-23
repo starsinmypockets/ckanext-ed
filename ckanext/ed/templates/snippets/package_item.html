@@ -17,7 +17,7 @@
               {{ h.link_to(h.truncate(title, truncate_title), h.url_for(controller='package', action='read', id=package.name)) }}
             </p>
             <div class="font-body-3xs">
-                {{ h.get_org_for_package(package) }}
+                {{ h.get_org_for_package(package) }} <span>&bull;</span> {{ h.time_ago_from_timestamp(package.metadata_modified )}}
             </div>
             {% endblock %}
 

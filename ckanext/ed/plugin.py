@@ -30,6 +30,7 @@ class EDPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'get_org_for_package' : helpers.get_org_for_package,
             'load_choices': helpers.load_choices,
             'alphabetize_dict' : helpers.alphabetize_dict,
+            'get_any': helpers.get_any
         }
 
     # IActions

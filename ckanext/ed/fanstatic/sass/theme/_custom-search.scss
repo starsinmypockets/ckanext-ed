@@ -16,6 +16,13 @@
     .font-body-3xs {
         margin-bottom: 14px;
         @include typeset($theme-font-role-heading,'2xs',1);
+
+        span {
+            font-size: 1.2rem;
+            padding: 0 5px;
+            position: relative;
+            top: 2px;
+        }
     }
     
     .dataset-total-views {
@@ -49,7 +56,7 @@
     h2 {
        font-size:1.1rem;
        position: relative;
-       top:13px;
+       top:11px;
        display: inline;
     }
 
@@ -67,6 +74,10 @@
             box-shadow: 0 0 0 transparent;
             border: 1px solid #cacaca;
         }
+
+        @media screen and (max-width:767px) {
+            text-align: left;
+        }
     }
 }
 
@@ -83,11 +94,43 @@
     }
 }
 
+/* Sorting */
+.sort-btn {
+    background:none;
+    border:0;
+    box-shadow: none;
+    
+    position: relative;
+    top:7px;
+    padding-left:0;
+
+    .sort-asc {
+        transform: rotate(180deg);
+    }
+}
+
+.sort-dropdown {
+    .dropdown-menu{
+        padding-top:0;
+        button {
+            background:none;
+            border:0;
+            box-shadow: none;
+            width:100%;
+            text-align:left;
+            padding-left:10px;
+        }
+
+        button.selected {
+            background-color:$theme-grey-medium;
+        }
+    }
+}
 
 /* Filters */ 
 .top-filters {
     float:right;
-    margin-bottom:40px;
+    margin-bottom:30px;
     .module {
         float:left;
     
@@ -95,12 +138,61 @@
             display:none;
         }
     
-        select {
+        .select-wrap {
             margin-left:10px;
             background-color:#fff;
             border-radius:100px;
             border: 2px solid #e8e8e8;
             padding: 5px 10px;
+            margin-bottom:10px;
+            position:relative;
+
+            select {
+                background-color:transparent;
+                border:0px solid transparent;
+                box-shadow: none;
+                padding:0;
+                outline:none;
+            }
+
+            @media screen and (max-width:767px){
+                margin-left:0;
+                margin-right:5px;
+            }
+        }
+
+        .select-wrap.active {
+            background-color:$theme-color-blue;
+            color:#fff;
+            border-color:$theme-color-blue;
+            padding-right:32px;
+
+            option {
+                background-color:#fff;
+                color: $theme-color-alternate;
+            }
+        }
+
+        .clear-btn {
+            background-color:transparent;
+            outline:none;
+            display: inline-block;
+    
+            position: absolute;
+            right: 6px;
+            top: 4px;
+            border-radius: 0 100px 100px 0;
+    
+            i {
+                background-color:#fff;
+                color:$theme-color-blue;
+                font-size: 16px;
+                border-radius: 1000px;
+                padding: 2px;
+            }
         }
     }
+
+    
+     
 } 
