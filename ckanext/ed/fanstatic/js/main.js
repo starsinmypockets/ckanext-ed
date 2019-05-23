@@ -39,6 +39,14 @@ $(document).ready(function(){
         }
     }
 
+    if(page=="dataset"){
+        //Changing navicons programatiically 
+        $(".view_list").html("view_list");
+        $(".info").html("info");
+        $(".add_comment").html("add_comment");
+        $(".bar_chart").html("bar_chart");
+    }
+
     var navHeight = $("#nav-wrapper").outerHeight();
     $("body").css("paddingTop",navHeight);
 }); 

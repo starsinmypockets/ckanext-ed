@@ -1,10 +1,11 @@
 {% ckan_extends %}
 
+
 {% block content_primary_nav %}
-    {{ h.build_nav_icon('dataset_read', _('Dataset'), id=pkg.name) }}
-    {{ h.build_nav_icon('dataset.docs', _('Docs'), id=c.pkg_dict.name, icon='book') }}
-    {{ h.build_nav_icon('dataset.disqus', _('Disqus'), id=c.pkg_dict.name, icon='book') }}
-    {{ h.build_nav_icon('dataset_showcase_list', _('Usage'), id=pkg.name) }}
+    {{ h.build_nav_icon('dataset_read', _('Dataset'), id=pkg.name, icon=' view_list material-icons') }}
+    {{ h.build_nav_icon('dataset.docs', _('Docs'), id=c.pkg_dict.name, icon=' info material-icons') }}
+    {{ h.build_nav_icon('dataset.disqus', _('Disqus'), id=c.pkg_dict.name, icon=' add_comment material-icons') }}
+    {{ h.build_nav_icon('dataset_showcase_list', _('Usage'), id=pkg.name, icon=' bar_chart material-icons') }}
 
     {% if h.ed_is_admin(c.user) %}
          {{ h.build_nav_icon('dataset_groups', _('Groups'), id=pkg.name) }}
@@ -50,5 +51,5 @@
   </div>
 
 
-
+<p class="page-name page-home hidden">dataset</p>
 {% endblock %}

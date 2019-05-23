@@ -17,28 +17,51 @@
 {% endblock %}
 
 {% block primary_content_inner %}
-{% if pkg.resources %}
-  <ul class="resource-list"{% if has_reorder %} data-module="resource-reorder" data-module-id="{{ pkg.id }}"{% endif %}>
-    {% set can_edit = h.check_access('package_update', {'id':pkg.id }) %}
-    {% for resource in pkg.resources %}
-      {% if resource.resource_type == 'doc' %}
-        <!-- Ugly workarund to update docs_here -->
-        {% if docs_here.update({'here': True }) %} {% endif %}
-        {% snippet 'package/snippets/resource_item.html', pkg=pkg, res=resource, url_is_edit=edit, can_edit=can_edit %}
-      {% endif %}
-    {% endfor %}
-  </ul>
-{% endif %}
-{% if not docs_here.here %}
-  {% trans url=h.url_for(controller='ckanext.ed.controller:NewResourceController', action='new_doc', id=pkg.name) %}
-    <p class="empty">This dataset has no documentation, <a href="{{ url }}">why not add one?</a></p>
-  {% endtrans %}
-{% endif %}
-{% endblock %}
 
-{% block scripts %}
-{{ super() }}
-{% if has_reorder %}
-  {% resource 'vendor/reorder' %}
-{% endif %}
-{% endblock %}
+    <!-- Sidebar Section -->
+    <div class="inner-sidebar">
+      <h4 class="side-heading">Documentation</h4>
+
+      <nav id="spy">
+          <ul class="sidebar-nav nav">
+              <li class="sidebar-brand">
+                  <a href="#anch0">Link 1 to file</a>
+              </li>
+              <li class="sidebar-brand">
+                  <a href="#anch0">Project Documentation</a>
+              </li>
+              
+          </ul>
+      </nav>
+    </div>
+
+    <!-- Primary Section -->
+    <div class="inner-primary">
+      {% if pkg.resources %}
+        <ul class="resource-list"{% if has_reorder %} data-module="resource-reorder" data-module-id="{{ pkg.id }}"{% endif %}>
+          {% set can_edit = h.check_access('package_update', {'id':pkg.id }) %}
+          {% for resource in pkg.resources %}
+            {% if resource.resource_type == 'doc' %}
+              <!-- Ugly workarund to update docs_here -->
+              {% if docs_here.update({'here': True }) %} {% endif %}
+              {% snippet 'package/snippets/resource_item.html', pkg=pkg, res=resource, url_is_edit=edit, can_edit=can_edit %}
+            {% endif %}
+          {% endfor %}
+        </ul>
+      {% endif %}
+      {% if not docs_here.here %}
+        {% trans url=h.url_for(controller='ckanext.ed.controller:NewResourceController', action='new_doc', id=pkg.name) %}
+          <p class="empty">This dataset has no documentation, <a href="{{ url }}">why not add one?</a></p>
+        {% endtrans %}
+      {% endif %}
+      {% endblock %}
+
+      {% block scripts %}
+      {{ super() }}
+      {% if has_reorder %}
+        {% resource 'vendor/reorder' %}
+      {% endif %}
+      {% endblock %}
+    </div>
+
+    <p class="clearfix"></p>

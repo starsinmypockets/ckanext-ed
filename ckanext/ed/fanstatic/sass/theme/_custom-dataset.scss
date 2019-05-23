@@ -1,9 +1,7 @@
 .dataset-title {
     float:none;
-    background-color:#fff;
-    padding: 36px;
-    z-index:99;
-    box-shadow: 0px 2px 6px #e8e8e8;
+    background-color:$theme-color-main;;
+    padding: 50px 50px 40px 50px;
 
     @media screen and (max-width:768px){
         padding:36px 15px 10px 15px;
@@ -12,8 +10,10 @@
 
     .heading {
         font-size:1.9rem !important;
-        border-bottom: 1px solid $theme-grey-darker;
+        border-bottom: 2px solid #193c5b;
         padding-bottom: 10px;
+        color:#fff;
+        line-height:1.7 !important;
     }
 
     .module-content {
@@ -32,15 +32,25 @@
         font-weight:600;
         color: $theme-color-main;
         display: block;
-        @include typeset($theme-font-role-ui,'3xs',1);
+        font-size: 0.8625rem;
+        color:#fff;
+        cursor:default;
     }
 
     span {
         @include typeset($theme-font-role-ui,'3xs',1);
+        color:#b2bdc8;
     }
 
     .tag-custom {
         display:inline;
+        background-color:transparent;
+        padding-left:0;
+        color:#b2bdc8;
+    }
+
+    .tag-custom:hover {
+        opacity:.8;
     }
 
     .col-custom {
@@ -57,7 +67,8 @@
 
     .main-info {
         label {
-            margin-top:2px;
+            margin-top: 3px;
+            margin-bottom: 8px;
         }
 
         @media screen and (max-width:768px){
@@ -80,9 +91,17 @@
         margin-bottom:0;
     }
 
+    .nav-tabs {
+        padding-top:0px;
+    }
+
+    .nav-tabs > li {
+        margin-right:30px;
+    }
+
     .nav-tabs > li > a {
         color:$theme-color-main;
-        font-weight:500;
+        font-weight:700;
         @include typeset($theme-font-role-ui,'xs',1);
 
         border-left:0;
@@ -91,14 +110,20 @@
         border-bottom:3px solid transparent;
 
         padding: 10px 15px 13px;
+
+        i.material-icons {
+            position: relative;
+            top: 6px;
+            min-height:24px;
+            min-width:24px;
+        }
     }
 
     .nav-tabs > li.active > a {
-        color:$theme-color-blue;
         border-left:0;
         border-top:0;
         border-right:0;
-        border-bottom:3px solid $theme-color-blue;
+        border-bottom:3px solid $theme-color-green;
 
     }
 
@@ -167,6 +192,48 @@
                 border-bottom:2px solid $theme-color-blue;
             }
         }
+
+
+        .content-pad {
+            padding:30px 20px 30px 30px;
+        }
+
+
+        .sidebar-nav {
+            li {
+                a{
+                    padding-left:30px;
+                    padding-right:20px;
+                    color:$theme-color-main;
+                    font-weight: 300;
+                }
+            }
+    
+            li.active {
+                border-right:4px solid color($theme-color-primary) ;
+    
+                a {
+                    font-weight: 600;
+                    background-color:$theme-grey-dark;
+                }
+    
+                a:hover {
+                    background-color:$theme-grey-dark;
+                }
+            }
+    
+            padding-bottom:10px;
+            border-bottom:0px solid color($theme-color-base-lighter);
+    
+    
+            .usa-checkbox__label {
+                span {
+                    color: $theme-color-green;
+                    @include u-font-size('body', '3xs');
+                    padding-left: 12px;
+                }
+            }
+        }
     }
 
     .inner-primary {
@@ -203,5 +270,71 @@
         .page-header {
             padding-left: 0px;
         }
+    }
+}
+
+.dataset-card {
+    padding:20px;
+    background-color:#fff;
+    border-radius:5px;
+    border:2px solid $theme-grey-darker;
+    margin-bottom:20px;
+    position:relative;
+
+    h5 {
+        @include u-font-size('body', 'xs');
+        color:$theme-color-alternate-dark;
+
+        margin-top: 18px;
+        margin-bottom: 10px;
+    }
+
+    .format {
+        color:$theme-color-blue;
+        background-color:#e7f2fd;
+        font-size: .9em;
+        padding: 3px 8px;
+        border-radius: 40px;
+        font-weight: 600;
+    }
+
+    .download-btn {
+        margin-top:10px;
+        width:100%;
+        text-transform: uppercase;
+        font-size: 0.8375rem;
+
+        background-color:$theme-color-green;
+        border:3px solid $theme-color-green;
+    }
+
+    .download-btn:hover {
+        opacity:.9;
+    }
+
+    .download-btn.outline {
+        border:3px solid $theme-color-green;
+        background:#fff;
+        color:$theme-color-green;
+    }
+
+    .material-icons {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        background-color: #0272e4;
+        color: #fff;
+        border-radius: 300px;
+        padding: 3px;
+        font-weight: bold;
+        font-size: 16px;
+    }
+}
+
+.dataset-card.active {
+    border:2px solid $theme-color-blue;
+
+    h5 {
+        color:$theme-color-main;
     }
 }

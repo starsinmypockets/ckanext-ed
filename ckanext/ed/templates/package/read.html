@@ -7,7 +7,42 @@
 {% block wrapper_class %}-custom{% endblock %}
 
 {% block primary_content_inner %}
-  {{ super() }}
+  <!-- Sidebar Section -->
+  <div class="inner-sidebar">
+    <section class="content-pad">
+        
+        <a href="#">
+          <div class="dataset-card active">
+              <span class="format">CSV</span>
+              <h5>2018-19 CRDC LEA DATA</h5>
+
+              <button class="usa-button download-btn">Download </button>
+              <button class="usa-button download-btn outline">API</button>
+
+              <i class="material-icons">done</i>
+          </div>
+        </a>
+
+        <a href="#">
+        <div class="dataset-card">
+            <span class="format">CSV</span>
+            <h5>2018-19 CRDC LEA DATA</h5>
+        </div>
+        </a>
+
+        <a href="#">
+          <div class="dataset-card">
+            <span class="format">CSV</span>
+            <h5>2018-19 CRDC LEA DATA</h5>
+          </div>
+        </a>
+
+    </section>
+  </div>
+
+  <!-- Primary Section -->
+  <div class="inner-primary">
+    {{ super() }}
     {% block package_description %}
       {% if pkg.private %}
         <span class="dataset-private label label-inverse pull-right">
@@ -47,8 +82,9 @@
     {% block package_additional_info %}
       {% snippet "package/snippets/additional_info.html", pkg_dict=pkg %}
     {% endblock %}
+  </div>
 
-
-
+  <p class="clearfix"></p>
+  
 
 {% endblock %}
