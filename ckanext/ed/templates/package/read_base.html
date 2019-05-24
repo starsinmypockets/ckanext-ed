@@ -24,12 +24,12 @@
   <div class="row main-info">
     <div class="col-custom">
       <label>Updated</label>
-      <span>March 1, 2019</span>
+      <span>{{ pkg.metadata_modified }}</span>
     </div>
 
     <div class="col-md-2">
       <label>License</label>
-      <span>Creative Commons Attribution</span>
+      <span>{{ pkg.license_title }}</span>
     </div>
 
     {% block package_organization %}
@@ -43,10 +43,10 @@
 
 
     <div class="col-md-3">
-      <label>Tags</label>
-      <a href="#" class="tag-custom">#entrollment</a>
-      <a href="#" class="tag-custom">#equity</a>
-      <a href="#" class="tag-custom">#civil-rights</a>
+    {% for tag in pkg.tags %}
+        {% set href = "/dataset?tags=" + tag['name'] %}
+      <a href="{{href}}" class="tag-custom">#{{tag.name}}</a>
+    {% endfor %}
     </div>
   </div>
 

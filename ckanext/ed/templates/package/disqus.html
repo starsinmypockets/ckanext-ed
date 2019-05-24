@@ -13,14 +13,14 @@
     <div class="inner-sidebar">
       <section class="module module-narrow module-shallow">
           <h4 class="side-heading"> Helpdesk </h4>
-          <a href="#" class="underline">crdc-help@ed.gov</a>
-          <a href="#">123-456-7891</a>
+          <a href="#" class="underline">{{ pkg.helpdesk_email }}</a>
+          <a href="#">{{ pkg.helpdesk_phone }}</a>
       </section>
 
       <section class="module module-narrow module-shallow">
           <h4 class="side-heading"> Data steward </h4>
-          <a href="#">Jane Doe</a>
-          <a href="#" class="underline">jane.doe@ed.gov</a>
+          <a href="#">{{ pkg.contact_name }}</a>
+          <a href="#" class="underline">{{ pkg.contact_email }}</a>
       </section>
     </div>
 
