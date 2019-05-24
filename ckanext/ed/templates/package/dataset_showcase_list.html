@@ -10,12 +10,8 @@
   <div class="inner-sidebar">
     <br />
     <section class="module module-narrow module-shallow">
-        <h4 class="side-heading"> Visits </h4>
-        <a href="#">123-456-7891</a>
-    </section>
-    <section class="module module-narrow module-shallow">
         <h4 class="side-heading"> Downloads </h4>
-        <a href="#">123,304</a>
+        <a href="#">{{ h.get_total_downloads(pkg.id, 'package') }}</a>
     </section>
   </div>
 
