@@ -56,7 +56,7 @@
                   </div>
                   <div class="col-links-2">
                     <ul>
-                      {% for category in c.search_facets.groups['items'][9:] %}
+                      {% for category in c.search_facets.groups['items'][9:18] %}
                         <li>
                             {% set href = "/dataset?groups=" + category.name %}
                             <a href="{{ href }}">{{ h.truncate(category['display_name'], 22) }}<span>{{ category.count }}</span></a>
