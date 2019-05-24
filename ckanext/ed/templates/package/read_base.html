@@ -43,6 +43,7 @@
 
 
     <div class="col-md-3">
+    <label>Tags</label>
     {% for tag in pkg.tags %}
         {% set href = "/dataset?tags=" + tag['name'] %}
       <a href="{{href}}" class="tag-custom">#{{tag.name}}</a>
