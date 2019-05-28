@@ -45,6 +45,7 @@ $(document).ready(function(){
         $(".info").html("info");
         $(".add_comment").html("add_comment");
         $(".bar_chart").html("bar_chart");
+        $(".supervisor_account").html("supervisor_account");
     }
 
     var navHeight = $("#nav-wrapper").outerHeight();
