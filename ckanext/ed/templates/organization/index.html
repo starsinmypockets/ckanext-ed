@@ -1,0 +1,26 @@
+{% ckan_extends %}
+
+{% block wrapper_class %}-custom{% endblock %}
+
+{% block primary %}
+    <div class="content-main">
+        <div class="col-md-10">
+            <section class="module">
+                <div class="module-content">
+                    {% block primary_content_inner %}
+                        {{ super() }}
+                    {% endblock %}
+                </div>
+            </section>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block secondary %}
+    <div class="sidebar secondary">
+          {% block secondary_content %}
+            {% snippet "organization/snippets/helper.html" %}
+          {% endblock %}
+    </div>
+{% endblock %}

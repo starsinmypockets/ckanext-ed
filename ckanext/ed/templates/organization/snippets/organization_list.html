@@ -1,0 +1,23 @@
+{% block organization_list %}
+
+<ul class="dataset-list list-unstyled">
+    {% block organization_list_inner %}
+    {% for organization in organizations %}
+        <li class="dataset-item item-extended">
+            {% set url = h.url_for(organization.type ~ '_read', action='read', id=organization.name) %}
+            <div class="card-custom package-item">
+                <p class="font-body-lg">
+                    <a href="{{ url }}">{{ organization.title }}</a>
+                </p>
+                <div class="data-desc">{{ organization.description }}</div>
+
+                <div class="dataset-total-views">
+                    <span>{{ organization.package_count }} Datasets &nbsp; </span> <br/><br/>
+                    <span>Suboffice: <a href="#">Office of Federal Student Aid</a> &nbsp; </span> 
+                </div>
+            </div>
+        </li>
+    {% endfor %}
+    {% endblock %}
+</ul>
+{% endblock %}

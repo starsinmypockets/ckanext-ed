@@ -1,5 +1,6 @@
-{% ckan_extends %}
+{% extends "package/base_advanced.html" %}
 
+{{ super() }}
 
 {% block content_primary_nav %}
     {{ h.build_nav_icon('dataset_read', _('Dataset'), id=pkg.name, icon=' view_list material-icons') }}

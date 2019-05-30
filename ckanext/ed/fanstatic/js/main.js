@@ -33,7 +33,7 @@ $(document).ready(function(){
         renderParticles();
     }
     
-    if(page=="search"){
+    if(page=="search" || page=="publisher_listing"){
         if ($(window).width() >= 768) {
             new SimpleBar($('#scrollbar')[0]);
         }

@@ -123,7 +123,8 @@
         border-left:0;
         border-top:0;
         border-right:0;
-        border-bottom:3px solid $theme-color-green;
+        border-bottom:3px solid $theme-color-green !important;
+        color:$theme-color-main  !important;
 
     }
 
@@ -180,7 +181,7 @@
 
         .module-shallow {
             border-bottom:1px solid color($theme-color-base-lighter);
-            padding-bottom: 40px;
+            padding-bottom: 20px;
 
             p {
                 margin-left:30px;

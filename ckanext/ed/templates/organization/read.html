@@ -1,0 +1,25 @@
+{% ckan_extends %}
+
+{% block wrapper_class %}-custom{% endblock %}
+
+{% block primary %}
+<div class="content-main">
+    <div class="col-md-10">
+        {% block primary_content %}
+            {{ super() }}
+        {% endblock %}
+    </div>
+</div>
+
+<p class="page-name page-home hidden">publisher_listing</p>
+{% endblock %}
+
+{% block secondary %}
+    <div class="sidebar secondary">
+        <div class="sidebar_content_wrap fixed" id="scrollbar">
+          {% block secondary_content %}
+             {{ super() }}
+          {% endblock %}
+        </div>
+    </div>
+{% endblock %}

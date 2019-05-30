@@ -48,6 +48,32 @@
     }
 }
 
+.dataset-item.item-extended {
+
+    .data-desc {
+        padding-bottom:17px;
+    }
+
+    .data-desc:empty {
+        padding-bottom: 0;
+    }
+
+    .dataset-total-views {
+        padding-top:5px;
+
+        span {
+            a {
+                @include typeset($theme-font-role-heading,'2xs',1);
+                font-weight:400;
+                margin-left: 3px;
+                color: #7d7d7d;
+                border-bottom: 1px solid #bbbbbb;
+                padding-bottom: 2px;
+            }
+        }
+    }
+}
+
 .search-form {
     margin-bottom: 0;
     padding-bottom: 0;
