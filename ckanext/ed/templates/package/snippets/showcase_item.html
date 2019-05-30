@@ -16,7 +16,6 @@
     {% block package_item %}
     
     
-    <div class="col-md-4 col-sm-6 img_block">
       {% block item_inner %}
         
         <a href="{{ h.url_for(controller='ckanext.showcase.controller:ShowcaseController', action='read', id=package.name) }}" title="{{ _('View {showcase_title}').format(showcase_title=package.title) }}">
@@ -56,7 +55,6 @@
           <form method="post"><input type="hidden" value="{{ package.id }}" name="remove_showcase_id" /><input value="{{ _('Remove') }}" type="submit" class="btn btn-danger btn-small media-edit" title="{{ _('Remove dataset from this showcase') }}"/></form>
         {% endif %} -->
       {% endblock %}
-    </div>
     {% endblock %}
     {# {% if position is divisibleby 3 %}
       <li class="clearfix js-hide"></li>

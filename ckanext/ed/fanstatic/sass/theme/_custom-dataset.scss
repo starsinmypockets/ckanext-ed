@@ -363,12 +363,15 @@
 }
 
 .showcase-card {
-    width:100%;
+
+    width:30%;
+    float:left;
+    margin-right:2%;
+
     height:300px;
     margin-bottom:30px;
     border-radius:4px;
     background-color:$theme-color-main;
-    background-size:fit;
     background-size: cover;
     background-repeat: no-repeat;
     position:relative;
@@ -392,6 +395,14 @@
 
     .overlay:hover {
         opacity:.8;
+    }
+
+    @media screen and (max-width:767px){
+        width:100%;
+    }
+
+    @media screen and (min-width:768px) and (max-width:1200px){
+        width:48%;
     }
 }
 
