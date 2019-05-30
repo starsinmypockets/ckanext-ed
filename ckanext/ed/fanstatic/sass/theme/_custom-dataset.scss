@@ -394,3 +394,18 @@
         opacity:.8;
     }
 }
+
+.sidebar-btn { 
+    padding:30px 30px 30px 30px;
+
+    .usa-button {
+        padding-right:40px;
+        padding-left:40px;
+    }
+}
+
+.ckanext-showcase-image-container {
+    max-height:400px;
+    overflow: hidden;
+    border-radius: 4px;
+}
