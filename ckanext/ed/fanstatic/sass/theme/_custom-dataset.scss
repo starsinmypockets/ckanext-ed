@@ -346,3 +346,98 @@
         color:$theme-color-main;
     }
 }
+
+.inclusion-text {
+    color:$theme-color-main;
+    color: #00274A;
+    font-weight: 600;
+    font-size: .86em !important;
+
+    @media screen and (min-width:768px){
+        float:right;
+    }
+}
+
+.showcase-list {
+    list-style: none;
+}
+
+.showcase-card {
+
+    width:30%;
+    float:left;
+    margin-right:2%;
+
+    height:300px;
+    margin-bottom:30px;
+    border-radius:4px;
+    background-color:$theme-color-main;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position:relative;
+    background-position: center center;
+
+    span {
+        color: #fff;
+        font-weight: 600;
+        position: absolute;
+        bottom: 20px;
+        left: 25px;
+        @include u-font-size('body', 'sm');
+    }
+
+    form {
+        position:absolute;
+        right:25px;
+        top:20px;
+    }
+
+    .overlay {
+        width: 100%;
+        height: 100%;
+        border-radius:4px;
+        background-color: $theme-color-main;
+        background: linear-gradient(0deg, rgba(0,39,74,1) 0%, rgba(255,255,255,0) 100%);
+    }
+
+    .overlay:hover {
+        opacity:.8;
+    }
+
+    @media screen and (max-width:767px){
+        width:100%;
+    }
+
+    @media screen and (min-width:768px) and (max-width:1200px){
+        width:48%;
+    }
+}
+
+.sidebar-btn { 
+    padding:30px 30px 30px 30px;
+
+    .usa-button {
+        padding-right:40px;
+        padding-left:40px;
+    }
+}
+
+.ckanext-showcase-image-container {
+    max-height:400px;
+    overflow: hidden;
+    border-radius: 4px;
+}
+
+.showcase-sidebar {
+    .module-heading {
+        border:0;
+        background:transparent;
+    }
+    .context-info .info {
+        padding-top:0;
+    }
+
+    .nav-simple {
+        padding-top:0;
+    }
+}

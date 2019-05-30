@@ -21,6 +21,9 @@
       <h4 class="side-heading"> API Hits </h4>
       <p>832</p>
     </section>
+    <section class="sidebar-btn">
+        <a href="#" class="usa-button">Dashboard</a>
+    </section>
   </div>
 
   <!-- Primary Section -->
@@ -35,11 +38,16 @@
         <button type="submit" class="btn btn-primary" title="{{ _('Associate this showcase with this dataset') }}">{{ _('Add to showcase') }}</button>
       </form>
     {% endif %}
+      
+    <h2>Showcase</h2>
+    <p>What people are making using this data.</p>
 
-    <h2>{% block page_heading %}{{ _('Showcases featuring {dataset_name}').format(dataset_name=h.dataset_display_name(c.pkg_dict)) }}{% endblock %}</h2>
+    <p class="inclusion-text">INCLUSION = ENDROSMENT</p>
+    <p class="clearfix"></p>
+    
     {% block showcase_list %}
       {% if c.showcase_list %}
-        {% snippet "showcase/snippets/showcase_list.html", packages=c.showcase_list, pkg_id=c.pkg_dict.name, show_remove=h.check_access('ckanext_showcase_update') %}
+        {% snippet "package/snippets/showcase_list.html", packages=c.showcase_list, pkg_id=c.pkg_dict.name, show_remove=h.check_access('ckanext_showcase_update') %}
       {% else %}
         <p class="empty">{{ _('There are no showcases that feature this dataset') }}</p>
       {% endif %}

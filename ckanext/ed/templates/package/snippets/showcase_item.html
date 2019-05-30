@@ -1,0 +1,36 @@
+{#
+    Displays a single dataset of type 'showcase'.
+    
+    package        - A package to display.
+    item_class     - The class name to use on the list item.
+    truncate       - The length to trucate the description to (default: 180)
+    truncate_title - The length to truncate the title to (default: 80).
+    show_remove    - If True, show the remove button to remove showcase/dataset association.
+    
+    #}
+    {% set truncate = truncate or 180 %}
+    {% set truncate_title = truncate_title or 80 %}
+    {% set title = package.title or package.name %}
+    {% set notes = h.markdown_extract(package.notes, extract_length=truncate) %}
+    
+    {% block package_item %}
+    
+    
+      {% block item_inner %}
+        
+        <a href="{{ h.url_for(controller='ckanext.showcase.controller:ShowcaseController', action='read', id=package.name) }}" title="{{ _('View {showcase_title}').format(showcase_title=package.title) }}">
+            <div class="showcase-card" style="background-image:url({{ package.image_display_url or h.url_for_static('/base/images/group_icon.jpg') }}">
+                <div class="overlay"></div>
+                
+                <span>{{ _('{showcase_title}').format(showcase_title=package.title) }}</span>
+
+                {% if show_remove %}
+                  <form method="post"><input type="hidden" value="{{ package.id }}" name="remove_showcase_id" /><input value="{{ _('Remove') }}" type="submit" class="btn btn-danger btn-small media-edit" title="{{ _('Remove dataset from this showcase') }}"/></form>
+                {% endif %} 
+            </div>
+        </a>
+      {% endblock %}
+    {% endblock %}
+    {# {% if position is divisibleby 3 %}
+      <li class="clearfix js-hide"></li>
+    {% endif %} #}
