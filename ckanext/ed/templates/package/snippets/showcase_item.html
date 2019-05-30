@@ -19,7 +19,7 @@
       {% block item_inner %}
         
         <a href="{{ h.url_for(controller='ckanext.showcase.controller:ShowcaseController', action='read', id=package.name) }}" title="{{ _('View {showcase_title}').format(showcase_title=package.title) }}">
-            <div class="showcase-card" style="background-image:url({{ package.image_display_url or h.url_for_static('/base/images/placeholder-group.png') }}">
+            <div class="showcase-card" style="background-image:url({{ package.image_display_url or h.url_for_static('/base/images/group_icon.jpg') }}">
                 <div class="overlay"></div>
                 
                 <span>{{ _('{showcase_title}').format(showcase_title=package.title) }}</span>

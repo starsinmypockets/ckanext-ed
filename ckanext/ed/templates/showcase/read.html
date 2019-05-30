@@ -15,9 +15,12 @@
 {% endblock %}
 
 {% block secondary %}
-    <div class="sidebar secondary">
+    <div class="sidebar secondary showcase-sidebar">
           {% block secondary_content %}
              {{ super() }}
+
+            {% block package_social %}
+            {% endblock %}
           {% endblock %}
     </div>
 {% endblock %}

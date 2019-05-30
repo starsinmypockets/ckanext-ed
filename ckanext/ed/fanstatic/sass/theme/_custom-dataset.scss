@@ -375,6 +375,7 @@
     background-size: cover;
     background-repeat: no-repeat;
     position:relative;
+    background-position: center center;
 
     span {
         color: #fff;
@@ -425,4 +426,18 @@
     max-height:400px;
     overflow: hidden;
     border-radius: 4px;
+}
+
+.showcase-sidebar {
+    .module-heading {
+        border:0;
+        background:transparent;
+    }
+    .context-info .info {
+        padding-top:0;
+    }
+
+    .nav-simple {
+        padding-top:0;
+    }
 }
