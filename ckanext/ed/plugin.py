@@ -126,6 +126,13 @@ class EDPlugin(plugins.SingletonPlugin, DefaultTranslation):
                     controller='ckanext.ed.controller:DisqusController',
                     action='read_disqus')
 
+        ## package
+        map.connect('dataset.new','/dataset/new',
+                    controller='ckan.controllers.package:PackageController',
+                    action='new')
+        map.connect('/dataset/{id}',
+                    controller='ckanext.ed.controller:EdPackageController',
+                    action='read')
         return map
 
     # IValidators

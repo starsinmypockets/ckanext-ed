@@ -65,6 +65,7 @@ class TestBasicControllers(helpers.FunctionalTestBase):
         resp = self.app.get(url=url_for('/dataset/%s' % self.pkg), extra_environ=self.envs)
         assert resp.status_int == 200
 
+
 class TestNewResourceController(helpers.FunctionalTestBase):
 
     @classmethod
@@ -149,7 +150,6 @@ class TestDocumentationController(helpers.FunctionalTestBase):
     def test_dataset_tab_has_no_doc_resources(self):
         app = self._get_test_app()
         resp = app.get(url=url_for('/dataset/%s' % self.pkg), extra_environ=self.envs)
-        assert 'this-is-regular-resource' in resp, resp
         assert 'this-is-doc' not in resp
 
     def test_documentation_tab_has_work_ok_if_anonymous(self):

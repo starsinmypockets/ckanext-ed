@@ -10,33 +10,58 @@
   <!-- Sidebar Section -->
   <div class="inner-sidebar">
     <section class="content-pad">
-        
-        <a href="#">
-          <div class="dataset-card active">
-              <span class="format">CSV</span>
-              <h5>2018-19 CRDC LEA DATA</h5>
-
-              <button class="usa-button download-btn">Download </button>
-              <button class="usa-button download-btn outline">API</button>
-
-              <i class="material-icons">done</i>
-          </div>
-        </a>
-
-        <a href="#">
-        <div class="dataset-card">
-            <span class="format">CSV</span>
-            <h5>2018-19 CRDC LEA DATA</h5>
-        </div>
-        </a>
-
-        <a href="#">
-          <div class="dataset-card">
-            <span class="format">CSV</span>
-            <h5>2018-19 CRDC LEA DATA</h5>
-          </div>
-        </a>
-
+        {% for resource in pkg.resources %}
+          {% if resource.resource_type != 'doc' %}
+          {% set active = '' %}
+          {% if resource.id == c.current_resource_id %}
+            {% set active = 'active' %}
+          {% endif %}
+            <a href=/dataset/{{pkg.name}}?resource={{resource.id}}>
+            <div class="dataset-card {{active}}">
+                <span class="format">{{resource.format}}</span>
+                {% if resource.url and h.is_url(resource.url) %}
+                  <h5>{{resource.name | upper }}</h5>
+                  {% if active %}
+                    <a class="usa-button download-btn resource-type-{{ resource.resource_type }}" href="{{ resource.url }}">
+                      {% if resource.resource_type in ('listing', 'service') %}
+                        <i class="fa fa-eye"></i> {{ _('View') }}
+                      {% elif  resource.resource_type == 'api' %}
+                        <i class="fa fa-key"></i> {{ _('API Endpoint') }}
+                      {% elif (not resource.has_views or not resource.can_be_previewed) and not resource.url_type == 'upload' %}
+                        <i class="fa fa-external-link"></i> {{ _('Go to resource') }}
+                      {% else %}
+                        {{ _('Download') }}
+                      {% endif %}
+                    </a>
+                    {%if resource.datastore_active %}
+                      <button class="usa-button download-btns dropdown-toggle" data-toggle="dropdown">
+                       <span class="caret"></span>
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li>
+                          <a href="{{ h.url_for(controller='ckanext.datastore.controller:DatastoreController', action='dump', resource_id=resource.id, bom=True) }}"
+                           target="_blank"><span>CSV</span></a>
+                          <a href="{{ h.url_for(controller='ckanext.datastore.controller:DatastoreController', action='dump', resource_id=resource.id, format='tsv', bom=True) }}"
+                           target="_blank"><span>TSV</span></a>
+                          <a href="{{ h.url_for(controller='ckanext.datastore.controller:DatastoreController', action='dump', resource_id=resource.id, format='json') }}"
+                           target="_blank"><span>JSON</span></a>
+                          <a href="{{ h.url_for(controller='ckanext.datastore.controller:DatastoreController', action='dump', resource_id=resource.id, format='xml') }}"
+                           target="_blank"><span>XML</span></a>
+                        </li>
+                      </ul>
+                    {%endif%}
+                    {% set loading_text = _('Loading...') %}
+                    {% if resource.datastore_active %}
+                    {% set api_info_url = h.url_for(controller='api', action='snippet', ver=1, snippet_path='api_info.html', resource_id=resource.id) %}
+                      <a class="usa-button download-btn outline btn btn-success" href="{{ api_info_url }}" data-module="api-info" data-module-template="{{ api_info_url }}" data-loading-text="{{ loading_text }}"><i class="fa fa-flask fa-lg"></i> {{ _('API') }}</a>
+                    {% endif %}
+                    <i class="material-icons">done</i>
+                  {% endif %}
+                {% endif %}
+            </div>
+            </a>
+            {% endif %}
+        {% endfor %}
     </section>
   </div>
 
@@ -72,19 +97,17 @@
       <span class="insert-comment-thread"></span>
     {% endblock %}
     {% block package_resources %}
-      {% snippet "package/snippets/resources_list.html", pkg=pkg, resources=pkg.resources, is_doc=is_doc %}
-    {% endblock %}
-
-    {% block package_tags %}
-      {% snippet "package/snippets/tags.html", tags=pkg.tags %}
-    {% endblock %}
-
-    {% block package_additional_info %}
-      {% snippet "package/snippets/additional_info.html", pkg_dict=pkg %}
+      {% if c.resources %}
+      {% snippet "package/snippets/resource_read.html",
+        pkg=pkg,
+        current_resource_view=current_resource_view,
+        resource_views=resource_views
+      %}
+      {% endif %}
     {% endblock %}
   </div>
 
   <p class="clearfix"></p>
-  
+
 
 {% endblock %}
