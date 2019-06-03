@@ -686,3 +686,19 @@ label:after {
         color: #fff;
         text-decoration: none;
 }
+
+
+.js .tab-content.active {
+    padding-top:0;
+
+    h2 {
+        margin-top:5px;
+    }
+}
+
+.side-content-extended {
+    h4 {
+        padding-left:30px;
+        padding-right:20px;
+    }
+}
