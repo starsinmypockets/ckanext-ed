@@ -250,6 +250,27 @@ class TestHelpers(test_helpers.FunctionalTestBase):
         result = helpers.alphabetize_dict(tags_list)
         assert_equals(result, excpeted_result)
 
+        # test dictionary sort
+        tags_list = [
+            {'count': 1,
+            'display_name': u'sat-scores',
+            'name': u'sat-scores'},
+            {'count': 1,
+            'display_name': u'arts',
+            'name': u'arts'},
+            {'count': 1, 'display_name': u'act-scores', 'name': u'act-scores'}
+        ]
+
+        excpeted_result = [
+            {'count': 1, 'display_name': u'act-scores', 'name': u'act-scores'},
+            {'count': 1, 'display_name': u'arts', 'name': u'arts'},
+            {'count': 1, 'display_name': u'sat-scores', 'name': u'sat-scores'},
+        ]
+        result = helpers.alphabetize_dict(tags_list)
+        assert_equals(result, excpeted_result)
+
+
+
     def test_get_any_on_list(self):
         data = [False, False, False]
         assert not helpers.get_any(data)
