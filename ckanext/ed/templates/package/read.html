@@ -97,7 +97,7 @@
       <span class="insert-comment-thread"></span>
     {% endblock %}
     {% block package_resources %}
-      {% if c.resources %}
+      {% if c.resource %}
       {% snippet "package/snippets/resource_read.html",
         pkg=pkg,
         current_resource_view=current_resource_view,

@@ -29,6 +29,16 @@ class TestBasicControllers(helpers.FunctionalTestBase):
         factories.Organization(name=self.orgname, id=self.orgname)
         context = _create_context(self.sysadmin)
         data_dict = _create_dataset_dict(self.pkg, self.orgname, private=False)
+        data_dict.update(resources=[
+            {
+                'id': 'data-without-table',
+                'name': 'data-without-table',
+                'url': '',
+                'description': 'resouce',
+                'format': 'csv',
+                'resource_type': 'regular-resource'
+            }
+        ])
         self.package = helpers.call_action('package_create', context, **data_dict)
         self.envs = {'REMOTE_USER': self.sysadmin['name'].encode('ascii')}
         self.app = self._get_test_app()
@@ -60,10 +70,12 @@ class TestBasicControllers(helpers.FunctionalTestBase):
     def test_pakage_page_is_ok_for_anonimous(self):
         resp = self.app.get(url=url_for('/dataset/%s' % self.pkg))
         assert resp.status_int == 200
+        assert 'Additional Information' in resp
 
     def test_pakage_page_is_ok_for_sysadmin(self):
         resp = self.app.get(url=url_for('/dataset/%s' % self.pkg), extra_environ=self.envs)
         assert resp.status_int == 200
+        assert 'Additional Information' in resp
 
 
 class TestNewResourceController(helpers.FunctionalTestBase):
