@@ -686,3 +686,49 @@ label:after {
         color: #fff;
         text-decoration: none;
 }
+
+
+.js .tab-content.active {
+    padding-top:0;
+
+    h2 {
+        margin-top:5px;
+    }
+}
+
+.side-content-extended {
+    h4 {
+        padding-left:30px;
+        padding-right:20px;
+    }
+}
+
+
+/* tables */
+.table {
+    border:3px solid $theme-grey-darker;
+
+    thead {
+        tr {
+            th {
+                text-transform: uppercase;
+                font-weight:600;
+                color:$theme-color-main;
+                @include u-font-size('body', '3xs');
+                vertical-align: middle;
+            }
+        }
+        
+    }
+
+    tbody {
+        tr {
+            td,th {
+                @include u-font-size('body', '3xs');
+                font-weight:400;
+                color:$theme-table-grey;
+            }
+        }
+    }
+    
+}
