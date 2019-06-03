@@ -1,0 +1,58 @@
+{% set url_action = 'resource_edit' if url_is_edit and can_edit else 'resource_read' %}
+{% set url = h.url_for(controller='package', action=url_action, id=pkg.name, resource_id=res.id) %}
+
+
+{% if res.pinned == 'True' or res_num==1 %}
+  {% if res.pinned == 'True'%}
+    <h5 id="pinned">Pinned</h5>
+    {% if h.check_access('package_update', {'id': c.pkg_dict.id ,'user': c.user}) %}
+      {% link_for _('Unpin'), controller='ckanext.ed.controller:DocumentationController', action='unpin', dataset_id=c.pkg_dict.name, resource_id=res.id, class_='btn btn-primary', icon='map-marker'%}
+    {% endif %}
+    <br>
+    What we think you probably want to look at first.
+  {% else %}
+    <h5 id="{{res.id}}">{{h.resource_display_name(res) | truncate(50)}}</h5>
+    {% if h.check_access('package_update', {'id': c.pkg_dict.id ,'user': c.user}) %}
+      {% link_for _('Pin'), controller='ckanext.ed.controller:DocumentationController', action='pin', dataset_id=c.pkg_dict.name, resource_id=res.id, class_='btn btn-primary', icon='map-marker'%}
+    {% endif %}
+  {% endif %}
+  <br>
+  <ul>
+    {% if res.url %}
+    <li><a href={{res.url}}>PDF</a></li>
+    {% endif %}
+    {% if res.external_website %}
+    <li><a href={{res.external_website}}>External Website</a></li>
+    {% endif %}
+  </ul>
+  <br>
+  <h5 id="about">About</h5>
+  <br>
+  {{res.description}}
+  <table class="table table-condensed">
+    <thead>
+      <tr>
+        <th scope="col">{{ _('Metadata') }}</th>
+        <th scope="col">{{ _('Description') }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for key, value in h.format_resource_items(res.items()) %}
+        <tr><th scope="row">{{ key }}</th><td>{{ value }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+<h5 id="{{res.id}}">{{h.resource_display_name(res) | truncate(50)}}</h5>
+{% if h.check_access('package_update', {'id': c.pkg_dict.id ,'user': c.user}) %}
+  {% link_for _('Pin'), controller='ckanext.ed.controller:DocumentationController', action='pin', dataset_id=c.pkg_dict.name, resource_id=res.id, class_='btn btn-primary', icon='map-marker'%}
+{% endif %}
+<ul>
+  {% if res.url %}
+  <li><a href={{res.url}}>PDF</a></li>
+  {% endif %}
+  {% if res.external_website %}
+  <li><a href={{res.external_website}}>External Website</a></li>
+  {% endif %}
+</ul>
+{% endif %}

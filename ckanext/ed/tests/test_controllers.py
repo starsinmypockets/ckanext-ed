@@ -181,12 +181,12 @@ class TestDocumentationController(helpers.FunctionalTestBase):
     def test_documentation_tab_has_pin_button(self):
         app = self._get_test_app()
         resp = app.get(url=url_for('/dataset/docs/%s' % self.pkg), extra_environ=self.envs)
-        assert 'Pin' in resp
+        assert ' Pin' in resp
 
     def test_documentation_tab_has_no_pin_button_for_anonymous(self):
         app = self._get_test_app()
         resp = app.get(url=url_for('/dataset/docs/%s' % self.pkg))
-        assert 'Pin' not in resp
+        assert ' Pin' not in resp
 
     def test_documentation_tab_has_unpin_button(self):
         app = self._get_test_app()

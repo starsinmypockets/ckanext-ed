@@ -9,13 +9,6 @@
 {% set has_reorder = c.pkg_dict and c.pkg_dict.resources and c.pkg_dict.resources|length > 0 %}
 {% set docs_here = {} %}
 
-{% block page_primary_action %}
-  {% if h.check_access('package_update', {'id': c.pkg_dict.id ,'user': c.user}) %}
-    {% link_for _('Add new doc'), controller='ckanext.ed.controller:NewResourceController', action='new_doc', id=c.pkg_dict.name, class_='btn btn-primary', icon='plus' %}
-    {% set has_reorder = False %}
-  {% endif %}
-{% endblock %}
-
 {% block primary_content_inner %}
 
     <!-- Sidebar Section -->
@@ -24,19 +17,30 @@
 
       <nav id="spy">
           <ul class="sidebar-nav nav">
-              <li class="sidebar-brand">
-                  <a href="#anch0">Link 1 to file</a>
-              </li>
-              <li class="sidebar-brand">
-                  <a href="#anch0">Project Documentation</a>
-              </li>
-              
+            <li class="sidebar-brand">
+              <a href="#about">About</a>
+            </li>
+            {% if pkg.resources %}
+              {% for resource in c.pkg_dict['resources']%}
+                {% if resource.resource_type == 'doc' %}
+                  <li class="sidebar-brand">
+                      {% if resource.pinned == 'True'%}
+                        <a href="#pinned"><b>Pinned</b></a>
+                        <a href="#about">About</a>
+                      {% else %}
+                        <a href="#{{resource.id}}">{{resource.name}}</a>
+                      {% endif %}
+                  </li>
+                {% endif %}
+              {% endfor %}
+            {% endif %}
           </ul>
       </nav>
     </div>
 
     <!-- Primary Section -->
     <div class="inner-primary">
+      <h4>Documentation</h4>
       {% if pkg.resources %}
         <ul class="resource-list"{% if has_reorder %} data-module="resource-reorder" data-module-id="{{ pkg.id }}"{% endif %}>
           {% set can_edit = h.check_access('package_update', {'id':pkg.id }) %}
@@ -44,7 +48,7 @@
             {% if resource.resource_type == 'doc' %}
               <!-- Ugly workarund to update docs_here -->
               {% if docs_here.update({'here': True }) %} {% endif %}
-              {% snippet 'package/snippets/resource_item.html', pkg=pkg, res=resource, url_is_edit=edit, can_edit=can_edit %}
+              {% snippet 'package/snippets/doc_item.html', pkg=pkg, res=resource, url_is_edit=edit, can_edit=can_edit, res_num=loop.index %}
             {% endif %}
           {% endfor %}
         </ul>

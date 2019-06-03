@@ -131,7 +131,7 @@ class EdPackageController(PackageController):
     def _resource_read(self, package, resource_id, context={}):
         '''Same as resource_read() from PackageController https://github.com/ckan/ckan/blob/f43d6a572838c792193f3239827d04f9ffea9206/ckan/controllers/package.py#L1083
 
-        Does exactly the same except this returns data instead of rendering 
+        Does exactly the same except this returns data instead of rendering
         '''
         c.package = package
 
@@ -201,7 +201,7 @@ class DocumentationController(PackageController):
         try:
             c.pkg_dict = get_action('package_show')(context, data_dict)
             c.pkg = context['package']
-        except (NotFound, NotAuthorized):
+        except (NotFound, NotAuthorized, toolkit.NotAuthorized):
             abort(404, _('Dataset not found'))
 
         package_type = c.pkg_dict['type'] or 'dataset'
