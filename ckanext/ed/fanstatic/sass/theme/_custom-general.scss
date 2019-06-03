@@ -712,9 +712,10 @@ label:after {
         tr {
             th {
                 text-transform: uppercase;
-                font-weight:500;
+                font-weight:600;
                 color:$theme-color-main;
                 @include u-font-size('body', '3xs');
+                vertical-align: middle;
             }
         }
         
@@ -725,6 +726,7 @@ label:after {
             td,th {
                 @include u-font-size('body', '3xs');
                 font-weight:400;
+                color:$theme-table-grey;
             }
         }
     }
