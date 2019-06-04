@@ -1,0 +1,44 @@
+.container-fluid {
+    .row {
+       margin-left: 0; 
+       margin-right: 0;
+    }
+}
+
+.stages li {
+    width:30%;
+}
+
+
+.control-large input {
+    border-radius:0;
+}
+
+.editor textarea {
+    border-radius:0;
+}
+
+fieldset {
+    border:0;
+}
+
+.page-header {
+    background-color:transparent;
+}
+
+.stages li.active .highlight {
+    color: #ffffff;
+    background: $theme-color-blue;
+}
+
+.stages li.active:before {
+    color: $theme-color-main;
+}
+
+.btn-lg, .btn-group-lg > .btn {
+    padding:7px 16px;
+}
+
+.row-fluid .controls {
+    margin-top:10px;
+}
