@@ -190,25 +190,15 @@ class TestDocumentationController(helpers.FunctionalTestBase):
         resp = app.get(url=url_for('/dataset/docs/%s?edit=true' % self.pkg), extra_environ=self.envs)
         assert 'Explore' not in resp
 
-    def test_documentation_tab_has_pin_button(self):
+    def test_documentation_tab_has_pin_button_on_edit(self):
         app = self._get_test_app()
-        resp = app.get(url=url_for('/dataset/docs/%s' % self.pkg), extra_environ=self.envs)
+        resp = app.get(url=url_for('/dataset/docs/%s?edit=True' % self.pkg), extra_environ=self.envs)
         assert ' Pin' in resp
 
-    def test_documentation_tab_has_no_pin_button_for_anonymous(self):
+    def test_documentation_tab_has_unpin_button_on_edit(self):
         app = self._get_test_app()
-        resp = app.get(url=url_for('/dataset/docs/%s' % self.pkg))
-        assert ' Pin' not in resp
-
-    def test_documentation_tab_has_unpin_button(self):
-        app = self._get_test_app()
-        resp = app.get(url=url_for('/dataset/docs/%s' % self.pkg), extra_environ=self.envs)
+        resp = app.get(url=url_for('/dataset/docs/%s?edit=True' % self.pkg), extra_environ=self.envs)
         assert 'Unpin' in resp
-
-    def test_documentation_tab_has_no_unpin_button_for_anonymous(self):
-        app = self._get_test_app()
-        resp = app.get(url=url_for('/dataset/docs/%s' % self.pkg))
-        assert 'Unpin' not in resp
 
     def test_pin_works(self):
         pinned_res_id = None
