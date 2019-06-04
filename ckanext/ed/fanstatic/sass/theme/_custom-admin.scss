@@ -34,3 +34,11 @@ fieldset {
 .stages li.active:before {
     color: $theme-color-main;
 }
+
+.btn-lg, .btn-group-lg > .btn {
+    padding:7px 16px;
+}
+
+.row-fluid .controls {
+    margin-top:10px;
+}
