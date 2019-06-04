@@ -269,8 +269,8 @@ def load_meta_file(file_path):
 
 
 def load_choices(field_meta=None):
-    file = load_meta_file(field_meta.get('choices_file_path'))
-    json_data = json.load(file)
+    fn = load_meta_file(field_meta.get('choices_file_path'))
+    json_data = json.load(fn)
     return json_data
 
 

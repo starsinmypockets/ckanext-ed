@@ -38,6 +38,38 @@
       "help_text": "Tags (or keywords) help users discover your dataset; please include terms that would be used by technical and non-technical users."
     },
     {
+      "field_name" : "level_of_data_string",
+      "label" : "Level Of Data",
+      "preset" : "tag_string_autocomplete",
+      "form_snippet" : "select-multiple-tags.html",
+      "required" : true,
+      "validators" : "ignore_missing",
+      "form_placeholder" : "eg. National, State, District, School or Individual",
+      "help_text" : "Tags (or keywords) help users discover your dataset; please include terms that would be used by technical and non-technical users.",
+      "choices": [
+        {
+        "value": "national",
+        "label": "National"
+        },
+        {
+        "value": "state",
+        "label": "State"
+        },
+        {
+        "value" : "district",
+        "label" : "District"
+        },
+        {
+        "value" : "school",
+        "label" : "School"
+        },
+        {
+        "value" : "individual",
+        "label" : "Individual"
+        }
+      ]
+    },
+    {
       "field_name": "owner_org",
       "label": "Office",
       "required": true,
