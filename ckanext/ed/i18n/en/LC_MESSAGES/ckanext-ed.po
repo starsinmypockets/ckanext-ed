@@ -25,7 +25,7 @@ msgstr ""
 
 #: ckanext/us_ed_theme/templates/header.html:6
 msgid "Organizations"
-msgstr "Offices"
+msgstr "Publihsers"
 
 #: ckanext/us_ed_theme/templates/header.html:7
 msgid "Groups"
@@ -65,7 +65,7 @@ msgstr[1] ""
 msgid "organization"
 msgid_plural "organizations"
 msgstr[0] "office"
-msgstr[1] "offices"
+msgstr[1] "publihser"
 
 #: ckanext/us_ed_theme/templates/home/snippets/stats.html:22
 msgid "group"
@@ -293,7 +293,7 @@ msgid "Organization not found"
 msgstr "Office not found"
 
 msgid "Organizations"
-msgstr "Offices"
+msgstr "Publishers"
 
 msgid "Organization has been deleted."
 msgstr "Office has been deleted."
@@ -356,7 +356,7 @@ msgstr ""
 "datasets from categories</p> "
 
 msgid "organizations"
-msgstr "offices"
+msgstr "publishers"
 
 msgid "Organization Form"
 msgstr "Office Form"
@@ -371,13 +371,13 @@ msgid "Edit Organization"
 msgstr "Edit Office"
 
 msgid "Add Organization"
-msgstr "Add Office"
+msgstr "Add Publisher"
 
 msgid "Search organizations..."
-msgstr "Search offices..."
+msgstr "Search publishers..."
 
 msgid "There are currently no organizations for this site"
-msgstr "There are currently no offices for this site"
+msgstr "There are currently no publishers for this site"
 
 msgid ""
 " <p><strong>Admin:</strong> Can add/edit and delete datasets, as well as "
@@ -399,7 +399,7 @@ msgid "Update Organization"
 msgstr "Update Office"
 
 msgid "Create Organization"
-msgstr "Create Office"
+msgstr "Create Publisher"
 
 msgid "Datasets in organization: {group}"
 msgstr "Datasets in office: {group}"
@@ -408,7 +408,7 @@ msgid "What are Organizations?"
 msgstr "What are Offices?"
 
 msgid ""
-" <p>Organizations act like publishing departments for datasets (for example,"
+" <p>Offices act like publishing departments for datasets (for example,"
 " the Department of Health). This means that datasets can be published by and"
 " belong to a department instead of an individual user.</p> <p>Within "
 "organizations, admins can assign roles and authorise its members, giving "
@@ -427,7 +427,7 @@ msgid ""
 "datasets. Users can have different roles within an Organization, depending "
 "on their level of authorisation to create, edit and publish. "
 msgstr ""
-" CKAN Offices are used to create, manage and publish collections of "
+" CKAN Publishers are used to create, manage and publish collections of "
 "datasets. Users can have different roles within an Office, depending "
 "on their level of authorization to create, edit and publish. "
 
@@ -454,7 +454,7 @@ msgid "Create a new organization"
 msgstr "Create a new office"
 
 msgid "There are no organizations to which you can assign this dataset."
-msgstr "There are no offices to which you can assign this dataset."
+msgstr "There are no publishers to which you can assign this dataset."
 
 msgid ""
 "Ask a system administrator to create an organization before you can "
@@ -474,25 +474,25 @@ msgstr "There is no description for this office"
 
 msgid "{number} organization found for \"{query}\""
 msgid_plural "{number} organizations found for \"{query}\""
-msgstr[0] "{number} office found for \"{query}\""
-msgstr[1] "{number} offices found for \"{query}\""
+msgstr[0] "{number} publisher found for \"{query}\""
+msgstr[1] "{number} publishers found for \"{query}\""
 
 msgid "No organizations found for \"{query}\""
-msgstr "No offices found for \"{query}\""
+msgstr "No publishers found for \"{query}\""
 
 msgid "{number} organization found"
 msgid_plural "{number} organizations found"
-msgstr[0] "{number} office found"
-msgstr[1] "{number} offices found"
+msgstr[0] "{number} publisher found"
+msgstr[1] "{number} publishers found"
 
 msgid "No organizations found"
-msgstr "No offices found"
+msgstr "No publishers found"
 
 msgid "My Organizations"
-msgstr "My Offices"
+msgstr "My Publishers"
 
 msgid "You are not a member of any organizations."
-msgstr "You are not a member of any offices."
+msgstr "You are not a member of any publishers."
 
 msgid "Showcase not found"
 msgstr "Application not found"

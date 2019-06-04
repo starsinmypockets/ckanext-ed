@@ -155,3 +155,7 @@ class EDPlugin(plugins.SingletonPlugin, DefaultTranslation):
         facets_dict['start_date'] = "Years"
         facets_dict['level_of_data_string'] = "Level Of Data"
         return facets_dict
+
+    def organization_facets(self, facets_dict, organization_type, package_type):
+        facets_dict['organization'] = 'Publishers'
+
