@@ -2,7 +2,6 @@ import os
 import logging
 import cgi
 
-
 from ckan.common import g, _, response, request, c, config
 import ckan.lib.helpers as h
 from paste.deploy.converters import asbool
@@ -46,9 +45,6 @@ UsernamePasswordError = logic.UsernamePasswordError
 DataError = dictization_functions.DataError
 unflatten = dictization_functions.unflatten
 
-
-
-
 abort = base.abort
 
 get_action = logic.get_action
@@ -58,6 +54,134 @@ clean_dict = logic.clean_dict
 tuplize_dict = logic.tuplize_dict
 parse_params = logic.parse_params
 
+
+class EdPackageController(PackageController):
+    def read(self, id):
+        '''Overrifing base packe read controller. https://github.com/ckan/ckan/blob/f43d6a572838c792193f3239827d04f9ffea9206/ckan/controllers/package.py#L360
+
+        Does exectly the same exapt it also includes info about resource selected.
+        '''
+        context = {'model': model, 'session': model.Session,
+                   'user': c.user, 'for_view': True,
+                   'auth_user_obj': c.userobj}
+        data_dict = {'id': id, 'include_tracking': True}
+
+        # interpret @<revision_id> or @<date> suffix
+        split = id.split('@')
+        if len(split) == 2:
+            data_dict['id'], revision_ref = split
+            if model.is_id(revision_ref):
+                context['revision_id'] = revision_ref
+            else:
+                try:
+                    date = h.date_str_to_datetime(revision_ref)
+                    context['revision_date'] = date
+                except TypeError as e:
+                    abort(400, _('Invalid revision format: %r') % e.args)
+                except ValueError as e:
+                    abort(400, _('Invalid revision format: %r') % e.args)
+        elif len(split) > 2:
+            abort(400, _('Invalid revision format: %r') %
+                  'Too many "@" symbols')
+
+        # check if package exists
+        try:
+            c.pkg_dict = get_action('package_show')(context, data_dict)
+            c.pkg = context['package']
+        except (NotFound, NotAuthorized, toolkit.NotAuthorized):
+            base.abort(404, _('Dataset not found'))
+
+        resource_id = request.params.get('resource')
+        for resource in c.pkg_dict['resources']:
+            resource_views = get_action('resource_view_list')(
+                context, {'id': resource['id']})
+            resource['has_views'] = len(resource_views) > 0
+            # Backwards compatibility with preview interface
+            resource['can_be_previewed'] = bool(len(resource_views))
+
+            if not resource_id and resource.get('resource_type') != 'doc':
+                resource_id = resource['id']
+
+        package_type = c.pkg_dict['type'] or 'dataset'
+        self._setup_template_variables(context, {'id': id},
+                                       package_type=package_type)
+
+        template = self._read_template(package_type)
+
+
+        vars = {'dataset_type': package_type}
+        if resource_id:
+            vars = self._resource_read(c.pkg_dict, resource_id, context=context)
+        c.current_package_id = c.pkg.id
+        c.current_resource_id = resource_id
+        try:
+            return render(template, extra_vars=vars)
+        except ckan.lib.render.TemplateNotFound as e:
+            msg = _(
+                "Viewing datasets of type \"{package_type}\" is "
+                "not supported ({file_!r}).".format(
+                    package_type=package_type,
+                    file_=e.message
+                )
+            )
+            abort(404, msg)
+
+        assert False, "We should never get here"
+
+    def _resource_read(self, package, resource_id, context={}):
+        '''Same as resource_read() from PackageController https://github.com/ckan/ckan/blob/f43d6a572838c792193f3239827d04f9ffea9206/ckan/controllers/package.py#L1083
+
+        Does exactly the same except this returns data instead of rendering
+        '''
+        c.package = package
+
+        for resource in c.package.get('resources', []):
+            if resource['id'] == resource_id:
+                c.resource = resource
+                break
+        if not c.resource:
+            abort(404, _('Resource not found'))
+
+        dataset_type = c.pkg.type or 'dataset'
+
+        # get package license info
+        license_id = c.package.get('license_id')
+        try:
+            c.package['isopen'] = model.Package.\
+                get_license_register()[license_id].isopen()
+        except KeyError:
+            c.package['isopen'] = False
+
+        # Deprecated: c.datastore_api - use h.action_url instead
+        c.datastore_api = '%s/api/action' % \
+            config.get('ckan.site_url', '').rstrip('/')
+
+        resource_views = get_action('resource_view_list')(
+            context, {'id': resource_id})
+        c.resource['has_views'] = len(resource_views) > 0
+
+        c.resource['can_be_previewed'] = bool(len(resource_views))
+
+        current_resource_view = None
+        view_id = request.GET.get('view_id')
+        if c.resource['has_views']:
+            if view_id:
+                current_resource_view = [rv for rv in resource_views
+                                         if rv['id'] == view_id]
+                if len(current_resource_view) == 1:
+                    current_resource_view = current_resource_view[0]
+                else:
+                    abort(404, _('Resource view not found'))
+            else:
+                current_resource_view = resource_views[0]
+        elif c.resource['can_be_previewed'] and not view_id:
+            current_resource_view = None
+
+        vars = {'resource_views': resource_views,
+                'current_resource_view': current_resource_view,
+                'dataset_type': dataset_type,
+                'resource_id': resource_id}
+        return vars
 
 class DocumentationController(PackageController):
     def read_doc(self, id):
@@ -77,7 +201,7 @@ class DocumentationController(PackageController):
         try:
             c.pkg_dict = get_action('package_show')(context, data_dict)
             c.pkg = context['package']
-        except (NotFound, NotAuthorized):
+        except (NotFound, NotAuthorized, toolkit.NotAuthorized):
             abort(404, _('Dataset not found'))
 
         package_type = c.pkg_dict['type'] or 'dataset'

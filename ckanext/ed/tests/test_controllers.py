@@ -29,6 +29,16 @@ class TestBasicControllers(helpers.FunctionalTestBase):
         factories.Organization(name=self.orgname, id=self.orgname)
         context = _create_context(self.sysadmin)
         data_dict = _create_dataset_dict(self.pkg, self.orgname, private=False)
+        data_dict.update(resources=[
+            {
+                'id': 'data-without-table',
+                'name': 'data-without-table',
+                'url': '',
+                'description': 'resouce',
+                'format': 'csv',
+                'resource_type': 'regular-resource'
+            }
+        ])
         self.package = helpers.call_action('package_create', context, **data_dict)
         self.envs = {'REMOTE_USER': self.sysadmin['name'].encode('ascii')}
         self.app = self._get_test_app()
@@ -60,10 +70,13 @@ class TestBasicControllers(helpers.FunctionalTestBase):
     def test_pakage_page_is_ok_for_anonimous(self):
         resp = self.app.get(url=url_for('/dataset/%s' % self.pkg))
         assert resp.status_int == 200
+        assert 'Additional Information' in resp
 
     def test_pakage_page_is_ok_for_sysadmin(self):
         resp = self.app.get(url=url_for('/dataset/%s' % self.pkg), extra_environ=self.envs)
         assert resp.status_int == 200
+        assert 'Additional Information' in resp
+
 
 class TestNewResourceController(helpers.FunctionalTestBase):
 
@@ -149,7 +162,6 @@ class TestDocumentationController(helpers.FunctionalTestBase):
     def test_dataset_tab_has_no_doc_resources(self):
         app = self._get_test_app()
         resp = app.get(url=url_for('/dataset/%s' % self.pkg), extra_environ=self.envs)
-        assert 'this-is-regular-resource' in resp, resp
         assert 'this-is-doc' not in resp
 
     def test_documentation_tab_has_work_ok_if_anonymous(self):
@@ -178,25 +190,15 @@ class TestDocumentationController(helpers.FunctionalTestBase):
         resp = app.get(url=url_for('/dataset/docs/%s?edit=true' % self.pkg), extra_environ=self.envs)
         assert 'Explore' not in resp
 
-    def test_documentation_tab_has_pin_button(self):
+    def test_documentation_tab_has_pin_button_on_edit(self):
         app = self._get_test_app()
-        resp = app.get(url=url_for('/dataset/docs/%s' % self.pkg), extra_environ=self.envs)
-        assert 'Pin' in resp
+        resp = app.get(url=url_for('/dataset/docs/%s?edit=True' % self.pkg), extra_environ=self.envs)
+        assert ' Pin' in resp
 
-    def test_documentation_tab_has_no_pin_button_for_anonymous(self):
+    def test_documentation_tab_has_unpin_button_on_edit(self):
         app = self._get_test_app()
-        resp = app.get(url=url_for('/dataset/docs/%s' % self.pkg))
-        assert 'Pin' not in resp
-
-    def test_documentation_tab_has_unpin_button(self):
-        app = self._get_test_app()
-        resp = app.get(url=url_for('/dataset/docs/%s' % self.pkg), extra_environ=self.envs)
+        resp = app.get(url=url_for('/dataset/docs/%s?edit=True' % self.pkg), extra_environ=self.envs)
         assert 'Unpin' in resp
-
-    def test_documentation_tab_has_no_unpin_button_for_anonymous(self):
-        app = self._get_test_app()
-        resp = app.get(url=url_for('/dataset/docs/%s' % self.pkg))
-        assert 'Unpin' not in resp
 
     def test_pin_works(self):
         pinned_res_id = None
