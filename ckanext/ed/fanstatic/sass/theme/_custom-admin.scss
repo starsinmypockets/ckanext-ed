@@ -17,3 +17,20 @@
 .editor textarea {
     border-radius:0;
 }
+
+fieldset {
+    border:0;
+}
+
+.page-header {
+    background-color:transparent;
+}
+
+.stages li.active .highlight {
+    color: #ffffff;
+    background: $theme-color-blue;
+}
+
+.stages li.active:before {
+    color: $theme-color-main;
+}
