@@ -77,7 +77,6 @@
       {% endif %}
       <h1>
         {% block page_heading %}
-          {{ h.dataset_display_name(pkg) }}
           {% if pkg.state.startswith('draft') %}
             [{{ _('Draft') }}]
           {% endif %}
@@ -86,15 +85,6 @@
           {% endif %}
         {% endblock %}
       </h1>
-      {% block package_notes %}
-        {% if pkg.notes %}
-          <div class="notes embedded-content">
-            {{ h.render_markdown(h.get_translated(pkg, 'notes')) }}
-          </div>
-        {% endif %}
-      {% endblock %}
-      {# FIXME why is this here? seems wrong #}
-      <span class="insert-comment-thread"></span>
     {% endblock %}
     {% block package_resources %}
       {% if c.resource %}
