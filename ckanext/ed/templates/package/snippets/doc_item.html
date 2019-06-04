@@ -5,21 +5,15 @@
 {% if res.pinned == 'True' or res_num==1 %}
   {% if res.pinned == 'True'%}
     <h5 id="pinned">Pinned</h5>
-    {% if h.check_access('package_update', {'id': c.pkg_dict.id ,'user': c.user}) %}
-      {% link_for _('Unpin'), controller='ckanext.ed.controller:DocumentationController', action='unpin', dataset_id=c.pkg_dict.name, resource_id=res.id, class_='btn btn-primary', icon='map-marker'%}
-    {% endif %}
     <br>
     What we think you probably want to look at first.
   {% else %}
     <h5 id="{{res.id}}">{{h.resource_display_name(res) | truncate(50)}}</h5>
-    {% if h.check_access('package_update', {'id': c.pkg_dict.id ,'user': c.user}) %}
-      {% link_for _('Pin'), controller='ckanext.ed.controller:DocumentationController', action='pin', dataset_id=c.pkg_dict.name, resource_id=res.id, class_='btn btn-primary', icon='map-marker'%}
-    {% endif %}
   {% endif %}
   <br>
   <ul>
     {% if res.url %}
-    <li><a href={{res.url}}>PDF</a></li>
+    <li><a href={{res.url}}>{{res.format|upper}}</a></li>
     {% endif %}
     {% if res.external_website %}
     <li><a href={{res.external_website}}>External Website</a></li>
@@ -44,12 +38,9 @@
   </table>
 {% else %}
 <h5 id="{{res.id}}">{{h.resource_display_name(res) | truncate(50)}}</h5>
-{% if h.check_access('package_update', {'id': c.pkg_dict.id ,'user': c.user}) %}
-  {% link_for _('Pin'), controller='ckanext.ed.controller:DocumentationController', action='pin', dataset_id=c.pkg_dict.name, resource_id=res.id, class_='btn btn-primary', icon='map-marker'%}
-{% endif %}
 <ul>
   {% if res.url %}
-  <li><a href={{res.url}}>PDF</a></li>
+  <li><a href={{res.url}}>{{res.format|upper}}</a></li>
   {% endif %}
   {% if res.external_website %}
   <li><a href={{res.external_website}}>External Website</a></li>
