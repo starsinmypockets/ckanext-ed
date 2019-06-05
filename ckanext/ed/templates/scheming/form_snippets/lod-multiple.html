@@ -26,6 +26,6 @@
       name="{{ field.field_name }}"
       data-stags={{ choices | join(",")}}
       {{ form.attributes(dict(
-        {"class": "select-multiple"}, **field.get('form_select_attrs', {}))) }}>
+        {"class": "lod-multiple"}, **field.get('form_select_attrs', {}))) }}>
   </input>
 {%- endcall -%}

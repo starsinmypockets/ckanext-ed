@@ -5,6 +5,47 @@ import ckan.plugins.toolkit as toolkit
 
 from ckanext.ed import actions, helpers, validators
 
+# Level Of Data vocabulary
+level_of_data_tags = (
+    'national',
+    'state',
+    'district',
+    'school',
+    'individual',
+)
+
+def create_level_of_data_codes():
+    '''
+    Populate the Level Of Data vocabulary into the database.
+    Vocabulary is defined in `level_of_data_tags' as an immutable
+    tuple.
+    '''
+    user = toolkit.get_action('get_site_user')({'ignore_auth' : True}, {})
+    context = { 'user' : user['name'] }
+    try:
+        data = {'id' : 'level_of_data_codes'}
+        toolkit.get_action('vocabulary_show')(context, data)
+    except toolkit.ObjectNotFound:
+        data = {'name' : 'level_of_data_codes' }
+        vocab = toolkit.get_action('vocabulary_create')(context, data)
+        for tag in level_of_data_tags:
+            data = {'name' : tag, 'vocabulary_id' : vocab['id']}
+            toolkit.get_action('tag_create')(context, data)
+
+def level_of_data_codes(field_metadata=None):
+    '''
+    Return the level of data tags, create if
+    necessary. Returns in scheming choices json format.
+    '''
+    create_level_of_data_codes()
+    try:
+        tag_list = toolkit.get_action('tag_list')
+        level_of_data = tag_list(data_dict={'vocabulary_id' : 'level_of_data_codes'})
+        level_of_data = [{ u'value' : name, u'label' : name} for name in level_of_data]
+        return level_of_data
+    except toolkit.ObjectNotFound:
+        return None
+
 
 class EDPlugin(plugins.SingletonPlugin, DefaultTranslation):
     plugins.implements(plugins.IConfigurer)
@@ -30,7 +71,8 @@ class EDPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'get_org_for_package' : helpers.get_org_for_package,
             'load_choices': helpers.load_choices,
             'alphabetize_dict' : helpers.alphabetize_dict,
-            'get_any': helpers.get_any
+            'get_any': helpers.get_any,
+            'get_level_of_data_tags' : level_of_data_codes,
         }
 
     # IActions
@@ -159,3 +201,12 @@ class EDPlugin(plugins.SingletonPlugin, DefaultTranslation):
     def organization_facets(self, facets_dict, organization_type, package_type):
         facets_dict['organization'] = 'Publishers'
 
+
+
+
+def _debug_caller():
+    import inspect
+    previous_frame = inspect.currentframe().f_back
+    details = (filename, line_number, function_name, lines, index) = \
+        inspect.getframeinfo(previous_frame)
+    return details

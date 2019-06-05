@@ -28,7 +28,6 @@
     {
       "field_name": "tag_string",
       "label": "Tags",
-      "preset": "tag_string_autocomplete",
       "form_snippet": "select-multiple-tags.html",
       "choices_helper": "load_choices",
       "choices_file_path": "ckanext.ed.schemas.assets:tags.json",
@@ -38,36 +37,14 @@
       "help_text": "Tags (or keywords) help users discover your dataset; please include terms that would be used by technical and non-technical users."
     },
     {
-      "field_name" : "level_of_data_string",
+      "field_name" : "level_of_data_tags",
       "label" : "Level Of Data",
-      "preset" : "tag_string_autocomplete",
-      "form_snippet" : "select-multiple-tags.html",
+      "form_snippet" : "lod-multiple.html",
+      "choices_helper" : "get_level_of_data_tags",
       "required" : true,
       "validators" : "ignore_missing",
       "form_placeholder" : "eg. National, State, District, School or Individual",
-      "help_text" : "Tags (or keywords) help users discover your dataset; please include terms that would be used by technical and non-technical users.",
-      "choices": [
-        {
-        "value": "national",
-        "label": "National"
-        },
-        {
-        "value": "state",
-        "label": "State"
-        },
-        {
-        "value" : "district",
-        "label" : "District"
-        },
-        {
-        "value" : "school",
-        "label" : "School"
-        },
-        {
-        "value" : "individual",
-        "label" : "Individual"
-        }
-      ]
+      "help_text" : "Tags (or keywords) help users discover your dataset; please include terms that would be used by technical and non-technical users."
     },
     {
       "field_name": "owner_org",
