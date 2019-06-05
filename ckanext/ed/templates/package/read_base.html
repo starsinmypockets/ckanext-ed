@@ -30,7 +30,7 @@
 
     <div class="col-md-2">
       <label>License</label>
-      <span>{{ pkg.license_title }}</span>
+      <span>{{ pkg.license_title or "unspecified" }}</span>
     </div>
 
     {% block package_organization %}
@@ -45,10 +45,14 @@
 
     <div class="col-md-3">
     <label>Tags</label>
-    {% for tag in pkg.tags %}
-        {% set href = "/dataset?tags=" + tag['name'] %}
-      <a href="{{href}}" class="tag-custom">#{{tag.name}}</a>
-    {% endfor %}
+    {% if pkg.tags|length > 0 %}
+        {% for tag in h.alphabetize_dict(pkg.tags[0:2], sort_by='name') %}
+            {% set href = "/dataset?tags=" + tag['name'] %}
+          <a href="{{href}}" class="tag-custom">#{{tag.name}}</a>
+        {% endfor %}
+    {% else %}
+        n/a
+    {% endif %}
     </div>
   </div>
 

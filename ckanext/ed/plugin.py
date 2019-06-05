@@ -152,7 +152,6 @@ class EDPlugin(plugins.SingletonPlugin, DefaultTranslation):
         facets_dict['res_format'] = "Formats"
         facets_dict['spatial'] = "Geography"
         facets_dict['license_id'] = "License"
-        facets_dict['start_date'] = "Years"
         facets_dict['level_of_data_string'] = "Level Of Data"
         return facets_dict
 
