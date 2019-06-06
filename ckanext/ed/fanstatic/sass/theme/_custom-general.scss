@@ -794,3 +794,20 @@ label:after {
     }
     
 }
+
+.clear-all {
+    padding: 8px 15px;
+    margin-left: 10px;
+    border: 20px;
+    background-color: $theme-color-blue;
+    position: relative;
+    font-weight: 700;
+    color: #fff;
+    top: 8px;
+    border-radius: 100px;
+}
+
+.clear-all:hover {
+    color:#fff !important;
+    background-color:#1a4480;
+}

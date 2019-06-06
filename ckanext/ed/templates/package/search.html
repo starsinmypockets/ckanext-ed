@@ -22,7 +22,7 @@
                     {{ h.snippet('snippets/filter_list.html', title=c.facet_titles[facet], name=facet) }}
                     {% endif %}
             {% endfor %}
-            <a href="{{ h.url_for('dataset') }}">Clear All</a>
+            <a href="{{ h.url_for('dataset') }}" class="clear-all">Clear All</a>
 
           </div>
           <p class="clearfix"></p>
