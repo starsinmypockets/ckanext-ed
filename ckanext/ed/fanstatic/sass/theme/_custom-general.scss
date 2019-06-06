@@ -580,7 +580,7 @@ p.clearfix {
     margin:0;
 }
 
-.tag-custom {
+.tag-custom,.label-inverse {
     background-color:$theme-grey-medium;
     color:$theme-color-alternate-dark;
     @include typeset($theme-font-role-ui,'3xs',1);

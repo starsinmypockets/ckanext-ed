@@ -328,6 +328,10 @@
         font-weight: 600;
     }
 
+    .format:empty {
+        display:none;
+    }
+    
     .download-btn {
         margin-top:10px;
         width:100%;
@@ -519,7 +523,7 @@
 }
 
 .page-advanced .content_action {
-    margin-top:7px;
+    margin-top:6px;
 }
 
 
@@ -527,12 +531,14 @@
 .page-advanced {
     .resource-list {
         margin:0;
+
+        h5 {
+            @include u-font-size('body', 'xs'); 
+            padding-top:30px;
+         }
     }
     
-    h5 {
-       @include u-font-size('body', 'xs'); 
-       padding-top:30px;
-    }
+    
 
     .table {
         margin-top:25px;
