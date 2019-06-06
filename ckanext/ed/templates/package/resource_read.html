@@ -1,0 +1,81 @@
+{% ckan_extends %}
+
+{% block wrapper_class %}-custom{% endblock %}
+
+{% block resource_view_nav %}
+    <div class="page-advanced"> <br/>
+    {% set resource_preview = h.resource_preview(c.resource, c.package) %}
+    {% snippet "package/snippets/resource_views_list.html",
+        views=resource_views,
+        pkg=pkg,
+        is_edit=false,
+        view_id=current_resource_view['id'],
+        resource_preview=resource_preview,
+        resource=c.resource,
+        extra_class="nav-tabs"
+    %}
+    </div>
+{% endblock %}
+{% block primary %}
+    {% block resource_additional_information %}
+    {% if res %}
+    <div class="content-main">
+    <div class="col-md-10">
+    <section class="module_">
+        {% block resource_additional_information_inner %}
+        <div class="module-content">
+        <h2>{{ _('Additional Information') }}</h2>
+        <table class="table table-bordered table-condensed custom-table" data-module="table-toggle-more">
+            <thead>
+            <tr>
+                <th scope="col">{{ _('Field') }}</th>
+                <th scope="col">{{ _('Value') }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row">{{ _('Data last updated') }}</th>
+                <td>{{ h.render_datetime(res.last_modified) or h.render_datetime(res.created) or _('unknown') }}</td>
+            </tr>
+            <tr>
+                <th scope="row">{{ _('Metadata last updated') }}</th>
+                <td>{{ h.render_datetime(res.revision_timestamp) or h.render_datetime(res.created) or _('unknown') }}</td>
+            </tr>
+            <tr>
+                <th scope="row">{{ _('Created') }}</th>
+                <td>{{ h.render_datetime(res.created) or _('unknown') }}</td>
+            </tr>
+            <tr>
+                <th scope="row">{{ _('Format') }}</th>
+                <td>{{ res.mimetype_inner or res.mimetype or res.format or _('unknown') }}</td>
+            </tr>
+            <tr>
+                <th scope="row">{{ _('License') }}</th>
+                <td>{% snippet "snippets/license.html", pkg_dict=pkg, text_only=True %}</td>
+            </tr>
+            {% for key, value in h.format_resource_items(res.items()) %}
+                <tr class="toggle-more"><th scope="row">{{ key }}</th><td>{{ value }}</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        </div>
+        {% endblock %}
+    </section>
+
+    </div>
+    </div>
+    {% endif %}
+    {% endblock %}
+{% endblock %}
+
+{% block secondary %}
+    <div class="sidebar secondary">
+            <br/>
+            {% block secondary_content %}
+                {% block resources_list %}
+                    {% snippet "package/snippets/resources.html", pkg=pkg, active=res.id %}
+                {% endblock %}
+                
+            {% endblock %}
+    </div>
+{% endblock %}

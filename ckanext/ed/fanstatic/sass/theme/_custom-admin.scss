@@ -31,6 +31,11 @@ fieldset {
     background: $theme-color-blue;
 }
 
+.stages li.active:after {
+    border-top-color:$theme-color-blue;
+    border-bottom-color: $theme-color-blue;
+}
+
 .stages li.active:before {
     color: $theme-color-main;
 }
@@ -41,4 +46,18 @@ fieldset {
 
 .row-fluid .controls {
     margin-top:10px;
+}
+
+
+
+.context-info .image img {
+    width:auto;
+    height:auto;
+    max-height: 150px;
+}
+
+.resource-item {
+    .checkbox {
+        display:none;
+    }
 }

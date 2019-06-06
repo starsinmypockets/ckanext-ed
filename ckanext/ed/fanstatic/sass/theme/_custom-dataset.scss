@@ -77,6 +77,10 @@
             }
         }
     }
+
+    .btn-manage {
+        display:none;
+    }
 }
 
 .page-advanced{
@@ -249,7 +253,7 @@
         height:auto;
         background-color:#fff;
 
-        padding:80px 100px;
+        padding:40px 100px;
 
         @media screen and (max-width:768px){
             padding:0;
@@ -268,6 +272,23 @@
 
             padding-bottom: 20px;
         }
+
+        .module {
+            margin-bottom:50px;
+        }
+
+        .module-resource {
+            border-bottom:0;
+        }
+
+        .dataset-private.pull-right {
+            margin-top:-10px;
+            margin-right:10px;
+        }
+    }
+
+    .inner-primary.wide {
+        padding:40px 40px 40px 100px;
     }
 
     @media screen and (max-width:768px){
@@ -295,6 +316,7 @@
 
         margin-top: 18px;
         margin-bottom: 10px;
+        word-wrap: break-word;
     }
 
     .format {
@@ -440,4 +462,91 @@
     .nav-simple {
         padding-top:0;
     }
+}
+
+.js .table-toggle-more .toggle-seperator {
+    display: none;
+}
+
+
+.page-advanced {
+
+    .nav-tabs-plain {
+        padding-left:0;
+        padding-top: 0px;
+        padding-right: 0;
+        float: left;
+        width: auto;
+
+        li {
+            padding-right:0;
+            margin-right:0;
+        }
+    }
+
+    .module-resource .actions {
+        top: 0px;
+    }
+}
+
+
+.data-viewer-error {
+    i {
+        width:0;
+    }
+}
+
+.drop-down-container {
+    position:relative;
+
+    .data-download {
+        background:$theme-color-blue;
+        border:0;
+        border-radius:3px;
+        padding:15px;
+        margin-top:10px;
+        color:#fff;
+        padding: 4px 10px;
+        
+        span {
+            margin:0;
+        }
+    }
+}
+
+.media-grid {
+    margin-top:50px;
+}
+
+.page-advanced .content_action {
+    margin-top:7px;
+}
+
+
+/* Docs section */
+.page-advanced {
+    .resource-list {
+        margin:0;
+    }
+    
+    h5 {
+       @include u-font-size('body', 'xs'); 
+       padding-top:30px;
+    }
+
+    .table {
+        margin-top:25px;
+    }
+
+    .resource-list {
+        ul {
+            list-style: disc;
+            display:inline-block;
+
+            li {
+                border-bottom:2px solid $theme-color-blue;
+            }
+        }
+    }
+    
 }

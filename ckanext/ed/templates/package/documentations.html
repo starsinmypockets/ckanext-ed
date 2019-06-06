@@ -25,22 +25,23 @@
   <div class="inner-sidebar">
     <h4 class="side-heading">Documentation</h4>
 
-    <nav id="spy">
+    <nav>
         <ul class="sidebar-nav nav">
-          <li class="sidebar-brand">
-            <a href="#about">About</a>
-          </li>
           {% if pkg.resources %}
             {% for resource in c.pkg_dict['resources']%}
               {% if resource.resource_type == 'doc' %}
-                <li class="sidebar-brand">
                     {% if resource.pinned == 'True'%}
+                    <li class="sidebar-brand">
                       <a href="#pinned"><b>Pinned</b></a>
+                    </li>
+                    <li class="sidebar-brand">
                       <a href="#about">About</a>
+                    </li>
                     {% else %}
+                    <li class="sidebar-brand">
                       <a href="#{{resource.id}}">{{resource.name}}</a>
+                    </li>
                     {% endif %}
-                </li>
               {% endif %}
             {% endfor %}
           {% endif %}

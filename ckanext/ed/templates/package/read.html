@@ -20,7 +20,7 @@
             <div class="dataset-card {{active}}">
                 <span class="format">{{resource.format}}</span>
                 {% if resource.url and h.is_url(resource.url) %}
-                  <h5>{{resource.name | upper }}</h5>
+                  <h5>{{resource.name }}</h5>
                   {% if active %}
                     <a class="usa-button download-btn resource-type-{{ resource.resource_type }}" href="{{ resource.url }}">
                       {% if resource.resource_type in ('listing', 'service') %}
@@ -33,8 +33,15 @@
                         {{ _('Download') }}
                       {% endif %}
                     </a>
+                    {% set loading_text = _('Loading...') %}
+                    {% if resource.datastore_active %}
+                    {% set api_info_url = h.url_for(controller='api', action='snippet', ver=1, snippet_path='api_info.html', resource_id=resource.id) %}
+                      <a class="usa-button download-btn outline btn btn-success" href="{{ api_info_url }}" data-module="api-info" data-module-template="{{ api_info_url }}" data-loading-text="{{ loading_text }}"><i class="fa fa-flask fa-lg"></i> {{ _('API') }}</a>
+                    {% endif %}
+
                     {%if resource.datastore_active %}
-                      <button class="usa-button download-btns dropdown-toggle" data-toggle="dropdown">
+                    <div class="drop-down-container">
+                      <button class="data-download" data-toggle="dropdown">
                        <span class="caret"></span>
                       </button>
                       <ul class="dropdown-menu">
@@ -49,12 +56,9 @@
                            target="_blank"><span>XML</span></a>
                         </li>
                       </ul>
+                    </div>
                     {%endif%}
-                    {% set loading_text = _('Loading...') %}
-                    {% if resource.datastore_active %}
-                    {% set api_info_url = h.url_for(controller='api', action='snippet', ver=1, snippet_path='api_info.html', resource_id=resource.id) %}
-                      <a class="usa-button download-btn outline btn btn-success" href="{{ api_info_url }}" data-module="api-info" data-module-template="{{ api_info_url }}" data-loading-text="{{ loading_text }}"><i class="fa fa-flask fa-lg"></i> {{ _('API') }}</a>
-                    {% endif %}
+
                     <i class="material-icons">done</i>
                   {% endif %}
                 {% endif %}
@@ -62,11 +66,14 @@
             </a>
             {% endif %}
         {% endfor %}
+
+        
+
     </section>
   </div>
 
   <!-- Primary Section -->
-  <div class="inner-primary">
+  <div class="inner-primary wide">
     {{ super() }}
     {% block package_description %}
       {% if pkg.private %}

@@ -56,6 +56,10 @@
     </div>
   </div>
 
-
+  {% block content_action %}
+    {% if h.check_access('package_update', {'id':pkg.id }) %}
+      {% link_for _('Manage'), controller='package', action='edit', id=pkg.name, class_='btn btn-primary btn-manage', icon='wrench' %}
+    {% endif %}
+  {% endblock %}
 <p class="page-name page-home hidden">dataset</p>
 {% endblock %}

@@ -5,7 +5,6 @@
 {% if res.pinned == 'True' or res_num==1 %}
   {% if res.pinned == 'True'%}
     <h5 id="pinned">Pinned</h5>
-    <br>
     What we think you probably want to look at first.
   {% else %}
     <h5 id="{{res.id}}">{{h.resource_display_name(res) | truncate(50)}}</h5>
@@ -19,11 +18,9 @@
     <li><a href={{res.external_website}}>External Website</a></li>
     {% endif %}
   </ul>
-  <br>
   <h5 id="about">About</h5>
-  <br>
   {{res.description}}
-  <table class="table table-condensed">
+  <table class="usa-table">
     <thead>
       <tr>
         <th scope="col">{{ _('Metadata') }}</th>
