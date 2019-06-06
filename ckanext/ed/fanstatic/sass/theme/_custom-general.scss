@@ -580,7 +580,7 @@ p.clearfix {
     margin:0;
 }
 
-.tag-custom {
+.tag-custom,.label-inverse {
     background-color:$theme-grey-medium;
     color:$theme-color-alternate-dark;
     @include typeset($theme-font-role-ui,'3xs',1);
@@ -793,4 +793,34 @@ label:after {
         }
     }
     
+}
+
+.clear-all {
+    padding: 8px 15px;
+    margin-left: 10px;
+    border: 20px;
+    background-color: $theme-color-blue;
+    position: relative;
+    font-weight: 700;
+    color: #fff;
+    top: 8px;
+    border-radius: 100px;
+}
+
+.clear-all:hover {
+    color:#fff !important;
+    background-color:#1a4480;
+}
+
+
+/* outlines */
+input:not([disabled]):focus, select:not([disabled]):focus, textarea:not([disabled]):focus, button:not([disabled]):focus {
+    outline: .05rem solid #2491ff;
+    outline-offset: 0;
+}
+
+iframe:focus, [href]:focus, [tabindex]:focus, [contentEditable=true]:focus {
+    outline: .15rem solid #2491ff;
+    box-shadow: 0px 0px 7px #94c9ff;
+    outline-offset: 0;
 }
