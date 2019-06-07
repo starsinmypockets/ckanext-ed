@@ -11,15 +11,15 @@
     <br />
     <section class="module module-narrow module-shallow">
         <h4 class="side-heading"> Visits </h4>
-        <p>121</p>
+          <p>{{ h.ed_get_total_views_for_dataset(pkg.id) }}</p>
     </section>
-      <section class="module module-narrow module-shallow">
-        <h4 class="side-heading"> Downloads </h4>
-        <p>{{ h.get_total_downloads(pkg.id, 'package') }}</p>
+    <section class="module module-narrow module-shallow">
+      <h4 class="side-heading"> Downloads </h4>
+      <p>{{ h.get_total_downloads(pkg.id, 'package') }}</p>
     </section>
     <section class="module module-narrow module-shallow">
       <h4 class="side-heading"> API Hits </h4>
-      <p>832</p>
+      <p>{{ h.get_total_downloads(pkg.id, 'package') }}</p>
     </section>
     <section class="sidebar-btn">
         <a href="#" class="usa-button">Dashboard</a>
@@ -38,13 +38,12 @@
         <button type="submit" class="btn btn-primary" title="{{ _('Associate this showcase with this dataset') }}">{{ _('Add to showcase') }}</button>
       </form>
     {% endif %}
-      
+
     <h2>Showcase</h2>
     <p>What people are making using this data.</p>
 
-    <p class="inclusion-text">INCLUSION = ENDROSMENT</p>
     <p class="clearfix"></p>
-    
+
     {% block showcase_list %}
       {% if c.showcase_list %}
         {% snippet "package/snippets/showcase_list.html", packages=c.showcase_list, pkg_id=c.pkg_dict.name, show_remove=h.check_access('ckanext_showcase_update') %}
