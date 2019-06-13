@@ -185,7 +185,11 @@ header.masthead {
         padding: 0 16px;
 
         @media screen and (max-width:767px){
-            padding: 0 4px; 
+            padding: 0 15px;
+
+            a {
+                padding:10px 0;
+            }
         }
     }
     .nav > li > a {
@@ -644,6 +648,19 @@ label:after {
 
 .pad-none {
     padding:0;
+}
+
+.pad-none.pad-right{
+    padding-right:10px;
+}
+
+.md-align-right
+{
+    text-align:right;
+
+    @media screen and (max-width:767px){
+        text-align:left;
+    }
 }
 
 .context-info .nums {

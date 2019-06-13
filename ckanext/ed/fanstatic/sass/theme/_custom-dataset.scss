@@ -256,7 +256,7 @@
         padding:40px 100px;
 
         @media screen and (max-width:768px){
-            padding:0;
+            padding:15px;
             padding-top:20px;
             float:none;
         }
@@ -287,8 +287,10 @@
         }
     }
 
-    .inner-primary.wide {
-        padding:40px 40px 40px 100px;
+    @media screen and (min-width:768px){
+        .inner-primary.wide {
+            padding:40px 40px 40px 100px;
+        }
     }
 
     @media screen and (max-width:768px){

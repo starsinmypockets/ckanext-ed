@@ -4,11 +4,11 @@
   {{ form.errors(error_summary) }}
 
   <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-6 pad-none pad-right">
             {{ form.input("fullname", id="field-fullname", label=_("Full Name"), placeholder=_("Joe Bloggs"), value=data.fullname, error=errors.fullname, classes=["control-medium"]) }}
   
       </div>
-      <div class="col-md-6">
+      <div class="col-md-6 pad-none">
             {{ form.input("name", id="field-username", label=_("Username"), placeholder=_("username"), value=data.name, error=errors.name, classes=["control-medium"], is_required=True) }}
       </div>
   </div>
@@ -23,10 +23,10 @@
   {{ form.required_message() }}
   
     <div class="row">
-        <div class="col-md-7">
+        <div class="col-md-7 pad-none">
             <p>Already have an account? <a href="{{ h.url_for('user.login') }}" class="reg-link">Sign-in</a></p>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-5 pad-none">
             <div class="form-actions">
                 {% block form_actions %}
                 <button class="usa-button" type="submit" name="save">{{ _("Create Account") }}</button>

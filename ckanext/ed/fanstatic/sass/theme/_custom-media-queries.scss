@@ -5,7 +5,8 @@
     }
 
     .container-fluid {
-        padding: 0 15px !important;
+        //padding: 0 15px !important;
+        padding:0 !important;;
     }
     @include customGridWidths(0%);
 
@@ -59,15 +60,182 @@
         position: static !important;
         top: 0 !important;
     }
+
+    .pad-none.pad-right{ 
+        padding-right:0;
+    }
+
+    .clear-all { 
+        margin-left:0;
+    }
+
+    .dataset-item .dataset-total-views span {
+        display:block;
+        margin-bottom:15px;
+    }
+
+    .navbar-toggle {
+        margin-right: 15px;
+    }
+
+    .dataset-item .font-body-3xs {
+        line-height: 1.5;
+    }
+
+    .js body.filters-modal .secondary .filters {
+        margin-top:66px;
+    }
+
+    //Publishers page
+    .context-info .image img {
+        height:auto;
+        width:100%;
+    }
+    .nav.pad-left, .sidebar .module-content {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .module-content h1 {
+        font-size:1.5rem;
+    }
+    .page-header.module-content {
+        padding-top: 0;
+        margin-left: 0;
+        margin-right: 0;
+        padding-bottom: 0;
+    }
+    .wrapper-custom .page-header .nav-tabs {
+        width:100%;
+        margin:0;
+    }
+    .wrapper-custom .page-header .nav-tabs>li {
+        margin-right: 0px;
+        margin-bottom: 10px;
+    }
+
+    .wrapper-custom .page-header .nav-tabs>li:last-child {
+        margin-bottom:0;
+    }
+
+    .wrapper-custom .page-header .nav-tabs>li.active>a {
+        border-radius:0 !important;
+    }
+
+    .sidebar_content_wrap.fixed.publishers_sidebar {
+        width:100%;
+    }
+
+    /* Datasets Page */
+    .main-info {
+        margin-bottom:10px;
+
+        .col-md-2,.col-md-3 {
+            padding:0;
+        }
+    }
+    .dataset-title .col-custom {
+        padding:0;
+    }
+
+    .page-advanced .inner-sidebar .content-pad {
+        padding: 30px 15px 30px 15px;
+    }
+
+    .module-content .page-header {
+        padding-right:0 !important;
+        margin-right:0 !important;
+    }
+
+    .page-advanced .inner-sidebar h4.side-heading {
+        padding-left:15px;
+    }
+    .page-advanced .inner-sidebar .module-shallow p {
+        margin-left:15px;
+    }
+
+    .sidebar-btn {
+        padding-left:15px;
+        padding-right:15px;
+    }
+
+    .page-advanced .page-header .nav-tabs {
+        margin-left:3px;
+    }
+
+    .inner-primary {
+        .module .module-content .nav-tabs-plain {
+            margin-bottom:20px;
+        }
+    }
+
+    .page-advanced .inner-sidebar .sidebar-nav li a {
+        padding:15px;
+    }
+
+    .wrapper.no-nav {
+        padding-left:15px;
+        padding-right:15px;
+    }
+
+    .form-actions .control-required-message {
+        width:100%;
+    }
+    .form-actions .btn {
+        margin-right:10px;
+    }
+
+    .full-height-pg {
+        padding-left:15px;
+        padding-right:15px;
+    }
 }
 
 @media screen and (min-width:1920px){
     @include customGridWidths(15%);
 }
 
+@media screen and (max-width:1023px){
+    .wrapper-custom .page-header .nav-tabs {
+        width:100%;
+        margin:0;
+    }
+    .wrapper-custom .page-header .nav-tabs>li {
+        margin-right: 0px;
+        margin-bottom: 10px;
+    }
+
+    .wrapper-custom .page-header .nav-tabs>li:last-child {
+        margin-bottom:0;
+    }
+
+    .wrapper-custom .page-header .nav-tabs>li.active>a {
+        border-radius:0 !important;
+    }
+
+    .page-advanced .page-header .nav-tabs {
+        margin-left:20px;
+    }
+
+    .page-advanced .inner-primary {
+        padding-left:25px;
+        padding-right:25px;
+    }
+
+    .page-advanced .inner-primary {
+        width:100%;
+    }
+
+
+    .dropdown.sort-dropdown {
+        display:inline-block;
+    }
+
+}
+
 @media screen and (min-width:768px) and (max-width:1200px){
     header.masthead .site-search {
-        width: 45%;
+        width: 42%;
     }
 
     header.masthead .nav > li {
@@ -90,9 +258,10 @@
 
     header.masthead {
         .nav-logo {
-            margin-right:20px;
+            margin-right:10px;
         }
     }
+
 }
 
 @media screen and (min-width:1200px) and (max-width:1919px){

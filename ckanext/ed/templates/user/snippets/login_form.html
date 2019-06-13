@@ -22,10 +22,10 @@ Example:
   {{ form.input('password', label=_("Password"), id='field-password', type="password", value="", error=password_error, classes=["control-medium"]) }}
 
   <div class="row">
-      <div class="col-sm-7">
+      <div class="col-sm-7 pad-none">
           {{ form.checkbox('remember', label=_("Remember me"), id='field-remember', checked=true, value="63072000",classes=["pad-bottom-0"]) }}
       </div>
-      <div class="col-sm-5">
+      <div class="col-sm-5 pad-none md-align-right">
            <a href="{{ h.url_for('user.request_reset') }}">Forgot Password</a>
       </div>
       
@@ -36,10 +36,10 @@ Example:
   {% endif %}
   
   <div class="row">
-      <div class="col-md-7">
+      <div class="col-md-7 pad-none ">
           <p>Don't have an account? <a href="{{ h.url_for('user.register') }}" class="reg-link">Register</a></p>
       </div>
-      <div class="col-md-5">
+      <div class="col-md-5 pad-none ">
           <div class="form-actions">
             {% block login_button %}
             <button class="usa-button" type="submit">{{ _('Sign-in') }}</button>
