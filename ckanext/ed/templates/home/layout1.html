@@ -40,7 +40,7 @@
         <div class="home-categories">
         <h3>Datasets by category</h3>
 
-        <div class="card-custom categories-card shadow">
+        <div class="card-custom-home categories-card shadow">
 
                   <div class="col-links-1">
                     <ul>
@@ -150,29 +150,6 @@
 
 <p class="page-name page-home hidden">home</p>
 
-<!-- Categories and Major Topics  
-<div role="main">
-  <div class="container">
-    {% set groups = h.ed_get_groups() %} {% if groups %}
-    <div class="module module-topics">
-      <h2 class="title">{{ _('Categories') }}</h2>
-      <ul class="module-topics-list">
-        {% for group in groups %} {% set group_url = h.url_for(controller='group', action='read', id=group.name) %} {% if group.image_display_url
-        %} {% set group_image = group.image_display_url %} {% else %} {% set group_image = '/base/images/placeholder-group.png'
-        %} {% endif %}
-
-        <li>
-          <a href="{{ group_url }}" class="topic">
-            <img class="topic-icon" src="{{ group_image }}" alt="{{ group.title }}">
-            <span class="topic-title">{{ group.title }}</span>
-          </a>
-        </li>
-        {% endfor %}
-      </ul>
-    </div>
-    {% endif %}
-  </div>
--->
 
 
 
