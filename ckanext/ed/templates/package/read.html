@@ -16,11 +16,12 @@
           {% if resource.id == c.current_resource_id %}
             {% set active = 'active' %}
           {% endif %}
-            <a href=/dataset/{{pkg.name}}?resource={{resource.id}}>
             <div class="dataset-card {{active}}">
-                <span class="format">{{resource.format}}</span>
                 {% if resource.url and h.is_url(resource.url) %}
-                  <h5>{{resource.name }}</h5>
+                  <a href=/dataset/{{pkg.name}}?resource={{resource.id}}>
+                    <span class="format">{{resource.format}}</span>
+                    <h5>{{resource.name }}</h5>
+                  </a>
                   {% if active %}
                     <a class="usa-button download-btn resource-type-{{ resource.resource_type }}" href="{{ resource.url }}">
                       {% if resource.resource_type in ('listing', 'service') %}
@@ -63,7 +64,6 @@
                   {% endif %}
                 {% endif %}
             </div>
-            </a>
             {% endif %}
         {% endfor %}
 
@@ -106,5 +106,7 @@
 
   <p class="clearfix"></p>
 
+
+  <p class="page-name-sub">data</p>
 
 {% endblock %}

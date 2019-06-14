@@ -159,9 +159,6 @@
         padding-right:15px;
     }
 
-    .page-advanced .page-header .nav-tabs {
-        margin-left:3px;
-    }
 
     .inner-primary {
         .module .module-content .nav-tabs-plain {
@@ -189,6 +186,11 @@
         padding-left:15px;
         padding-right:15px;
     }
+
+    .resource-view {
+        width:100% !important;
+        overflow-x: scroll !important;
+    }
 }
 
 @media screen and (min-width:1920px){
@@ -213,9 +215,6 @@
         border-radius:0 !important;
     }
 
-    .page-advanced .page-header .nav-tabs {
-        margin-left:20px;
-    }
 
     .page-advanced .inner-primary {
         padding-left:25px;

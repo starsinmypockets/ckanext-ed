@@ -48,6 +48,14 @@ $(document).ready(function(){
         $(".supervisor_account").html("supervisor_account");
     }
 
+
+    //Subpage 
+    var subpage = $('body').find('.page-name-sub').text();
+
+    if(subpage=="data"){
+        $(".nav-tabs > li:first-child").addClass("active");
+    }
+
     var navHeight = $("#nav-wrapper").outerHeight();
     $("body").css("paddingTop",navHeight);
 }); 

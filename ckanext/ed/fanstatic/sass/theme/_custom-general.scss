@@ -155,6 +155,7 @@ header.masthead {
     background:$theme-color-main !important;
     z-index:100;
     min-height:60px;
+    margin-bottom:0;
 
     @media screen and (max-width:767px){
         min-height:66px;
@@ -829,6 +830,17 @@ label:after {
     background-color:#1a4480;
 }
 
+.err-content {
+    h1 {
+        font-size:3em !important;
+        padding-bottom:20px;
+    }
+
+    .warning {
+        opacity:.6;
+        margin-bottom:20px;
+    }
+}
 
 /* outlines */
 input:not([disabled]):focus, select:not([disabled]):focus, textarea:not([disabled]):focus, button:not([disabled]):focus {
