@@ -174,7 +174,7 @@
       "label": "Spatial",
       "form_placeholder": "eg. Lincoln, Nebraska",
       "help_text": "The range of spatial applicability of a dataset. Could include a spatial region like a bounding box or a named place."
-    }, 
+    },
     {
       "field_name": "start_date",
       "label": "Data Relevance Start Date",
@@ -214,9 +214,7 @@
       "label": "Description",
       "required": true,
       "form_snippet": "markdown.html",
-      "form_placeholder": "Some useful notes about the data",
-      "resource_type": "doc_only",
-      "validators": "dummy_validator"
+      "form_placeholder": "Some useful notes about the data"
     },
     {
       "field_name": "format",
@@ -236,6 +234,7 @@
     {
       "field_name" : "publishing_approved",
       "label" : "Has the Disclosure Review Board approved the release of this data file?",
+      "required": true,
       "preset" : "checkbox"
     }
   ]

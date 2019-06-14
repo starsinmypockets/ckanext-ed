@@ -15,7 +15,7 @@ class TestDocsValidators(FunctionalTestBase):
 
     def test_resource_type_validator_regular_resource(self):
         context = _create_context(self.sysadmin)
-        resources = [{'name': 'doc', 'url': '', 'description': 'doc', 'format': 'pdf'}]
+        resources = [_create_resource_dict(name='doc',description='doc',format='pdf')]
         data_dict = _create_dataset_dict('test-dataset-1', self.orgname, resources=resources)
         call_action('package_create', context, **data_dict)
         dataset = call_action('package_show', context, id='test-dataset-1')
@@ -24,16 +24,16 @@ class TestDocsValidators(FunctionalTestBase):
     def test_resource_type_validator_doc(self):
         context = _create_context(self.sysadmin)
         context.update(is_doc=True)
-        resources = [{'name': 'doc', 'url': '', 'description': 'doc', 'format': 'pdf'}]
+        resources = [_create_resource_dict(id='doc-12345', name='doc',description='doc',format='pdf',resource_type=None)]
         data_dict = _create_dataset_dict('test-dataset-2', self.orgname, resources=resources)
         call_action('package_create', context, **data_dict)
         dataset = call_action('package_show', context, id='test-dataset-2')
-        assert dataset.get('resources')[0]['resource_type'] == 'doc'
+        assert dataset.get('resources')[0]['resource_type'] == 'doc', dataset.get('resources')[0]['resource_type']
 
     def test_resource_type_validator_not_modifies_if_type_is_present(self):
         context = _create_context(self.sysadmin)
         resources = [
-            {'name': 'doc', 'url': '', 'description': 'doc', 'format': 'pdf', 'resource_type': 'doc'}
+            _create_resource_dict(name='doc',description='doc',format='pdf',resource_type='doc')
         ]
         data_dict = _create_dataset_dict('test-dataset-3', self.orgname, resources=resources)
         call_action('package_create', context, **data_dict)
@@ -43,14 +43,14 @@ class TestDocsValidators(FunctionalTestBase):
     def test_resource_type_validator_not_modifies_doc_on_resource_update(self):
         context = _create_context(self.sysadmin)
         resources = [
-            {'name': 'doc', 'url': '', 'description': 'doc', 'format': 'pdf', 'resource_type': 'doc'}
+            _create_resource_dict(name='doc',description='doc',format='pdf',resource_type='doc')
         ]
         data_dict = _create_dataset_dict('test-dataset-3a', self.orgname, resources=resources)
         call_action('package_create', context, **data_dict)
         dataset = call_action('package_show', context, id='test-dataset-3a')
         data_to_update = {
-            'id':dataset.get('resources')[0]['id'], 'name': 'doc', 'url': '',
-            'description': 'doc', 'format': 'pdf'
+            'id':dataset.get('resources')[0]['id'], 'name': 'doc',
+            'description': 'doc', 'format': 'pdf', 'url': 'https://us-ed.ckan.io', 'publishing_approved': True
         }
         updated = call_action('resource_update', context, **data_to_update)
         assert updated['resource_type'] == 'doc'
@@ -58,14 +58,14 @@ class TestDocsValidators(FunctionalTestBase):
     def test_resource_type_validator_not_modifies_regular_resource_on_resource_update(self):
         context = _create_context(self.sysadmin)
         resources = [
-            {'name': 'doc', 'url': '', 'description': 'doc', 'format': 'pdf', 'resource_type': 'regular-resource'}
+            _create_resource_dict(name='doc',description='doc',format='pdf',resource_type='regular-resource')
         ]
         data_dict = _create_dataset_dict('test-dataset-3b', self.orgname, resources=resources)
         call_action('package_create', context, **data_dict)
         dataset = call_action('package_show', context, id='test-dataset-3b')
         data_to_update = {
-            'id':dataset.get('resources')[0]['id'], 'name': 'doc', 'url': '',
-            'description': 'doc', 'format': 'pdf'
+            'id':dataset.get('resources')[0]['id'], 'name': 'doc',
+            'description': 'doc', 'format': 'pdf', 'url': 'https://us-ed.ckan.io', 'publishing_approved': True
         }
         updated = call_action('resource_update', context, **data_to_update)
         assert updated['resource_type'] == 'regular-resource'
@@ -74,31 +74,32 @@ class TestDocsValidators(FunctionalTestBase):
         context = _create_context(self.sysadmin)
         context.update(is_doc=True)
         resources = [
-            {'name': 'doc', 'description': 'doc', 'format': 'pdf'}
+            _create_resource_dict(name='doc',description='doc',format='pdf', url=None)
         ]
         data_dict = _create_dataset_dict('test-dataset-4', self.orgname, resources=resources)
         call_action('package_create', context, **data_dict)
         dataset = call_action('package_show', context, id='test-dataset-4')
         assert dataset.get('resources')[0]['url'] == '', dataset.get('resources')[0]['url']
 
-    def test_resource_dummy_validator_for_doc_only(self):
-        context = _create_context(self.sysadmin)
-        resources = [
-            {'name': 'doc', 'format': 'pdf', 'url': ''}
-        ]
-        data_dict = _create_dataset_dict('test-dataset-4', self.orgname, resources=resources)
-        call_action('package_create', context, **data_dict)
-        dataset = call_action('package_show', context, id='test-dataset-4')
-        assert dataset.get('resources')[0]['description'] == ''
+    # TODO: Bring this back. For now we don't have description required in doc only
+    # def test_resource_dummy_validator_for_doc_only(self):
+    #     context = _create_context(self.sysadmin)
+    #     resources = [
+    #         _create_resource_dict(name='doc',format='pdf', description=None)
+    #     ]
+    #     data_dict = _create_dataset_dict('test-dataset-4', self.orgname, resources=resources)
+    #     call_action('package_create', context, **data_dict)
+    #     dataset = call_action('package_show', context, id='test-dataset-4')
+    #     assert dataset.get('resources')[0]['description'] == ''
 
     def test_resource_dummy_validator_for_remains_as_is_on_update(self):
         context = _create_context(self.sysadmin)
-        res_meta = {'name': 'regular-resource', 'format': 'csv', 'url': '', 'description': 'Very Good Description'}
+        res_meta = _create_resource_dict(name='regular-resource',format='csv',description='Very Good Description')
         resources = [res_meta]
         data_dict = _create_dataset_dict('test-dataset-4', self.orgname, resources=resources)
         call_action('package_create', context, **data_dict)
         dataset = call_action('package_show', context, id='test-dataset-4')
-        res_meta.update({'id': dataset['resources'][0]['id'], 'url': 'https://ckan.io'})
+        res_meta.update({'id': dataset['resources'][0]['id'], 'url': 'https://ckan.io', 'publishing_approved': True})
         call_action('resource_update', context, **res_meta)
         res = call_action('resource_show', context, id=res_meta['id'])
         assert res['description'] == 'Very Good Description'
@@ -217,4 +218,23 @@ def _create_dataset_dict(package_name, office_name='us-ed', resources=[]):
         'owner_org': office_name,
         'title': 'Title',
         'identifier': 'identifier'
+    }
+
+def _create_resource_dict(name,
+                            id=None,
+                            description='nice description',
+                            publishing_approved=True,
+                            url='https://us-ed.ckan.io',
+                            format='csv',
+                            resource_type='regular-resource',
+                            pinned=False):
+    return {
+        'id': id or name,
+        'name': name,
+        'url': url,
+        'description': description,
+        'format': format,
+        'resource_type': resource_type,
+        'publishing_approved': publishing_approved,
+        'pinned': pinned
     }
