@@ -238,6 +238,11 @@
         }
         .list-item:hover {
             background-color:$theme-grey-dark;
+            margin-left:1px;
+        }
+
+        .list-item::last-child {
+            border-bottom:0;
         }
 
         margin-bottom:40px;
