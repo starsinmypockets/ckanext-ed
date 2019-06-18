@@ -78,6 +78,7 @@ Output all USWDS
 
 
 // Custom Theming for Ed potal 
+// General file contains the portal wide codes, while each page specific scss file contains page specific styles
 @import 'theme/custom-general';
 @import 'theme/custom-about';
 @import 'theme/custom-home';
