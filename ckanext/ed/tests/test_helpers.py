@@ -148,7 +148,9 @@ class TestHelpers(test_helpers.FunctionalTestBase):
             'package_id': package['id'],
             'url': 'http://data',
             'name': 'A nice resource',
-            'upload': test_csv_resource
+            'upload': test_csv_resource,
+            'description': '123',
+            'publishing_approved': True
         }
 
         result = test_helpers.call_action('resource_create', context, **params)
@@ -169,7 +171,9 @@ class TestHelpers(test_helpers.FunctionalTestBase):
             'resource_type' : 'doc',
             'upload' : test_doc_resource,
             'description': "Test Documentation",
-            'url' : "http://example.com"
+            'url' : "http://example.com",
+            'description': '123',
+            'publishing_approved': True
         }
         result = test_helpers.call_action('resource_create', context, **params)
         dataset = test_helpers.call_action('package_show', id=package['id'])
@@ -193,7 +197,10 @@ class TestHelpers(test_helpers.FunctionalTestBase):
         params = {
             'package_id': package['id'],
             'name': 'A JSON Resource',
-            'upload': test_json_resource
+            'upload': test_json_resource,
+            'description': '123',
+            'publishing_approved': True,
+            'url': 'https://us-ed.ckan.io'
         }
         result = test_helpers.call_action('resource_create', context, **params)
         dataset = test_helpers.call_action('package_show', id=package['id'])
@@ -212,7 +219,10 @@ class TestHelpers(test_helpers.FunctionalTestBase):
         params = {
             'package_id': package['id'],
             'name': 'An XMK Resource',
-            'upload': test_xml_resource
+            'upload': test_xml_resource,
+            'description': '123',
+            'publishing_approved': True,
+            'url': 'https://us-ed.ckan.io'
         }
 
         result = test_helpers.call_action('resource_create', context, **params)

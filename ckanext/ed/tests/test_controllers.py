@@ -29,16 +29,15 @@ class TestBasicControllers(helpers.FunctionalTestBase):
         factories.Organization(name=self.orgname, id=self.orgname)
         context = _create_context(self.sysadmin)
         data_dict = _create_dataset_dict(self.pkg, self.orgname, private=False)
-        data_dict.update(resources=[
-            {
-                'id': 'data-without-table',
-                'name': 'data-without-table',
-                'url': '',
-                'description': 'resouce',
-                'format': 'csv',
-                'resource_type': 'regular-resource'
-            }
-        ])
+        data_dict.update(resources=[_create_resource_dict(
+            id='data-without-table',
+            name= 'data-without-table',
+            url='https=us-ed.ckan.io',
+            description= 'resouce',
+            format='csv',
+            resource_type='regular-resource',
+            publishing_approved=True
+        )])
         self.package = helpers.call_action('package_create', context, **data_dict)
         self.envs = {'REMOTE_USER': self.sysadmin['name'].encode('ascii')}
         self.app = self._get_test_app()
@@ -146,9 +145,9 @@ class TestDocumentationController(helpers.FunctionalTestBase):
         self.context = _create_context(self.sysadmin)
         data_dict = _create_dataset_dict(self.pkg, self.orgname, private=False)
         data_dict.update(resources=[
-            {'name': 'this-is-regular-resource', 'url': '', 'description': 'resouce', 'format': 'pdf', 'resource_type': 'regular-resource'},
-            {'name': 'this-is-doc', 'url': '', 'description': 'doc', 'format': 'pdf', 'resource_type': 'doc'},
-            {'name': 'this-is-pinned-doc', 'url': '', 'description': 'doc', 'format': 'pdf', 'resource_type': 'doc', 'pinned': 'True'}
+            _create_resource_dict(name='this-is-regular-resource',description='resouce',format='pdf',resource_type='regular-resource'),
+            _create_resource_dict(name='this-is-doc',description='doc',format='pdf',resource_type='doc'),
+            _create_resource_dict(name='this-is-pinned-doc',description='doc',format='pdf',resource_type='doc',pinned='True')
         ])
         # data_dict.update(state='draft')
         self.package = helpers.call_action('package_create', self.context, **data_dict)
@@ -391,7 +390,7 @@ class TestStateUpdateController(helpers.FunctionalTestBase):
         assert resp.status_int, 302
 
 
-def _create_dataset_dict(package_name, office_name='us-ed', private=False):
+def _create_dataset_dict(package_name, office_name='us-ed', private=False, url=''):
     return {
         'name': package_name,
         'contact_name': 'Stu Shepard',
@@ -403,7 +402,28 @@ def _create_dataset_dict(package_name, office_name='us-ed', private=False):
         'owner_org': office_name,
         'title': package_name.upper(),
         'identifier': 'identifier',
-        'private': private
+        'private': private,
+        'publishing_approved': True,
+        'url': url
+    }
+
+def _create_resource_dict(name,
+                            id=None,
+                            description='nice description',
+                            publishing_approved=True,
+                            url='https://us-ed.ckan.io',
+                            format='csv',
+                            resource_type='regular-resource',
+                            pinned=False):
+    return {
+        'id': id or name,
+        'name': name,
+        'url': url,
+        'description': description,
+        'format': format,
+        'resource_type': resource_type,
+        'publishing_approved': publishing_approved,
+        'pinned': pinned
     }
 
 def _create_context(user):

@@ -44,12 +44,14 @@ def dummy_validator(key, data, errors, context):
     field_name = key[-1]
     field_schema = list(filter(
                     lambda x: x['field_name'] == field_name, resource_schema))[0]
+
     if field_schema.get('required'):
         if is_doc and (field_schema.get('resource_type') == 'resource_only'):
             data[key] = ''
         elif not is_doc and (field_schema.get('resource_type') == 'doc_only'):
             data[key] = ''
-
+        else:
+            errors[key].append('Missing value')
 
 def resource_type_validator(key, data, errors, context):
     if data[key]:
@@ -63,7 +65,7 @@ def resource_type_validator(key, data, errors, context):
             {'user': context['user']},
             {'id': resource_id, 'resource_id': resource_id}
         )
-    except KeyError:
+    except:
         pass
     is_doc = context.get('is_doc') or resource_info.get('resource_type') == 'doc'
     data[key] = 'doc' if is_doc else 'regular-resource'
