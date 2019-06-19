@@ -62,3 +62,9 @@ fieldset {
         display:none;
     }
 }
+
+.wrapper {
+    .nav-tabs > li > a {
+        width:100%;
+    }
+}

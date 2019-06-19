@@ -866,12 +866,12 @@ label:after {
 }
 
 /* Updating the default outlines to be slimmer */
-input:not([disabled]):focus, select:not([disabled]):focus, textarea:not([disabled]):focus, button:not([disabled]):focus {
+input:not([disabled]):focus,input:not([disabled]):active, select:not([disabled]):focus,select:not([disabled]):active, textarea:not([disabled]):focus,textarea:not([disabled]):active, button:not([disabled]):focus,button:not([disabled]):active {
     outline: .05rem solid #2491ff;
     outline-offset: 0;
 }
 
-iframe:focus, [href]:focus, [tabindex]:focus, [contentEditable=true]:focus {
+iframe:focus, iframe:active, [href]:focus, [href]:active, [tabindex]:focus, [tabindex]:active, [contentEditable=true]:focus, [contentEditable=true]:active {
     outline: .15rem solid #2491ff;
     box-shadow: 0px 0px 7px #94c9ff;
     outline-offset: 0;
