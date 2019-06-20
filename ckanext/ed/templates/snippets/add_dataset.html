@@ -4,8 +4,6 @@
 
 {% if group %}
     {% link_for _('Add Data Profile'), controller='package', action='new', group=group, class_='usa-button usa-button--outline' %}
-{% elif dataset_type == 'dataset' %}
-    {% link_for _('Add Data Profile'), controller='package', action='new', group=group, class_='usa-button usa-button--outline' %}
 {% else %}
-    {% link_for _('Add ' + dataset_type.title()), controller='package', action='new', named_route=dataset_type + '_new', class_='usa-button usa-button--outline' %}
+    {% link_for _('Add Data Profile'), controller='package', action='new', named_route=dataset_type + '_new', class_='usa-button usa-button--outline' %}
 {% endif %}
