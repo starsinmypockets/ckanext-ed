@@ -14,18 +14,27 @@
     ) -%}
   {%- set choices = [] -%}
   {%- for c in h.scheming_field_choices(field) -%}
-    {%- do choices.append(h.scheming_language_text(c.label)) -%}
+    {%- do choices.append(
+      (c.value, h.scheming_language_text(c.label))) -%}
   {%- endfor -%}
   {%- if field.get('sorted_choices') -%}
     {%- set choices = choices|sort(case_sensitive=false, attribute=1) -%}
   {%- endif -%}
-  <input type="text" multiple="multiple"
+  <select multiple
       size="{{ ([field.get('select_size', 10), field.choices|length]|sort)[0] }}"
       style="display: block"
       id="field-{{ field.field_name }}"
+      class="placeholder-multiple"
       name="{{ field.field_name }}"
-      data-stags={{ choices | join(",")}}
       {{ form.attributes(dict(
-        {"class": "select-multiple"}, **field.get('form_select_attrs', {}))) }}>
-  </input>
+        {"class": "form-control"}, **field.get('form_select_attrs', {}))) }}>
+    {%- for val, label in choices -%}
+      <option id="field-{{ field.field_name }}-{{ val }}"
+          value="{{ val }}"
+          {{"selected " if val in data[field.field_name] }} />
+        {{ label }}
+      </option>
+    {%- endfor -%}
+  </select>
 {%- endcall -%}
+

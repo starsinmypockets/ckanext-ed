@@ -1,11 +1,11 @@
 {% ckan_extends %}
 
 {% block links %}
-    
+
     <!--[if IE]>
     <script src="{{ h.url_for_static('/classList.min.js') }}"></script>
     <![endif]-->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">  
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     {% resource 'pages/css/medium-editor.css' %}
     {% resource 'pages/js/medium-editor.js' %}
     {% resource 'pages/js/pages-editor.js' %}
@@ -22,9 +22,10 @@
 {% block scripts %}
   {{ super() }}
   {% resource 'ed/js/uswds.js' %}
-  {% resource 'ed/js/particles.js' %} 
-  {% resource 'ed/js/simplebar.js' %}  
+  {% resource 'ed/js/particles.js' %}
+  {% resource 'ed/js/simplebar.js' %}
   {% resource 'ed/js/main.js' %}
-  {% resource 'ed/js/select-tags.js' %} 
-   
+  {% resource 'ed/js/select-tags.js' %}
+  {% resource 'ed/js/select2-tags.js' %}
+
 {% endblock %}

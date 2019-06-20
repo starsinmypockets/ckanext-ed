@@ -26,7 +26,7 @@
       "form_placeholder": "Human-readable description (e.g., an abstract) with sufficient detail to enable a user to quickly understand whether the asset is of interest."
     },
     {
-      "field_name": "tag_string",
+      "field_name": "tags_predefined",
       "label": "Tags",
       "preset": "tag_string_autocomplete",
       "form_snippet": "select-multiple-tags.html",

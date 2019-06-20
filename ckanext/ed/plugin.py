@@ -38,6 +38,8 @@ class EDPlugin(plugins.SingletonPlugin, DefaultTranslation):
         return {
             'ed_prepare_zip_resources': actions.prepare_zip_resources,
             'package_show': actions.package_show,
+            'package_create': actions.package_create,
+            'package_update': actions.package_update,
             'package_activity_list': actions.package_activity_list,
             'dashboard_activity_list': actions.dashboard_activity_list,
             'group_activity_list': actions.group_activity_list,
