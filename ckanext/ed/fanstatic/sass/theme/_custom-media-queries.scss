@@ -1,4 +1,6 @@
-/* Media Queries */
+/* Media Queries and styles for responsive */
+
+// For Mobile Phones and Tablets
 @media screen and (max-width:767px){ 
     header.masthead .navbar-collapse {
         padding: 0 0 20px 0;
@@ -10,6 +12,7 @@
     }
     @include customGridWidths(0%);
 
+    //Setting up the sidebar widths and design updates
     .sidebar {
 
         .sidebar_content_wrap {
@@ -30,6 +33,7 @@
         padding-right:5px;
     }
 
+    //Homepage responsive updates
     .hero {
         .hero-content {
             padding:40px 10px 0 0px;
@@ -44,6 +48,8 @@
         margin: 20px 0 70px 0;
     }
 
+
+    // Dataset Search Page style updates 
     .search-form {
         label {
             padding-left:0;
@@ -86,7 +92,7 @@
         margin-top:66px;
     }
 
-    //Publishers page
+    // Publishers page Updates
     .context-info .image img {
         height:auto;
         width:100%;
@@ -99,6 +105,8 @@
     .module-content h1 {
         font-size:1.5rem;
     }
+
+    // Resetting the page header paddings
     .page-header.module-content {
         padding-top: 0;
         margin-left: 0;
@@ -126,7 +134,7 @@
         width:100%;
     }
 
-    /* Datasets Page */
+    /* Datasets Page Responsive Updates */
     .main-info {
         margin-bottom:10px;
 
@@ -170,11 +178,13 @@
         padding:15px;
     }
 
+    
     .wrapper.no-nav {
         padding-left:15px;
         padding-right:15px;
     }
 
+    //Fixing the form actions of core CKAN on admin pages
     .form-actions .control-required-message {
         width:100%;
     }
@@ -193,11 +203,16 @@
     }
 }
 
+// For devices large than 1920px panels
 @media screen and (min-width:1920px){
     @include customGridWidths(15%);
 }
 
+// For devices smaller than 1024px
+
 @media screen and (max-width:1023px){
+
+    // Chaning the Wrapper properties to support the nav tabs better
     .wrapper-custom .page-header .nav-tabs {
         width:100%;
         margin:0;
@@ -232,7 +247,11 @@
 
 }
 
+// For devices between 768px and 1200px
+
 @media screen and (min-width:768px) and (max-width:1200px){
+
+    //Header searchbar widths updated for better experience on smaller screens
     header.masthead .site-search {
         width: 42%;
     }
@@ -263,6 +282,7 @@
 
 }
 
+// For devices between 1200px and 1920px
 @media screen and (min-width:1200px) and (max-width:1919px){
     @include customGridWidths(20.5%);
 }

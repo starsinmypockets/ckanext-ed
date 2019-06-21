@@ -1,9 +1,9 @@
+// Main Javascript file for  ed portal
+
+//Adding scrollspy to the pages like about
 $('body').scrollspy({ target: '#spy', offset:280});
 
-
-//Getting sidebar height
-
-
+//Calculate the position of scroll for
 $(window).on('load',function(){
     calcScrollLocation();
 });
@@ -19,8 +19,8 @@ function calcSidebarHeight(){
 
 function calcScrollLocation(){
     var scroll = $(window).scrollTop();
-
 }
+
 
 
 $(document).ready(function(){
@@ -28,11 +28,13 @@ $(document).ready(function(){
     //Checks the page name via page tag
     var page = $('body').find('.page-home').text();
 
-    /* Particles for homepage */
+    /* Particles js for homepage */
     if(page=="home"){
         renderParticles();
     }
-    
+
+
+    //Showing scrollbar on specific page for devices larger than 768px
     if(page=="search" || page=="publisher_listing"){
         if ($(window).width() >= 768) {
             new SimpleBar($('#scrollbar')[0]);
@@ -60,6 +62,7 @@ $(document).ready(function(){
     $("body").css("paddingTop",navHeight);
 }); 
 
+//Using Particles.js for homepage
 function renderParticles(){
     particlesJS("hero", {
         "particles": {
@@ -134,7 +137,7 @@ function renderParticles(){
         , "retina_detect":true
     });
 
-
+    //Calculating the canvas height to ensure particles take up full space
     function calcCanvasHeight(){
         setTimeout(function() { 
             $(".hero > canvas").height("400px");

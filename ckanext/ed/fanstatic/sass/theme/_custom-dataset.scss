@@ -1,3 +1,7 @@
+/* Dataset Page Styles */
+
+
+//Dataset title - the top blue section of dataset page
 .dataset-title {
     float:none;
     background-color:$theme-color-main;;
@@ -8,6 +12,7 @@
         box-shadow:0 0 0 transparent;
     }
 
+    //Setting up the layout of contents inside dataset-heading
     .heading {
         font-size:1.9rem !important;
         border-bottom: 2px solid #193c5b;
@@ -42,6 +47,7 @@
         color:#b2bdc8;
     }
 
+    //Styling the tags as per style guidelines
     .tag-custom {
         display:inline;
         background-color:transparent;
@@ -53,6 +59,7 @@
         opacity:.8;
     }
 
+    //Custom columns for better control on paddings etc
     .col-custom {
         width:12%;
         float:left;
@@ -83,6 +90,7 @@
     }
 }
 
+//Page advanced class used to separate the page layout from regular dataset pages for CKAN
 .page-advanced{
 
     .page-header {
@@ -95,6 +103,7 @@
         margin-bottom:0;
     }
 
+    //Stying the 4 tabs on dataset tabs as per designs 
     .nav-tabs {
         padding-top:0px;
     }
@@ -148,12 +157,12 @@
     }
 
 
-    /* Split Sections */
-
+    /* Split Sections  -  the dataset page is divided into 2 columns, left for resources, right for content */
     .module > .module-content:nth-child(2n) {
         padding:0;
     }
 
+    //inner-sidebar is where the resources are shown
     .inner-sidebar {
         float:left;
         min-height:400px;
@@ -245,8 +254,10 @@
                 }
             }
         }
-    }
+    } //End of inner sidebar
 
+
+    //Iner primary for the resource preview 
     .inner-primary {
         float:left;
         min-height:400px;
@@ -261,6 +272,7 @@
             float:none;
         }
 
+        //Styling the elements inside the resource preview
         .module-content {
             padding:0;
         }
@@ -287,12 +299,15 @@
         }
     }
 
+    //Media Query to increase padding on larger screens
     @media screen and (min-width:768px){
         .inner-primary.wide {
             padding:40px 40px 40px 100px;
         }
     }
 
+
+    //Media query to fix phpne issues
     @media screen and (max-width:768px){
         .nav-tabs > li > a,.nav-tabs > li > a:hover,.nav-tabs > li.active > a {
             border:0;
@@ -304,6 +319,7 @@
     }
 }
 
+// Dataset card is used to display each of the resource with a whtie card and green buttons
 .dataset-card {
     padding:20px;
     background-color:#fff;
@@ -312,6 +328,7 @@
     margin-bottom:20px;
     position:relative;
 
+    //Styling the dataset card items
     h5 {
         @include u-font-size('body', 'xs');
         color:$theme-color-alternate-dark;
@@ -333,6 +350,8 @@
     .format:empty {
         display:none;
     }
+
+    //Resource Download buttons are styled
     
     .download-btn {
         margin-top:10px;
@@ -366,7 +385,7 @@
         font-size: 16px;
     }
 }
-
+// Blue border when the resource is selectedd
 .dataset-card.active {
     border:2px solid $theme-color-blue;
 
@@ -390,6 +409,7 @@
     list-style: none;
 }
 
+//Usage-Tab Card where the showcase elements are shown with a background image
 .showcase-card {
 
     width:30%;
@@ -405,6 +425,7 @@
     position:relative;
     background-position: center center;
 
+    //Styling the inners of dataset card
     span {
         color: #fff;
         font-weight: 600;
@@ -474,7 +495,7 @@
     display: none;
 }
 
-
+//Fixing the navtabs for the nav-tab-plain, to have no paddings etc
 .page-advanced {
 
     .nav-tabs-plain {
@@ -529,7 +550,7 @@
 }
 
 
-/* Docs section */
+/* Docs Tab on the dataset page */
 .page-advanced {
     .resource-list {
         margin:0;
