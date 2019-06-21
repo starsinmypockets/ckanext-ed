@@ -2,9 +2,12 @@ import logging
 
 import logic
 from ckan.plugins import toolkit
+import ckan.lib.navl.dictization_functions as df
 from ckan.model import (PACKAGE_NAME_MIN_LENGTH, PACKAGE_NAME_MAX_LENGTH)
 from ckan.model.core import State
 from ckan.common import _
+
+missing = df.missing
 
 log = logging.getLogger(__name__)
 
