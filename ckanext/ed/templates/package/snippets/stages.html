@@ -37,16 +37,16 @@ Example:
   </li>
   <li class="last {{ s2 }}">
     {% if s2 != 'complete' %}
-      <span class="highlight">{{ _('Add data') }}</span>
+      <span class="highlight">{{ _('Add Data') }}</span>
     {% else %}
       {% if s1 == 'active' %}
         {# stage 1 #}
-        <button class="highlight" name="save" value="go-resources" type="submit">{{ _('Add data') }}</button>
+        <button class="highlight" name="save" value="go-resources" type="submit">{{ _('Add Data') }}</button>
       {% elif s3 == 'active' %}
         {# stage 3 #}
-        <button class="highlight" name="save" value="go-resources" type="submit">{{ _('Add Docs') }}</button>
+        <button class="highlight" name="save" value="go-resources" type="submit">{{ _('Add Data') }}</button>
       {% else %}
-        {% link_for _('Add data'), named_route='dataset.new', class_="highlight" %}
+        {% link_for _('Add Data'), named_route='dataset.new', class_="highlight" %}
       {% endif %}
     {% endif %}
   </li>
@@ -59,9 +59,9 @@ Example:
         <button class="highlight" name="save" value="go-resources" type="submit">{{ _('Add data') }}</button>
       {% elif s2 == 'active' %}
         {# stage 2 #}
-        <button class="highlight" name="save" value="go-resources" type="submit">{{ _('Add Docs') }}</button>
+        <button class="highlight" name="save" value="go-resources" type="submit">{{ _('Add Data') }}</button>
       {% else %}
-        {% link_for _('Add Docs'), named_route='dataset.new', class_="highlight" %}
+        {% link_for _('Add data'), named_route='dataset.new', class_="highlight" %}
       {% endif %}
     {% endif %}
   </li>
