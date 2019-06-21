@@ -275,6 +275,12 @@ def load_choices(field_meta=None):
 
 
 def alphabetize_dict(items, sort_by='display_name'):
+    """
+    Aplbetically sort a dictionary. `sort_by` can be provided
+    to determine the value by which key to sort the dictionary.
+
+    Returns the sorted dictionary.
+    """
     sorted_dict = sorted(items, key=lambda x: x[sort_by])
     return sorted_dict
 
