@@ -12,6 +12,11 @@ log = logging.getLogger(__name__)
 
 def mail_package_publish_request_to_admins(
                         context, data_dict, event='approval', feedback=None):
+    '''
+    Sends an email to organization admin with request to publish dataset
+
+    Note: Not used ATM
+    '''
     members = core_member_list(
         context=context,
         data_dict={'id': data_dict.get('owner_org')}
@@ -29,6 +34,10 @@ def mail_package_publish_request_to_admins(
 
 def mail_package_publish_update_to_user(
                             context, pkg_dict, event='approval', feedback=None):
+    '''
+    Sends an email to user who published the dataset about approbal state.
+    One of approved or rejected
+    '''
     context.setdefault('model', model)
     user = model.User.get(pkg_dict['creator_user_id'])
     if user and user.email:
@@ -40,10 +49,16 @@ def mail_package_publish_update_to_user(
 
 
 def _compose_email_subj(data_dict, event='request'):
+    '''
+    Formats an email subject
+    '''
     return '[US ED] Package Publishing {0}: {1}'.format(event.capitalize(), data_dict.get('title'))
 
 
 def _compose_email_body(data_dict, user, event='request', feedback=None):
+    '''
+    Formats an email body
+    '''
     pkg_link = toolkit.url_for('dataset_read', id=data_dict['name'], qualified=True)
     return render_jinja2('emails/package_publish_{0}.html'.format(event), {
         'admin_name': user.fullname or user.name,
