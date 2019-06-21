@@ -101,15 +101,23 @@
     {
       "field_name": "contact_name",
       "required": true,
+      "validators": "not_empty",
       "label": "Data Steward Name",
       "help_text": "The person considered the data steward for this data."
     },
     {
       "field_name": "contact_email",
       "required": true,
-      "validators": "ignore_missing email_validator",
+      "validators": "not_empty ignore_missing email_validator",
       "label": "Data Steward Email",
       "help_text": "The data steward's email address."
+    },
+    {
+      "field_name": "help_url",
+      "required": false,
+      "label": "Get help for this Dateset",
+      "help_text": "Documentation and instructions for using this Dataset",
+      "display_snippet": "link.html"
     },
     {
       "field_name": "access_level",

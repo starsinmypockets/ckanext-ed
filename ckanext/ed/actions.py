@@ -152,6 +152,8 @@ def prepare_zip_resources(context, data_dict):
 
 @toolkit.side_effect_free
 def package_show(context, data_dict):
+    '''Override core ckan package_show.
+    '''
     package = core_package_show(context, data_dict)
     # User with less perms then creator should not be able to access pending dataset
     approval_pending = package.get('approval_state') == 'approval_pending'
@@ -167,12 +169,13 @@ def package_show(context, data_dict):
 
 @toolkit.side_effect_free
 def package_create(context, data_dict):
+    '''Override core ckan package_create
+    '''
     # because scheming is not working with tags vocabulary and
     # we have a list of predefined tags that should appear in the tags list
     # we are using a different field in scheming and here we need to
     # convert it to tags format and save it as tags in the database.
     data_dict['tags'] = convert_to_tags_format(data_dict['tags_predefined'])
-
     dataset_dict = core_package_create(context, data_dict)
 
     return dataset_dict
@@ -217,6 +220,8 @@ def package_update(context, data_dict):
 
 @toolkit.side_effect_free
 def package_activity_list(context, data_dict):
+    '''Override core ckan package_activity_list
+    '''
     get_workflow_activities = data_dict.get('get_workflow_activities')
     full_list = core_package_activity_list(context, data_dict)
     workflow_activities = [
@@ -236,6 +241,8 @@ def package_activity_list(context, data_dict):
 
 @toolkit.side_effect_free
 def dashboard_activity_list(context, data_dict):
+    '''Override core ckan dashboard_activity_list
+    '''
     full_list = core_dashboard_activity_list(context, data_dict)
     normal_activities = [
         a for a in full_list if 'workflow_activity' not in a.get('data', {})]
@@ -244,6 +251,8 @@ def dashboard_activity_list(context, data_dict):
 
 @toolkit.side_effect_free
 def group_activity_list(context, data_dict):
+    '''Override core ckan group_activity_list
+    '''
     full_list = core_group_activity_list(context, data_dict)
     normal_activities = [
         a for a in full_list if 'workflow_activity' not in a.get('data', {})]
@@ -252,6 +261,8 @@ def group_activity_list(context, data_dict):
 
 @toolkit.side_effect_free
 def recently_changed_packages_activity_list(context, data_dict):
+    '''Override core ckan recently_changed_packages_activity_list
+    '''
     full_list = core_recently_changed_packages_activity_list(context, data_dict)
     normal_activities = [
         a for a in full_list if 'workflow_activity' not in a.get('data', {})]
