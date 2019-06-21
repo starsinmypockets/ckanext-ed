@@ -2,6 +2,7 @@ from ckan.lib.activity_streams import activity_stream_string_functions
 from ckan.lib.plugins import DefaultTranslation
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
+import routes.mapper
 
 from ckanext.ed import actions, helpers, validators
 
@@ -135,40 +136,41 @@ class EDPlugin(plugins.SingletonPlugin, DefaultTranslation):
                     action='read')
 
         # Rename organizations
-        map.redirect('/organization', '/provider',
+        map.redirect('/organization', '/publisher',
                      _redirect_code='301 Moved Permanently')
-        map.redirect('/organization/{url}?{qq}', '/provider/{url}{query}',
+        map.redirect('/organization/{url}?{qq}', '/publisher/{url}{query}',
                      _redirect_code='301 Moved Permanently')
-        org_controller = 'ckan.controllers.organization:OrganizationController'
-        
-        map.connect('provider_index', '/provider',controller=org_controller, action='index')
-        map.connect('/provider/list',controller=org_controller, action='list')
-        map.connect('/provider/new',controller=org_controller, action='new')
-        map.connect('/provider/{action}/{id}',
-                    requirements=dict(action='|'.join([
-                        'delete',
-                        'admins',
-                        'member_new',
-                        'member_delete',
-                        'history'
-                        'followers',
-                        'follow',
-                        'unfollow',
-                    ])))
-        map.connect('provider_activity', '/provider/activity/{id}',controller=org_controller,
-                    action='activity', ckan_icon='time')
-        map.connect('provider_read', '/provider/{id}',controller=org_controller, action='read')
-        map.connect('provider_about', '/provider/about/{id}',controller=org_controller,
-                    action='about', ckan_icon='info-sign')
-        map.connect('provider_read', '/provider/{id}',controller=org_controller, action='read',
-                    ckan_icon='sitemap')
-        map.connect('provider_edit', '/provider/edit/{id}',controller=org_controller,
-                    action='edit', ckan_icon='edit')
-        map.connect('provider_members', '/provider/edit_members/{id}',controller=org_controller,
-                    action='members', ckan_icon='group')
-        map.connect('provider_bulk_process',
-                    '/provider/bulk_process/{id}',controller=org_controller,
-                    action='bulk_process', ckan_icon='sitemap')
+        org_controller = 'ckanext.ed.controller:EdOrganizationController'
+
+        with routes.mapper.SubMapper(map, controller=org_controller) as m:
+            m.connect('publisher_index', '/publisher', action='index')
+            m.connect('/publisher/list', action='list')
+            m.connect('/publisher/new', action='new')
+            m.connect('/publisher/{action}/{id}',
+                      requirements=dict(action='|'.join([
+                          'delete',
+                          'admins',
+                          'member_new',
+                          'member_delete',
+                          'history'
+                          'followers',
+                          'follow',
+                          'unfollow',
+                      ])))
+            m.connect('publisher_activity', '/publisher/activity/{id}',
+                      action='activity', ckan_icon='time')
+            m.connect('publisher_read', '/publisher/{id}', action='read')
+            m.connect('publisher_about', '/publisher/about/{id}',
+                      action='about', ckan_icon='info-sign')
+            m.connect('publisher_read', '/publisher/{id}', action='read',
+                      ckan_icon='sitemap')
+            m.connect('publisher_edit', '/publisher/edit/{id}',
+                      action='edit', ckan_icon='edit')
+            m.connect('publisher_members', '/publisher/edit_members/{id}',
+                      action='members', ckan_icon='group')
+            m.connect('publisher_bulk_process',
+                      '/publisher/bulk_process/{id}',
+                      action='bulk_process', ckan_icon='sitemap')
 
         return map
 
