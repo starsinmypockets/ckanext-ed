@@ -33,7 +33,7 @@
       "choices_helper": "load_choices",
       "choices_file_path": "ckanext.ed.schemas.assets:tags.json",
       "required": true,
-      "validators": "not_empty ignore_missing",
+      "validators": "ignore_missing",
       "form_placeholder": "eg. university, public school etc.",
       "help_text": "Tags (or keywords) help users discover your dataset; please include terms that would be used by technical and non-technical users."
     },
@@ -43,7 +43,7 @@
       "preset" : "tag_string_autocomplete",
       "form_snippet" : "select-multiple-tags.html",
       "required" : true,
-      "validators" : "not_empty ignore_missing",
+      "validators" : "ignore_missing",
       "form_placeholder" : "eg. National, State, District, School or Individual",
       "help_text" : "Tags (or keywords) help users discover your dataset; please include terms that would be used by technical and non-technical users.",
       "choices": [
