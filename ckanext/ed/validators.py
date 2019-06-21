@@ -2,6 +2,9 @@ import logging
 
 import logic
 from ckan.plugins import toolkit
+from ckan.model import (PACKAGE_NAME_MIN_LENGTH, PACKAGE_NAME_MAX_LENGTH)
+from ckan.model.core import State
+from ckan.common import _
 
 log = logging.getLogger(__name__)
 
@@ -69,3 +72,30 @@ def resource_type_validator(key, data, errors, context):
         pass
     is_doc = context.get('is_doc') or resource_info.get('resource_type') == 'doc'
     data[key] = 'doc' if is_doc else 'regular-resource'
+
+
+def package_name_validator(key, data, errors, context):
+    model = context['model']
+    session = context['session']
+    package = context.get('package')
+
+    query = session.query(model.Package.state).filter_by(name=data[key])
+    if package:
+        package_id = package.id
+    else:
+        package_id = data.get(key[:-1] + ('id',))
+    if package_id and package_id is not missing:
+        query = query.filter(model.Package.id != package_id)
+    result = query.first()
+    if result and result.state != State.DELETED:
+        errors[key].append(_('That Dataset URL is already in use. Please try a new URL'))
+
+    value = data[key]
+    if len(value) < PACKAGE_NAME_MIN_LENGTH:
+        raise Invalid(
+            _('Name "%s" length is less than minimum %s') % (value, PACKAGE_NAME_MIN_LENGTH)
+        )
+    if len(value) > PACKAGE_NAME_MAX_LENGTH:
+        raise Invalid(
+            _('Name "%s" length is more than maximum %s') % (value, PACKAGE_NAME_MAX_LENGTH)
+        )
