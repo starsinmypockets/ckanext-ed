@@ -142,7 +142,8 @@ class EDPlugin(plugins.SingletonPlugin, DefaultTranslation):
         return {
             'state_validator': validators.state_validator,
             'resource_type_validator': validators.resource_type_validator,
-            'dummy_validator': validators.dummy_validator
+            'dummy_validator': validators.dummy_validator,
+            'package_name_validator': validators.package_name_validator
         }
 
     def dataset_facets(self, facets_dict, package_type):

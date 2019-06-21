@@ -1,3 +1,4 @@
+/* Admin Pages styling */
 .container-fluid {
     .row {
        margin-left: 0; 
@@ -9,7 +10,7 @@
     width:30%;
 }
 
-
+//Smaller fixes to admin screens including page headers, input fields etc
 .control-large input {
     border-radius:0;
 }
@@ -49,7 +50,7 @@ fieldset {
 }
 
 
-
+//Fixes to profile page images
 .context-info .image img {
     width:auto;
     height:auto;
@@ -59,5 +60,11 @@ fieldset {
 .resource-item {
     .checkbox {
         display:none;
+    }
+}
+
+.wrapper {
+    .nav-tabs > li > a {
+        width:100%;
     }
 }
