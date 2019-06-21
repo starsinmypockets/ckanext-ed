@@ -1,6 +1,8 @@
 /***** Custom codes after import ******/
+/** General Styles that are applied across the ed-portal **/
 
-/* Custom Variables */
+
+/* Custom Variables - These variables are calculated and changed for various screens and scenarios  */
 $fixedTop-padding: 1px;
 @mixin homeCategoryHeight($base-height) {
 
@@ -30,7 +32,7 @@ $fixedTop-padding: 1px;
 }
 
 
-/* Fonts */
+/* Loading up the  Fonts */
 @font-face {
     font-family: Public Sans Web;
     font-style: normal;
@@ -79,6 +81,8 @@ $fixedTop-padding: 1px;
     src: url(../fonts/public-sans/PublicSans-Thin.woff2) format("woff2"), url(../fonts/public-sans/PublicSans-Thin.woff) format("woff"), url(../fonts/public-sans/PublicSans-Thin.ttf) format("truetype"); 
 }
     
+
+// Styling the typography, using functions from USWDS-2.0
 h1{
     @include typeset($theme-font-role-ui,'xl',1);
     @include u-text('normal');	
@@ -125,7 +129,7 @@ a:hover,a:active,a:focus,a:visited {
     width:0;
 }
 
-/* Navbar */
+/* Page Navbar - Sticky */
 
 header.account-masthead {
     @include u-bg('gray-5');
@@ -147,6 +151,7 @@ header.account-masthead {
     }
 }
 
+//Stying the page header
 header.masthead {
     width:100%;
     margin-bottom: initial;
@@ -182,6 +187,7 @@ header.masthead {
         line-height: 1;
     }
 
+    // Navlinks in the bootstrap navigation
     .nav > li {
         padding: 0 16px;
 
@@ -225,6 +231,7 @@ header.masthead {
         padding: 0 0; 
     }
 
+    //Making the website search round and move the search icon to the left
     .site-search {
         width:50%;
 
@@ -257,7 +264,7 @@ header.masthead {
     }
 }
 
-/* Footer */
+/* Styling the page footer */
 .site-footer {
     background-color:$theme-color-alternate-dark !important;
     background-image:none;
@@ -299,7 +306,7 @@ header.masthead {
     }
     
 
-    /* logo */
+    /* Ed Logo in the footer */
     .footer-logo, .footer-logo-content {
         float:left
     }
@@ -320,7 +327,9 @@ header.masthead {
 }
 
 
-/* Overall Styles */
+/* Overall Styles -  These are the general styles that are applied throughout the portal */
+
+//wrapper custom is used as overall wrapper to the pages to apply styles on top of CKAN, all the pages need to be wrapped in wrapper-custom
 .wrapper-custom {
     border:0;
     border-radius: 0;
@@ -401,12 +410,14 @@ header.masthead {
     padding-bottom:50px;
 }
 
+//Sidebar for pages like search and about etc. 
 .sidebar {
     min-height: 100vh;
     padding: 10px 0 20px 0;
     float:left;
     color:$theme-color-main;
 
+    //Styles specific to sidebar
     .sidebar_content_wrap {
         max-height:90vh;
         overflow-y:auto;
@@ -472,7 +483,7 @@ header.masthead {
             }
         }
     }
-
+    //Overriding the modules from CKAN
     .nav,.module-content {
         padding-left: 30px;
         padding-right: 20px;
@@ -548,7 +559,7 @@ header.masthead {
     }
 }
 
-
+//Sidebar styling
 .sidebar .nav, .sidebar .module-content {
     padding-left: 0px; 
     padding-right: 0px;
@@ -594,6 +605,7 @@ p.clearfix {
     margin:0;
 }
 
+//Tag custom class to style the ckan tags
 .tag-custom,.label-inverse {
     background-color:$theme-grey-medium;
     color:$theme-color-alternate-dark;
@@ -631,6 +643,8 @@ p.clearfix {
 .simplebar-scrollbar:before {
     background: #cecece !important;
 }
+
+//Labels and Bootstrap Form styles are overridden
 
 label:after {
     content: "";
@@ -774,7 +788,7 @@ label:after {
 }
 
 
-/* tables */
+/* Styling the Tables */
 .table {
     border:3px solid $theme-grey-darker;
 
@@ -851,13 +865,13 @@ label:after {
     }
 }
 
-/* outlines */
-input:not([disabled]):focus, select:not([disabled]):focus, textarea:not([disabled]):focus, button:not([disabled]):focus {
+/* Updating the default outlines to be slimmer */
+input:not([disabled]):focus,input:not([disabled]):active, select:not([disabled]):focus,select:not([disabled]):active, textarea:not([disabled]):focus,textarea:not([disabled]):active, button:not([disabled]):focus,button:not([disabled]):active {
     outline: .05rem solid #2491ff;
     outline-offset: 0;
 }
 
-iframe:focus, [href]:focus, [tabindex]:focus, [contentEditable=true]:focus {
+iframe:focus, iframe:active, [href]:focus, [href]:active, [tabindex]:focus, [tabindex]:active, [contentEditable=true]:focus, [contentEditable=true]:active {
     outline: .15rem solid #2491ff;
     box-shadow: 0px 0px 7px #94c9ff;
     outline-offset: 0;

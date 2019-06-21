@@ -1,7 +1,9 @@
+/* Styles for Publishers */
+
 #organization-search-form, #organization-datasets-search-form {
     padding-bottom: 30px;
 
-
+    //Fixing the search input for publishers
     .search-input-group {
         width:100%;
         position: relative;
@@ -13,7 +15,7 @@
             border-bottom: 1px solid #d2d2d2;
         }
 
-
+        //chaing the position of search btn
         .input-group-btn {
             position:absolute;
             top: 3px;
@@ -32,6 +34,7 @@
     }
 }
 
+//Heading size reduced
 .context-info h1.heading {
     margin: 0 0 5px 0;
     font-size: 18px;

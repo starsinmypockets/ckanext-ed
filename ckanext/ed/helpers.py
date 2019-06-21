@@ -15,8 +15,12 @@ def _get_action(action, context_dict, data_dict):
 
 
 def get_groups():
-    # Helper used on the homepage for showing groups
+    '''
+    Returns list of groups
 
+    :returns: a list of grousp
+    :rtype: list
+    '''
     data_dict = {
         'all_fields': True
     }
@@ -97,6 +101,14 @@ def get_storage_path_for(dirname):
 
 
 def get_total_views_for_dataset(id):
+    '''Returns totoal number of unique views for the dataset
+
+    :param id: dataset id
+    :type id: string
+
+    :returns: number of unique views
+    :rtype: integer
+    '''
     data_dict = {
         'id': id,
         'include_tracking': True
@@ -168,6 +180,10 @@ def get_pending_datasets(user, include_rejected=False):
 
 def workflow_activity_create(
                     activity, dataset_id, dataset_name, user, feedback=None):
+    '''Creates activity for approval feedback
+
+    Note: Not used ATM
+    '''
     activity_context = {'ignore_auth': True}
     data_dict = {
         'user_id': user,
@@ -183,6 +199,16 @@ def workflow_activity_create(
 
 
 def custom_activity_renderer(context, activity):
+    '''Returns the custom string for activity stream
+
+    :param context: context
+    :type context: dict
+    :activity: Activity name Eg reject
+    :type activity: string
+
+    :returns: Fromated activity string
+    :rtype: string
+    '''
     if 'workflow_activity' not in activity.get('data', {}):
         # Default core one
         return toolkit._("{actor} updated the dataset {dataset}")
@@ -207,6 +233,14 @@ def custom_activity_renderer(context, activity):
 
 
 def get_latest_rejection_feedback(pkg_id):
+    '''Returns the latest rejection feedback for dataset
+
+    :param pkg_id: id of the dataset
+    :type pkg_id: string
+
+    :returns: Rejected feedback
+    :rtype: string
+    '''
     context = {'ignore_auth': True}
     data_dict = {
         'id': pkg_id,
@@ -222,9 +256,8 @@ def get_latest_rejection_feedback(pkg_id):
             return activity['data']['feedback']
 
 def quality_mark(package):
-    """
-    :param pacakge:
-        Package dictionary
+    """Returns flag for quality about dataset
+    :param pacakge: Package dictionary
     :return: dict
          ['machine'] - True if there's at least one machine readable resource.
          ['doc'] - True if there's at least one document resource.
@@ -246,10 +279,12 @@ def quality_mark(package):
              'doc' : at_least_one_document_resource }
 
 def get_org_for_package(package):
-    """
+    """Returns organization name for the dataset
+    :param package: package dict
+    :type package: dictionary
 
-    :param package:
     :return: organization name
+    :rtype: string
     """
     return (
         package['organization']['title']
@@ -260,6 +295,12 @@ def load_meta_file(file_path):
     """
     Given a path like "ckanext.ed.schemas:choices.json"
     find the second part relative to the import path of the first
+
+    :param file_path: path to the file
+    :type file_path: string
+
+    :return: fileobject of data
+    :rtype: fileObject
     """
     module_name, file_name = file_path.split(':', 1)
     module = __import__(module_name, fromlist=[''])
@@ -269,16 +310,46 @@ def load_meta_file(file_path):
 
 
 def load_choices(field_meta=None):
+    """Load choices defined in custom file
+    :param file_meta: Metadata about the field
+    :type file_meta: dictionary
+
+    :return: json version of data
+    :rtype: dictionary
+    """
     fn = load_meta_file(field_meta.get('choices_file_path'))
     json_data = json.load(fn)
     return json_data
 
 
 def alphabetize_dict(items, sort_by='display_name'):
+    """
+    Aplbetically sort a dictionary. `sort_by` can be provided
+    to determine the value by which key to sort the dictionary.
+
+    :param items: list of items to be sorted
+    :type items: list
+    :param sort_by: dictionary key the dictionary should be sorted on
+    :type sort_by: string
+
+    :return: list of sorted data
+    :rtype: list
+    """
     sorted_dict = sorted(items, key=lambda x: x[sort_by])
     return sorted_dict
 
 def get_any(list_, key=None):
+    """Teturns true if list contains at least one True. List can also may be
+    the list of objects Eg: [{"a": True, "b": False}]. "key" parameter is required in that case
+
+    :param list_: list of items
+    :type list_: list
+    :param key: dictionary key that should contain True or False value
+    :type key: string
+
+    :return: True or False
+    :rtype: boolean
+    """
     if key is not None:
         return any(i[key] for i in list_)
     return any(list_)

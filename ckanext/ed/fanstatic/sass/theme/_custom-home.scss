@@ -1,4 +1,6 @@
-/* Home Page */
+/* Styles for the Homepage */
+
+//Styling the hero section
 .hero {
     padding:100px 0 85px 0;
     background-color:$theme-color-main !important;
@@ -10,6 +12,7 @@
     position:relative;
     overflow:hidden;
 
+    //Removing bg image on smaller devices
     @media screen and (max-width:425px){
         background-image:none;
     }
@@ -26,6 +29,8 @@
         z-index:0;
 
     }
+
+    //Styles for the content and the search bar inside the hero section
     .hero-content {
         padding:60px 90px 0 90px;
         margin:0;
@@ -91,10 +96,12 @@
     }
 }
 
+//Categories and tags on homepage are split in 2 sections
 
 .home-categories {
     margin: 58px 76px 20px 76px;
 
+    //Styles for cards and categories
     .categories-card {
         padding:0;
         overflow:hidden;
@@ -158,7 +165,7 @@
             }
         }
 
-        
+        //Media query to hide the tags on phone screens
         @media screen and (max-width:768px) {
            .col-tags {
                 display:none
@@ -192,7 +199,7 @@
 
 
 }
-
+//Trending and new sections use identical classes and design.
 .trending-new {
     margin: 20px 76px 140px 76px;
 
@@ -203,6 +210,7 @@
     .card-custom-plain {
         margin-top: 24px;
 
+        //Styles for each of the list item inside New / Trending datasets
         .list-item {
             position:relative;
             padding: 15px 10px 15px 50px;
