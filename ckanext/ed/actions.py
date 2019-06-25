@@ -7,6 +7,7 @@ import zipfile
 from ckan.controllers.admin import get_sysadmins
 from ckan.lib.mailer import MailerException
 from ckan.logic.action.create import package_create as core_package_create
+from ckan.logic.action.update import package_update as core_package_update
 from ckan.logic.action.get import activity_detail_list as core_activity_detail_list
 from ckan.logic.action.get import dashboard_activity_list as core_dashboard_activity_list
 from ckan.logic.action.get import group_activity_list as core_group_activity_list
@@ -170,17 +171,53 @@ def package_show(context, data_dict):
 def package_create(context, data_dict):
     '''Override core ckan package_create
     '''
+    # because scheming is not working with tags vocabulary and
+    # we have a list of predefined tags that should appear in the tags list
+    # we are using a different field in scheming and here we need to
+    # convert it to tags format and save it as tags in the database.
+    data_dict['tags'] = convert_to_tags_format(data_dict['tags_predefined'])
+
     dataset_dict = core_package_create(context, data_dict)
-    if dataset_dict.get('approval_state') == 'approval_pending':
-        helpers.workflow_activity_create('submitted_for_review',
-                dataset_dict['id'], dataset_dict['name'], context.get('user'))
-        try:
-            mail_package_publish_request_to_admins(context, dataset_dict)
-        except MailerException:
-            message = '[email] Package Publishing request is not sent: {0}'
-            log.critical(message.format(data_dict.get('title')))
+
     return dataset_dict
 
+def convert_to_tags_format(predefined_data):
+    '''
+        Returns list of tags in tags_format
+        :param: list of predefined tags
+
+        :returns: list of tags in tags_format
+        :rtype: list
+    '''
+    tags_format = []
+
+    for data in predefined_data:
+        if data not in tags_format:
+            tags_tmp = {}
+            tags_tmp['name'] = data
+            tags_tmp['state'] = 'active'
+            tags_format.append(tags_tmp)
+
+    return tags_format
+
+@toolkit.side_effect_free
+def package_update(context, data_dict):
+    # because scheming is not working with tags vocabulary and
+    # we have a list of predefined tags that should appear in the tags list
+    # we are using a different field in scheming and here we need to
+    # convert it to tags format and save it as tags in the database.
+    if type(data_dict['tags_predefined']) ==  type([]):
+        data_dict['tags'] = convert_to_tags_format(data_dict['tags_predefined'])
+    else:
+        # because CKAN always returns strings we need to handle it in order to
+        # pass it to the covert_to_tags_format function.
+        # This is done in order to aviod an error happening on resource_create.
+        tags_predefined = data_dict['tags_predefined'].strip('}').strip('{').split(',')
+        data_dict['tags'] = convert_to_tags_format(tags_predefined)
+
+    dataset_dict = core_package_update(context, data_dict)
+
+    return dataset_dict
 
 @toolkit.side_effect_free
 def package_activity_list(context, data_dict):

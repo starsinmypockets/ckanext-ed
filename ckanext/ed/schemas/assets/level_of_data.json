@@ -1,0 +1,22 @@
+[
+  {
+    "value": "national",
+    "label": "national"
+  },
+  {
+    "value": "state",
+    "label": "state"
+  },
+  {
+    "value" : "district",
+    "label" : "district"
+  },
+  {
+    "value" : "school",
+    "label" : "school"
+  },
+  {
+    "value" : "individual",
+    "label" : "individual"
+  }
+]
