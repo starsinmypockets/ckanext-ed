@@ -224,7 +224,7 @@
     {
       "field_name" : "publishing_approved",
       "label" : "Has the Disclosure Review Board approved the release of this data file?",
-      "required": true,
+      "required": false,
       "preset" : "checkbox"
     }
   ]
