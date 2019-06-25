@@ -2,6 +2,7 @@ from ckan.lib.activity_streams import activity_stream_string_functions
 from ckan.lib.plugins import DefaultTranslation
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
+import routes.mapper
 
 from ckanext.ed import actions, helpers, validators
 
@@ -148,6 +149,44 @@ class EDPlugin(plugins.SingletonPlugin, DefaultTranslation):
         map.connect('/dataset/{id}',
                     controller='ckanext.ed.controller:EdPackageController',
                     action='read')
+
+        # Rename organizations
+        map.redirect('/organization', '/publisher',
+                     _redirect_code='301 Moved Permanently')
+        map.redirect('/organization/{url}?{qq}', '/publisher/{url}{query}',
+                     _redirect_code='301 Moved Permanently')
+        org_controller = 'ckanext.ed.controller:EdOrganizationController'
+
+        with routes.mapper.SubMapper(map, controller=org_controller) as m:
+            m.connect('publisher_index', '/publisher', action='index')
+            m.connect('/publisher/list', action='list')
+            m.connect('/publisher/new', action='new')
+            m.connect('/publisher/{action}/{id}',
+                      requirements=dict(action='|'.join([
+                          'delete',
+                          'admins',
+                          'member_new',
+                          'member_delete',
+                          'history'
+                          'followers',
+                          'follow',
+                          'unfollow',
+                      ])))
+            m.connect('publisher_activity', '/publisher/activity/{id}',
+                      action='activity', ckan_icon='time')
+            m.connect('publisher_read', '/publisher/{id}', action='read')
+            m.connect('publisher_about', '/publisher/about/{id}',
+                      action='about', ckan_icon='info-sign')
+            m.connect('publisher_read', '/publisher/{id}', action='read',
+                      ckan_icon='sitemap')
+            m.connect('publisher_edit', '/publisher/edit/{id}',
+                      action='edit', ckan_icon='edit')
+            m.connect('publisher_members', '/publisher/edit_members/{id}',
+                      action='members', ckan_icon='group')
+            m.connect('publisher_bulk_process',
+                      '/publisher/bulk_process/{id}',
+                      action='bulk_process', ckan_icon='sitemap')
+
         return map
 
     # IValidators

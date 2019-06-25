@@ -21,6 +21,7 @@ from ckanext.ed.helpers import get_storage_path_for, get_pending_datasets, is_ad
 from ckanext.ed.mailer import mail_package_publish_update_to_user, mail_package_publish_request_to_admins
 from ckan.controllers.package import PackageController
 from ckan.controllers.user import UserController
+from ckan.controllers.organization import OrganizationController
 import ckan.plugins as p
 
 
@@ -643,3 +644,17 @@ class DisqusController(PackageController):
             c.pkg = context['package']
         except (NotFound, NotAuthorized):
             abort(404, _('Dataset not found'))
+
+
+class EdOrganizationController(OrganizationController):
+    def _guess_group_type(self, expecting_name=False):
+        """
+            The base CKAN function gets the group_type from the URL,
+            this is a problem in the case when the URL mapping is changed
+            and instead of group we use something else.
+            That will require overriding the OrganizationController.
+
+        """
+        gt = 'organization'
+
+        return gt
