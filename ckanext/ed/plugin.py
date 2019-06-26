@@ -2,6 +2,7 @@ from ckan.lib.activity_streams import activity_stream_string_functions
 from ckan.lib.plugins import DefaultTranslation
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
+import routes.mapper
 
 from ckanext.ed import actions, helpers, validators
 
@@ -18,6 +19,10 @@ class EDPlugin(plugins.SingletonPlugin, DefaultTranslation):
 
     # ITemplateHelpers
     def get_helpers(self):
+        '''
+        Define custom helpers (or override existing ones).
+        Available as h.{helper-name}() in templates.
+        '''
         return {
             'ed_get_groups': helpers.get_groups,
             'ed_is_admin': helpers.is_admin,
@@ -35,6 +40,10 @@ class EDPlugin(plugins.SingletonPlugin, DefaultTranslation):
 
     # IActions
     def get_actions(self):
+        '''
+        Define custom functions (or ovveride existing ones).
+        Availbale via API /api/action/{action-name}
+        '''
         return {
             'ed_prepare_zip_resources': actions.prepare_zip_resources,
             'package_show': actions.package_show,
@@ -48,6 +57,9 @@ class EDPlugin(plugins.SingletonPlugin, DefaultTranslation):
 
     # IPackageController
     def before_search(self, search_params):
+        '''
+        Override with custom search params
+        '''
         # For requests dashboard we need approval_pending datasets. Passing in
         # extras that request is sent from dashboard. Return params as is if so
         if search_params.get('extras', {}).get('from_dashboard'):
@@ -60,8 +72,9 @@ class EDPlugin(plugins.SingletonPlugin, DefaultTranslation):
 
     # IConfigurer
     def update_config(self, config_):
-
-
+        '''
+        Override with custom configurations
+        '''
         toolkit.add_template_directory(config_, 'templates')
         toolkit.add_public_directory(config_, 'public')
         toolkit.add_resource('fanstatic', 'ed')
@@ -71,6 +84,9 @@ class EDPlugin(plugins.SingletonPlugin, DefaultTranslation):
 
     # IRoutes
     def before_map(self, map):
+        '''
+        Map custom controllers and endpoints
+        '''
         publish_controller = 'ckanext.ed.controller:StateUpdateController'
         map.connect('dataset.workflow', '/dataset/workflow/{id}',
                     controller='ckanext.ed.controller:WorkflowActivityStreamController',
@@ -135,10 +151,51 @@ class EDPlugin(plugins.SingletonPlugin, DefaultTranslation):
         map.connect('/dataset/{id}',
                     controller='ckanext.ed.controller:EdPackageController',
                     action='read')
+
+        # Rename organizations
+        map.redirect('/organization', '/publisher',
+                     _redirect_code='301 Moved Permanently')
+        map.redirect('/organization/{url}?{qq}', '/publisher/{url}{query}',
+                     _redirect_code='301 Moved Permanently')
+        org_controller = 'ckanext.ed.controller:EdOrganizationController'
+
+        with routes.mapper.SubMapper(map, controller=org_controller) as m:
+            m.connect('publisher_index', '/publisher', action='index')
+            m.connect('/publisher/list', action='list')
+            m.connect('/publisher/new', action='new')
+            m.connect('/publisher/{action}/{id}',
+                      requirements=dict(action='|'.join([
+                          'delete',
+                          'admins',
+                          'member_new',
+                          'member_delete',
+                          'history'
+                          'followers',
+                          'follow',
+                          'unfollow',
+                      ])))
+            m.connect('publisher_activity', '/publisher/activity/{id}',
+                      action='activity', ckan_icon='time')
+            m.connect('publisher_read', '/publisher/{id}', action='read')
+            m.connect('publisher_about', '/publisher/about/{id}',
+                      action='about', ckan_icon='info-sign')
+            m.connect('publisher_read', '/publisher/{id}', action='read',
+                      ckan_icon='sitemap')
+            m.connect('publisher_edit', '/publisher/edit/{id}',
+                      action='edit', ckan_icon='edit')
+            m.connect('publisher_members', '/publisher/edit_members/{id}',
+                      action='members', ckan_icon='group')
+            m.connect('publisher_bulk_process',
+                      '/publisher/bulk_process/{id}',
+                      action='bulk_process', ckan_icon='sitemap')
+
         return map
 
     # IValidators
     def get_validators(self):
+        '''
+        Define custom validators
+        '''
         return {
             'state_validator': validators.state_validator,
             'resource_type_validator': validators.resource_type_validator,
@@ -147,6 +204,9 @@ class EDPlugin(plugins.SingletonPlugin, DefaultTranslation):
         }
 
     def dataset_facets(self, facets_dict, package_type):
+        '''
+        Override core search fasets for datasets
+        '''
         from collections import OrderedDict
         facets_dict = OrderedDict({})
         facets_dict['groups'] = "Major Topics"
@@ -159,5 +219,7 @@ class EDPlugin(plugins.SingletonPlugin, DefaultTranslation):
         return facets_dict
 
     def organization_facets(self, facets_dict, organization_type, package_type):
+        '''
+        Override core search fasets for publishers
+        '''
         facets_dict['organization'] = 'Publishers'
-

@@ -21,6 +21,7 @@ from ckanext.ed.helpers import get_storage_path_for, get_pending_datasets, is_ad
 from ckanext.ed.mailer import mail_package_publish_update_to_user, mail_package_publish_request_to_admins
 from ckan.controllers.package import PackageController
 from ckan.controllers.user import UserController
+from ckan.controllers.organization import OrganizationController
 import ckan.plugins as p
 
 
@@ -185,6 +186,8 @@ class EdPackageController(PackageController):
 
 class DocumentationController(PackageController):
     def read_doc(self, id):
+        '''Controller for reading the documentations tab
+        '''
         edit = request.params.get('edit')
         context = {'model': model, 'session': model.Session,
                    'user': c.user, 'for_view': True,
@@ -212,12 +215,18 @@ class DocumentationController(PackageController):
                       extra_vars={'dataset_type': package_type, 'edit': edit})
 
     def pin(self, dataset_id, resource_id):
+        '''Controller to pin the documentation
+        '''
         self._update_pin(dataset_id, resource_id, pin=True)
 
     def unpin(self, dataset_id, resource_id):
+        '''Controller to unpin the pinned documentation
+        '''
         self._update_pin(dataset_id, resource_id, pin=False)
 
     def _update_pin(self, dataset_id, resource_id, pin=False):
+        '''Updates resource metadata with pinned=True/False
+        '''
         context = {'model': model, 'session': model.Session,
                    'user': c.user, 'auth_user_obj': c.userobj}
         toolkit.check_access(
@@ -241,6 +250,8 @@ class DocumentationController(PackageController):
         )
 
     def _is_true(self, value):
+        '''Returns boolean depending on string
+        '''
         if value == 'True' or value == 'true':
             return True
         if value == 'False' or value == 'false':
@@ -250,16 +261,23 @@ class DocumentationController(PackageController):
 
 class NewResourceController(base.BaseController):
     def new_resource(self, id, data=None, errors=None, error_summary=None):
+        '''Controller for regular resources - does exactly the same as core new_resoruce controller
+        With slight modification to differenciate it from documentations
+        '''
         save_action = request.params.get('save')
         is_doc = 'from-doc' in save_action if save_action else False
         return self._new_resource(id, data=data, errors=errors, error_summary=error_summary, is_doc=is_doc)
 
     def new_doc(self, id, data=None, errors=None, error_summary=None, is_doc=True):
+        '''Controller for regular resources - does exactly the same as core new_resoruce controller
+        But adds the flag that this is a documentation
+        '''
         return self._new_resource(id, data=data, errors=errors, error_summary=error_summary, is_doc=True)
 
     def _new_resource(self, id, data=None, errors=None, error_summary=None, is_doc=False):
-        ''' FIXME: This is a temporary action to allow styling of the
-        forms. '''
+        '''Core function to prepare metadata for resource and documentation controllers.
+        Does different things depending on `is_doc` is True or False
+        '''
         if request.method == 'POST' and not data:
             save_action = request.params.get('save')
             data = data or \
@@ -434,6 +452,10 @@ class WorkflowActivityStreamController(base.BaseController):
 
 class PendingRequestsController(base.BaseController):
     def list_requests(self):
+        '''Lits pending requests for organization admin for separate tab
+
+        Note: Not used ATM
+        '''
         if not toolkit.c.userobj:
             base.abort(403, _('Not authorized to see this page'))
         is_editor = not is_admin(toolkit.c.user)
@@ -448,6 +470,8 @@ class PendingRequestsController(base.BaseController):
 
 class DownloadController(base.BaseController):
     def download_zip(self, zip_id):
+        '''Downloads dataset
+        '''
         if not zip_id:
             toolkit.abort(404, toolkit._('Data not found'))
         file_name, package_name = zip_id.split('::')
@@ -470,21 +494,29 @@ class DownloadController(base.BaseController):
 
 class StateUpdateController(base.BaseController):
     def approve(self, id):
+        '''Approves dataset for publishing
+        '''
         make_public = toolkit.request.params.get(
             'make_public') == 'true'
 
         _make_action(id, 'approve', make_public=make_public)
 
     def reject(self, id):
+        '''Rejects dataset for publishing
+        '''
         feedback = toolkit.request.params.get(
             'feedback', 'No feedback provided')
         _make_action(id, 'reject', feedback=feedback)
 
     def resubmit(self, id):
+        '''Tesubmits dataset for publishing
+        '''
         _make_action(id, 'resubmit')
 
 
 def _raise_not_authz(id, action='reject'):
+    '''Raises NotAuthorized if user is not the admin of the dataset
+    '''
     if action == 'resubmit':
         toolkit.check_access(
             'package_update', {
@@ -505,6 +537,11 @@ def _raise_not_authz(id, action='reject'):
 
 
 def _make_action(package_id, action='reject', feedback=None, make_public=None):
+    '''Makes actions. One of reject, approve, resubmit. Checks authorized,
+    Update package metadata appropriatelly and sends emails
+
+    Note: Not used ATM
+    '''
     action_props = {
         'reject': {
             'state': 'rejected',
@@ -561,12 +598,16 @@ def _make_action(package_id, action='reject', feedback=None, make_public=None):
 
 
 class HelpController(base.BaseController):
+    '''Dummy controller for help endoint
+    '''
     def external_help(self):
         return toolkit.redirect_to('https://youtube.com')
 
 
 class CustomeUserController(UserController):
     def me(self, locale=None):
+        '''Overrides core ckan me() method for UserController
+        '''
         if not c.user:
             h.redirect_to(locale=locale, controller='user', action='login',
                           id=None)
@@ -577,6 +618,8 @@ class CustomeUserController(UserController):
 
 class DisqusController(PackageController):
     def read_disqus(self, id):
+        '''Controller for Discus tab on dataset page
+        '''
         context = {'model': model, 'session': model.Session,
                    'user': c.user, 'for_view': True,
                    'auth_user_obj': c.userobj}
@@ -601,3 +644,17 @@ class DisqusController(PackageController):
             c.pkg = context['package']
         except (NotFound, NotAuthorized):
             abort(404, _('Dataset not found'))
+
+
+class EdOrganizationController(OrganizationController):
+    def _guess_group_type(self, expecting_name=False):
+        """
+            The base CKAN function gets the group_type from the URL,
+            this is a problem in the case when the URL mapping is changed
+            and instead of group we use something else.
+            That will require overriding the OrganizationController.
+
+        """
+        gt = 'organization'
+
+        return gt
