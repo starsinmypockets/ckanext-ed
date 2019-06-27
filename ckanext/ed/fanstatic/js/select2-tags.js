@@ -3,7 +3,6 @@
 
     $(document).ready(function() {
         $(".placeholder-multiple").select2({
-            tags:true
         });
 
     });
