@@ -175,7 +175,7 @@ def package_create(context, data_dict):
     # we have a list of predefined tags that should appear in the tags list
     # we are using a different field in scheming and here we need to
     # convert it to tags format and save it as tags in the database.
-    data_dict['tags'] = convert_to_tags_format(data_dict['tags_predefined'])
+    #data_dict['tags'] = convert_to_tags_format(data_dict['tags_predefined'])
     dataset_dict = core_package_create(context, data_dict)
 
     return dataset_dict
@@ -205,14 +205,14 @@ def package_update(context, data_dict):
     # we have a list of predefined tags that should appear in the tags list
     # we are using a different field in scheming and here we need to
     # convert it to tags format and save it as tags in the database.
-    if type(data_dict['tags_predefined']) ==  type([]):
-        data_dict['tags'] = convert_to_tags_format(data_dict['tags_predefined'])
-    else:
-        # because CKAN always returns strings we need to handle it in order to
-        # pass it to the covert_to_tags_format function.
-        # This is done in order to aviod an error happening on resource_create.
-        tags_predefined = data_dict['tags_predefined'].strip('}').strip('{').split(',')
-        data_dict['tags'] = convert_to_tags_format(tags_predefined)
+    # if type(data_dict['tags_predefined']) ==  type([]):
+    #     data_dict['tags'] = convert_to_tags_format(data_dict['tags_predefined'])
+    # else:
+    #     # because CKAN always returns strings we need to handle it in order to
+    #     # pass it to the covert_to_tags_format function.
+    #     # This is done in order to aviod an error happening on resource_create.
+    #     tags_predefined = data_dict['tags_predefined'].strip('}').strip('{').split(',')
+    #     data_dict['tags'] = convert_to_tags_format(tags_predefined)
 
     dataset_dict = core_package_update(context, data_dict)
 

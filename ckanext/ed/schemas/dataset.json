@@ -26,14 +26,11 @@
       "form_placeholder": "A few sentences about the data in this profile."
     },
     {
-      "field_name": "tags_predefined",
+      "field_name": "tags_string",
       "label": "Tags",
       "preset": "tag_string_autocomplete",
-      "form_snippet": "select-multiple-tags.html",
       "choices_helper": "load_choices",
       "choices_file_path": "ckanext.ed.schemas.assets:tags.json",
-      "required": true,
-      "validators": "ignore_missing",
       "form_placeholder": "Keywords",
       "help_text": "Tags (or keywords) help users discover your dataset; please include terms that would be used by technical and non-technical users."
     },
@@ -123,7 +120,6 @@
       "field_name": "access_level",
       "label": "Public Access Level",
       "preset": "select",
-      "required": true,
       "choices": [
         {
           "value": "public",
@@ -204,13 +200,11 @@
     {
       "field_name": "name",
       "label": "Name",
-      "required": true,
       "form_placeholder": "eg. January 2011 Gold Prices"
     },
     {
       "field_name": "description",
       "label": "Description",
-      "required": true,
       "form_snippet": "markdown.html",
       "form_placeholder": "Some useful notes about the data"
     },
