@@ -22,6 +22,8 @@ from ckanext.ed.mailer import mail_package_publish_update_to_user, mail_package_
 from ckan.controllers.package import PackageController
 from ckan.controllers.user import UserController
 from ckan.controllers.organization import OrganizationController
+from ckan.controllers.group import GroupController
+
 import ckan.plugins as p
 
 
@@ -658,3 +660,10 @@ class EdOrganizationController(OrganizationController):
         gt = 'organization'
 
         return gt
+
+
+class EdTopicController(GroupController):
+    group_types = ['group']
+
+    def _guess_group_type(self, expecting_name=False):
+        return 'group' 
