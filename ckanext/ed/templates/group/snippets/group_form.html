@@ -9,8 +9,8 @@
     {% set attrs = {'data-module': 'slug-preview-target', 'class': 'form-control'} %}
     {{ form.input('title', label=_('Name'), id='field-name', placeholder=_('My Group'), value=data.title, error=errors.title, classes=['control-full'], attrs=attrs) }}
 
-    {%- set prefix = h.url_for(group_type + '_read', id='') -%}
-    {%- set domain = h.url_for(group_type + '_read', id='', qualified=true) -%}
+    {%- set prefix = h.url_for('topic_read', id='') -%}
+    {%- set domain = h.url_for('topic_read', id='', qualified=true) -%}
     {% set domain = domain|replace("http://", "")|replace("https://", "") %}
     {% set attrs = {'data-module': 'slug-preview-slug', 'class': 'form-control input-sm', 'data-module-prefix': domain, 'data-module-placeholder': '<' + group_type + '>'} %}
 
@@ -21,7 +21,7 @@
         value=data.name,
         error=errors.name,
         attrs=attrs,
-        is_required=true) | replace('/group/', '/topic/') | replace('<group>', '<topic>') }}
+        is_required=true) | replace('<group>', '<topic>') }}
 
     {{ form.markdown('description', label=_('Description'), id='field-description', placeholder=_('A little information about my group...'), value=data.description, error=errors.description) }}
 
