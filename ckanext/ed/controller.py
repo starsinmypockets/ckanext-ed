@@ -1,6 +1,8 @@
 import os
 import logging
 import cgi
+import json
+import hashlib
 
 from ckan.common import g, _, response, request, c, config
 import ckan.lib.helpers as h
@@ -22,6 +24,9 @@ from ckanext.ed.mailer import mail_package_publish_update_to_user, mail_package_
 from ckan.controllers.package import PackageController
 from ckan.controllers.user import UserController
 from ckan.controllers.organization import OrganizationController
+from ckanext.stats import controller as StatsController
+from ckanext.stats import stats as stats_lib
+
 import ckan.plugins as p
 
 
@@ -658,3 +663,66 @@ class EdOrganizationController(OrganizationController):
         gt = 'organization'
 
         return gt
+
+
+class EdStatsController(base.BaseController):
+    def index(self):
+        stats = stats_lib.Stats()
+        rev_stats = stats_lib.RevisionStats()
+
+        stats_response = {
+            'top_rated_packages': stats.top_rated_packages(),
+            'most_edited_packages': [],
+            'largest_groups': [],
+            'top_tags': [],
+            'top_package_creators': [],
+            'new_packages_by_week': rev_stats.get_by_week('new_packages'),
+            'deleted_packages_by_week': rev_stats.get_by_week('deleted_packages'),
+            'num_packages_by_week': rev_stats.get_num_packages_by_week(),
+            'package_revisions_by_week': rev_stats.get_by_week('package_revisions'),
+            'raw_packages_by_week': [],
+            'all_package_revisions': [],
+            'raw_all_package_revisions': [],
+            'new_datasets': [],
+            'raw_new_datasets': [],
+        }
+
+        for p in stats.most_edited_packages():
+            stats_response['most_edited_packages'].append({
+                'title': p[0].title,
+                'name': p[0].name,
+                'count': p[1]
+            })
+        for p in stats.largest_groups():
+            stats_response['largest_groups'].append({
+                'title': p[0].title,
+                'name': p[0].name,
+                'count': p[1]
+            })
+        for p in stats.top_tags():
+            stats_response['top_tags'].append({
+                'name': p[0].name,
+                'count': p[1]
+            })
+        for p in stats.top_package_creators():
+            stats_response['top_package_creators'].append({
+                'id': p[0].id,
+                'name': p[0].name,
+                'fullname': p[0].fullname,
+                'gravatar': hashlib.md5(p[0].email.lower()).hexdigest(),
+                'count': p[1]
+            })
+
+        for week_date, num_packages, cumulative_num_packages in stats_response['num_packages_by_week']:
+            stats_response['raw_packages_by_week'].append({'date': week_date, 'total_packages': cumulative_num_packages})
+
+        for week_date, revs, num_revisions, cumulative_num_revisions in stats_response['package_revisions_by_week']:
+            stats_response['all_package_revisions'].append('[%s, %s]' % (week_date, num_revisions))
+            stats_response['raw_all_package_revisions'].append({'date': week_date, 'total_revisions': num_revisions})
+
+        for week_date, pkgs, num_packages, cumulative_num_packages in stats_response['new_packages_by_week']:
+            stats_response['new_datasets'].append('[%s, %s]' % (week_date, num_packages))
+            stats_response['raw_new_datasets'].append({'date': week_date, 'new_packages': num_packages})
+
+        return json.dumps(stats_response)
+
