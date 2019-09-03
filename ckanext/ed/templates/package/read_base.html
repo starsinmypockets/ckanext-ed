@@ -9,7 +9,7 @@
     {{ h.build_nav_icon('dataset_showcase_list', _('Usage'), id=pkg.name, icon=' bar_chart material-icons') }}
 
     {% if h.ed_is_admin(c.user) %}
-         {{ h.build_nav_icon('dataset_groups', _('Groups'), id=pkg.name, icon=' supervisor_account material-icons')  }}
+         {{ h.build_nav_icon('dataset_topics', _('Topics'), id=pkg.name, icon=' supervisor_account material-icons')  }}
     {% endif %}
 {% endblock %}
 

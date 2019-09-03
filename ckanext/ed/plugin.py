@@ -36,7 +36,7 @@ class EDPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'load_choices': helpers.load_choices,
             'alphabetize_dict' : helpers.alphabetize_dict,
             'get_any': helpers.get_any,
-            'get_facet_items_dict': helpers.get_facet_items_dict
+            'get_facet_items_dict': helpers.get_facet_items_dict,
         }
 
     # IActions
@@ -99,6 +99,9 @@ class EDPlugin(plugins.SingletonPlugin, DefaultTranslation):
         map.connect('dashboard.requests', '/dashboard/requests',
                     controller='ckanext.ed.controller:PendingRequestsController',
                     action='list_requests')
+        map.connect('dashboard.topics', '/dashboard/topics',
+                    controller='ckanext.ed.controller:DashboardTopicsController',
+                    action='list_groups')
         map.connect('/dataset-publish/{id}/approve',
                     controller=publish_controller,
                     action='approve')
@@ -232,6 +235,10 @@ class EDPlugin(plugins.SingletonPlugin, DefaultTranslation):
                     '/topic/bulk_process/{id}',
                     action='bulk_process', ckan_icon='sitemap')
 
+        with routes.mapper.SubMapper(map, controller='package') as m:
+            m.connect('dataset_topics', '/dataset/topics/{id}',
+                      action='groups', ckan_icon='users')
+
         return map
 
     # IValidators
@@ -266,3 +273,4 @@ class EDPlugin(plugins.SingletonPlugin, DefaultTranslation):
         Override core search fasets for publishers
         '''
         facets_dict['organization'] = 'Publishers'
+        facets_dict['groups'] = 'Topics'

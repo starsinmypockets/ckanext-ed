@@ -470,6 +470,20 @@ class PendingRequestsController(base.BaseController):
         return base.render(u'user/dashboard_requests.html', extra_vars)
 
 
+class DashboardTopicsController(base.BaseController):
+    def list_groups(self):
+        '''Lists all the topics for an user in the dashboard
+        '''
+        if not toolkit.c.userobj:
+            base.abort(403, _('Not authorized to see this page'))
+        is_editor = not is_admin(toolkit.c.user)
+        context = {
+            u'for_view': True, u'user': g.user, u'auth_user_obj': g.userobj}
+        data_dict = {u'user_obj': g.userobj, u'include_datasets': True}
+        extra_vars = _extra_template_variables(context, data_dict)
+        return base.render(u'user/dashboard_groups.html', extra_vars)
+
+
 class DownloadController(base.BaseController):
     def download_zip(self, zip_id):
         '''Downloads dataset

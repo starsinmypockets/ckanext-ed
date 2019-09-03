@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ckanext-us_ed_theme 0.0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2018-08-30 19:26+0200\n"
-"PO-Revision-Date: 2018-08-30 19:26+0200\n"
+"PO-Revision-Date: 2019-09-03 15:18+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
 "Language-Team: en <LL@li.org>\n"
@@ -29,7 +29,7 @@ msgstr "Publishers"
 
 #: ckanext/us_ed_theme/templates/header.html:7
 msgid "Groups"
-msgstr ""
+msgstr "Topics"
 
 #: ckanext/us_ed_theme/templates/header.html:8
 msgid "Applications"
