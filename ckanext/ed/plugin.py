@@ -197,6 +197,9 @@ class EDPlugin(plugins.SingletonPlugin, DefaultTranslation):
                       '/publisher/bulk_process/{id}',
                       action='bulk_process', ckan_icon='sitemap')
 
+        map.connect('stats_json', '/stats/json',
+                    controller='ckanext.ed.controller:EdStatsController',
+                    action='index', ckan_icon='info-sign')
 
         # Rename groups / categories to topics
         map.redirect('/group', '/topic',
