@@ -22,6 +22,8 @@ from ckanext.ed.mailer import mail_package_publish_update_to_user, mail_package_
 from ckan.controllers.package import PackageController
 from ckan.controllers.user import UserController
 from ckan.controllers.organization import OrganizationController
+from ckan.controllers.group import GroupController
+
 import ckan.plugins as p
 
 
@@ -468,6 +470,20 @@ class PendingRequestsController(base.BaseController):
         return base.render(u'user/dashboard_requests.html', extra_vars)
 
 
+class DashboardTopicsController(base.BaseController):
+    def list_groups(self):
+        '''Lists all the topics for an user in the dashboard
+        '''
+        if not toolkit.c.userobj:
+            base.abort(403, _('Not authorized to see this page'))
+        is_editor = not is_admin(toolkit.c.user)
+        context = {
+            u'for_view': True, u'user': g.user, u'auth_user_obj': g.userobj}
+        data_dict = {u'user_obj': g.userobj, u'include_datasets': True}
+        extra_vars = _extra_template_variables(context, data_dict)
+        return base.render(u'user/dashboard_groups.html', extra_vars)
+
+
 class DownloadController(base.BaseController):
     def download_zip(self, zip_id):
         '''Downloads dataset
@@ -658,3 +674,10 @@ class EdOrganizationController(OrganizationController):
         gt = 'organization'
 
         return gt
+
+
+class EdTopicController(GroupController):
+    group_types = ['group']
+
+    def _guess_group_type(self, expecting_name=False):
+        return 'group' 

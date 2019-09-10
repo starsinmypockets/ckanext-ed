@@ -46,7 +46,7 @@
                     <ul>
                       {% for category in c.search_facets.groups['items'][:9] %}
                         <li>
-                            {% set href = "/dataset?groups=" + category.name %}
+                            {% set href = "/dataset?topics=" + category.name %}
                             <a href="{{ href }}">
                                 {{ h.truncate(category['display_name'], 22) }}
                                 <span>{{ category.count }}</span></a>
@@ -58,7 +58,7 @@
                     <ul>
                       {% for category in c.search_facets.groups['items'][9:18] %}
                         <li>
-                            {% set href = "/dataset?groups=" + category.name %}
+                            {% set href = "/dataset?topics=" + category.name %}
                             <a href="{{ href }}">{{ h.truncate(category['display_name'], 22) }}<span>{{ category.count }}</span></a>
                         </li>
                       {% endfor %}

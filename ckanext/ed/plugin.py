@@ -35,7 +35,8 @@ class EDPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'get_org_for_package' : helpers.get_org_for_package,
             'load_choices': helpers.load_choices,
             'alphabetize_dict' : helpers.alphabetize_dict,
-            'get_any': helpers.get_any
+            'get_any': helpers.get_any,
+            'get_facet_items_dict': helpers.get_facet_items_dict,
         }
 
     # IActions
@@ -62,6 +63,10 @@ class EDPlugin(plugins.SingletonPlugin, DefaultTranslation):
         '''
         # For requests dashboard we need approval_pending datasets. Passing in
         # extras that request is sent from dashboard. Return params as is if so
+
+        if 'topics' in str(search_params.get('fq')):
+            search_params['fq'] = search_params['fq'].replace('topics:"', 'groups:"')
+
         if search_params.get('extras', {}).get('from_dashboard'):
             return search_params
 
@@ -94,6 +99,9 @@ class EDPlugin(plugins.SingletonPlugin, DefaultTranslation):
         map.connect('dashboard.requests', '/dashboard/requests',
                     controller='ckanext.ed.controller:PendingRequestsController',
                     action='list_requests')
+        map.connect('dashboard.topics', '/dashboard/topics',
+                    controller='ckanext.ed.controller:DashboardTopicsController',
+                    action='list_groups')
         map.connect('/dataset-publish/{id}/approve',
                     controller=publish_controller,
                     action='approve')
@@ -189,6 +197,48 @@ class EDPlugin(plugins.SingletonPlugin, DefaultTranslation):
                       '/publisher/bulk_process/{id}',
                       action='bulk_process', ckan_icon='sitemap')
 
+
+        # Rename groups / categories to topics
+        map.redirect('/group', '/topic',
+                     _redirect_code='301 Moved Permanently')
+        map.redirect('/group/{url:.*}', '/topic/{url}',
+                     _redirect_code='301 Moved Permanently')
+        group_controller = 'ckanext.ed.controller:EdTopicController'
+
+        with routes.mapper.SubMapper(map, controller=group_controller) as m:
+            m.connect('topic_index', '/topic', action='index')
+            m.connect('/topic/list', action='list')
+            m.connect('/topic/new', action='new')
+            m.connect('/topic/{action}/{id}',
+                    requirements=dict(action='|'.join([
+                        'delete',
+                        'admins',
+                        'member_new',
+                        'member_delete',
+                        'history'
+                        'followers',
+                        'follow',
+                        'unfollow',
+                    ])))
+            m.connect('topic_activity', '/topic/activity/{id}',
+                    action='activity', ckan_icon='time')
+            m.connect('topic_read', '/topic/{id}', action='read')
+            m.connect('topic_about', '/topic/about/{id}',
+                    action='about', ckan_icon='info-sign')
+            m.connect('topic_read', '/topic/{id}', action='read',
+                    ckan_icon='sitemap')
+            m.connect('topic_edit', '/topic/edit/{id}',
+                    action='edit', ckan_icon='edit')
+            m.connect('topic_members', '/topic/edit_members/{id}',
+                    action='members', ckan_icon='group')
+            m.connect('topic_bulk_process',
+                    '/topic/bulk_process/{id}',
+                    action='bulk_process', ckan_icon='sitemap')
+
+        with routes.mapper.SubMapper(map, controller='package') as m:
+            m.connect('dataset_topics', '/dataset/topics/{id}',
+                      action='groups', ckan_icon='users')
+
         return map
 
     # IValidators
@@ -223,3 +273,4 @@ class EDPlugin(plugins.SingletonPlugin, DefaultTranslation):
         Override core search fasets for publishers
         '''
         facets_dict['organization'] = 'Publishers'
+        facets_dict['groups'] = 'Topics'

@@ -10,6 +10,7 @@ from ckan.plugins import toolkit
 
 log = logging.getLogger()
 
+
 def _get_action(action, context_dict, data_dict):
     return toolkit.get_action(action)(context_dict, data_dict)
 
@@ -353,3 +354,49 @@ def get_any(list_, key=None):
     if key is not None:
         return any(i[key] for i in list_)
     return any(list_)
+
+def get_facet_items_dict(facet, limit=None, exclude_active=False):
+    '''Return the list of unselected facet items for the given facet, sorted
+    by count.
+
+    Returns the list of unselected facet contraints or facet items (e.g. tag
+    names like "russian" or "tolstoy") for the given search facet (e.g.
+    "tags"), sorted by facet item count (i.e. the number of search results that
+    match each facet item).
+
+    Reads the complete list of facet items for the given facet from
+    c.search_facets, and filters out the facet items that the user has already
+    selected.
+
+    Arguments:
+    facet -- the name of the facet to filter.
+    limit -- the max. number of facet items to return.
+    exclude_active -- only return unselected facets.
+
+    '''
+    if not hasattr(c, u'search_facets') or not c.search_facets.get(
+                                               facet, {}).get(u'items'):
+        return []
+    facets = []
+
+    if facet == 'groups':
+        facet_name = 'topics'
+    else:
+        facet_name = facet
+
+    for facet_item in c.search_facets.get(facet)['items']:
+        if not len(facet_item['name'].strip()):
+            continue
+        if not (facet_name, facet_item['name']) in request.params.items():
+            facets.append(dict(active=False, **facet_item))
+        elif not exclude_active:
+            facets.append(dict(active=True, **facet_item))
+    # Sort descendingly by count and ascendingly by case-sensitive display name
+    facets.sort(key=lambda it: (-it['active'], -it['count'], it['display_name'].lower()))
+    if hasattr(c, 'search_facets_limits'):
+        if c.search_facets_limits and limit is None:
+            limit = c.search_facets_limits.get(facet)
+    # zero treated as infinite for hysterical raisins
+    if limit is not None and limit > 0:
+        return facets[:limit]
+    return facets
