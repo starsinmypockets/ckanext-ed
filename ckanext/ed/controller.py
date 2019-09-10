@@ -726,3 +726,17 @@ class EdStatsController(base.BaseController):
 
         return json.dumps(stats_response)
 
+
+class CollectionController(base.BaseController):
+    def to_json(self):
+        resp = {
+            'title': 'Some title',
+            'description': 'Some description'
+        }
+
+        return json.dumps(resp)
+
+
+    def list_collections(self):
+
+        return base.render('collection/list.html')

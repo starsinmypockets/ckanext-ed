@@ -190,6 +190,11 @@ class EDPlugin(plugins.SingletonPlugin, DefaultTranslation):
                       action='bulk_process', ckan_icon='sitemap')
 
 
+        collections_controller = 'ckanext.ed.controller:CollectionController'
+        with routes.mapper.SubMapper(map, controller=collections_controller) as m:
+            m.connect('collection_index', '/collections', action='list_collections')
+
+
         map.connect('stats_json', '/stats/json',
                     controller='ckanext.ed.controller:EdStatsController',
                     action='index', ckan_icon='info-sign')
