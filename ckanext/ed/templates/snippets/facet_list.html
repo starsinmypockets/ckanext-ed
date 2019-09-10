@@ -3,7 +3,7 @@
 
           <h4 class="side-heading">
             {% set title = title or h.get_facet_title(name) %}
-            {{ title }}
+            {{ title if not title == 'Groups' else 'Topics' }}
           </h4>
           {% endblock %}
           {% block facet_list_items %}
