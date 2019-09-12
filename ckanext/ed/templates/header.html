@@ -99,6 +99,9 @@
               <li>
                 <a href="{{ h.url_for(controller='organization', action='index') }}">Publishers</a>
               </li>
+	      <li>
+                <a href="{{ h.url_for(controller='collection', action='index') }}">Collections</a>
+              </li>
               <li>
                 {% if c.userobj %}
                   <a href="{{ h.url_for('/user/_logout') }}" class='usa-button usa-button--outline' title="{{ _('Log out') }}">
