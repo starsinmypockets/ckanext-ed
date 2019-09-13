@@ -9,7 +9,8 @@ Example:
 
 #}
 {% block group_list %}
-<ul class="media-grid" data-module="media-grid">
+
+<ul class="dataset-list list-unstyled collection-list">
 	{% block group_list_inner %}
   {% for group in groups %}
     {% snippet "collection/snippets/group_item.html", group=group, position=loop.index %}
@@ -17,3 +18,4 @@ Example:
   {% endblock %}
 </ul>
 {% endblock %}
+
