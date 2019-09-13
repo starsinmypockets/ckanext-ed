@@ -19,9 +19,10 @@
               {% block page_primary_action %}
                 {% if h.check_access('group_create') %}
                   {% link_for _('Add Collection'), controller='collection', action='new', class_='btn btn-primary', icon='plus-square', named_route=group_type + '_new' %}
+                  <br/><br/>
                 {% endif %}
               {% endblock %}
-
+              
               {% block primary_content_inner %}
                 <h1 class="hide-heading">{{ _('Collections') }}</h1>
                 {% block groups_search_form %}

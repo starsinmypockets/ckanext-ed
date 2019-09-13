@@ -2,3 +2,37 @@
 .collection-list {
     margin-top:50px;
 }
+
+#group-search-form, #group-datasets-search-form {
+    padding-bottom: 30px;
+
+    //Fixing the search input for publishers
+    .search-input-group {
+        width:100%;
+        position: relative;
+
+        input {
+            border: 0;
+            box-shadow: 0 0 0;
+            padding: 5px 0px 15px 50px;
+            border-bottom: 1px solid #d2d2d2;
+        }
+
+        //chaing the position of search btn
+        .input-group-btn {
+            position:absolute;
+            top: 3px;
+            left: 14px;
+            z-index:999;
+
+            button{
+                padding:0;
+                border:0;
+                background: transparent;
+                width: 18px;
+                height: 18px;
+                color:$theme-color-alternate;
+            }
+        }
+    }
+}
