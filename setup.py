@@ -82,6 +82,9 @@ setup(
         [ckan.plugins]
         ed=ckanext.ed.plugin:EDPlugin
 
+        [paste.paster_command]
+        ed=ckanext.ed.commands.vocabularies:Ed
+
         [babel.extractors]
         ckan = ckan.lib.extract:extract_ckan
     ''',
